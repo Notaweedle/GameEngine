@@ -1,15 +1,26 @@
 #include "Engine.h"
 
-#include "SDL3/SDL.h"
-#include <iostream>
+
+using namespace nu;
+
 
 int main()
 {
-    int height = 1280;
-    int width = 1024;
+    int height = 1024;
+    int width = 512;
     nu::Renderer renderer;
     renderer.Initialize("Game Engine", height, width);
     
+    std::vector<Vector2> v;
+
+    for (int i = 0; i < 3000; i++) 
+    {
+        Vector2 vec{ (nu::RandomFloat(height), nu::RandomFloat(width)) };
+        v.push_back(vec);
+    }
+    Vector2 vel{ 0.5, 10 };
+
+    Vector2 mouse;
     
 
     // handle events
@@ -18,39 +29,41 @@ int main()
 
     while (!quit) 
     {
+        SDL_GetMouseState(&mouse.x, &mouse.y);
         while (SDL_PollEvent(&e)) 
         {
             if (e.type == SDL_EVENT_QUIT) 
             {
                 quit = true;
             }
+            if (e.type == SDL_EVENT_KEY_DOWN && e.key.scancode == SDL_SCANCODE_ESCAPE)
+            {
+                quit = true;
+            }
         }
-                
-        renderer.SetColor(0, 0, 0);
-        renderer.Clear();
 
-        renderer.SetColor(255, 255, 255, 1);
-        renderer.DrawFillRect(0, 0, height, width);
-        // background 
+        int numkeys;
+        const bool* keyState = SDL_GetKeyboardState(&numkeys);
+        if (keyState[SDL_SCANCODE_SPACE]) { std::cout << "press\n";}
 
 
-        for (int i = 0; i < 1250; i++)
+
+
+        for (size_t i = 0; i < v.size(); i++) 
         {
-            renderer.SetColor(rand() % 255, rand() % 255, rand() % 255, rand() % 26);
-            renderer.DrawFillRect(rand() % height, rand() % width, rand() % 50, rand() % 50);
+            renderer.SetColor (nu::RandomFloat(255), nu::RandomFloat(255), nu::RandomFloat(255), RandomFloat());
+            v[i] = v[i] + vel;
+            renderer.DrawPoint(v[i].x, v[i].y);
         }
 
-        for (int i = 0; i < 10000; i++) 
-        {
-            renderer.SetColor(rand() % 255,rand() % 256,rand() % 256, 1);
-            renderer.DrawPoint(rand() % 1280, rand() % 1024);
-        }
+        renderer.SetColor(1.0f, 1.0f, 1.0f, 1.f);
+        renderer.DrawFillRect(mouse.x-20, mouse.y-20, 40, 40);
 
-        
+
 
         renderer.Present();
     }
-
+    //SHUTDOWN
     renderer.Shutdown();
 
     return 0;
