@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+#include <iostream>
 
 using namespace nu;
 
@@ -9,13 +9,14 @@ int main()
     int height = 1024;
     int width = 512;
     nu::Renderer renderer;
+    nu::Input input;
     renderer.Initialize("Game Engine", height, width);
     
     std::vector<Vector2> v;
 
     for (int i = 0; i < 3000; i++) 
     {
-        Vector2 vec{ (nu::RandomFloat(height), nu::RandomFloat(width)) };
+        Vector2 vec{ nu::RandomFloat(static_cast<float>(height)), nu::RandomFloat(static_cast<float>(width)) };
         v.push_back(vec);
     }
     Vector2 vel{ 0.5, 10 };
@@ -26,9 +27,12 @@ int main()
     // handle events
     SDL_Event e;
     bool quit = false;
+    
+
 
     while (!quit) 
     {
+        input.Update();
         SDL_GetMouseState(&mouse.x, &mouse.y);
         while (SDL_PollEvent(&e)) 
         {
@@ -57,7 +61,15 @@ int main()
         }
 
         renderer.SetColor(1.0f, 1.0f, 1.0f, 1.f);
-        renderer.DrawFillRect(mouse.x-20, mouse.y-20, 40, 40);
+        std::cout << "\033[2J\033[1;1H";
+        std::cout <<"(" << mouse.x << " , " << mouse.y << ")" << std::endl;
+        std::cout << input.GetButtonDown(Input::MouseButton::Left) << std::endl;
+
+        if (input.GetButtonDown(Input::MouseButton::Left))
+        {
+            renderer.DrawFillRect(mouse.x, mouse.y - 20, 40, 40);
+        }
+        
 
 
 

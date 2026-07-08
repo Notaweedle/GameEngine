@@ -28,7 +28,7 @@ namespace nu {
 	/// </summary>
 	/// <returns></returns>
 
-	//TODO : Fill out the summrury
+	
 	inline float RandomFloat() {
 		// rand() = 0 <- RAND_MAX
 		return rand() / RAND_MAX;

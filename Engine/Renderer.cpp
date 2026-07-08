@@ -16,7 +16,7 @@ namespace nu
             return false;
         }
 
-        m_renderer = SDL_CreateRenderer(m_window, NULL);
+        m_renderer = SDL_CreateRenderer(m_window, nullptr);
         if (m_renderer == nullptr) {
             std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
             SDL_DestroyWindow(m_window);
