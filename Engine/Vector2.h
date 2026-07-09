@@ -5,8 +5,8 @@ namespace nu
 	class Vector2
 	{
 	public:
-		float x;
-		float y;
+		float x, y;
+		
 
 		Vector2() = default;
 		Vector2(float x, float y) : x{ x }, y{ y } {}
