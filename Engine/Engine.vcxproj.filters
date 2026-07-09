@@ -39,7 +39,7 @@
     <ClInclude Include="mathUitl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\GameTime.h">
+    <ClInclude Include="GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\GameTime.cpp">
+    <ClCompile Include="GameTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "pch.h"
 #include <iostream>
 
 using namespace nu;
@@ -9,7 +10,6 @@ struct Tranform
     float rotation;
     float scale;
 };
-
 class Actor {
 public:
     Actor() = default;
@@ -55,7 +55,7 @@ protected:
 };
 
 
-
+std::vector<Vector2> points;
 int main()
 {
     Actor player{ Tranform {Vector2 {640.0f,512.f},0.0f,50.0f} };
@@ -69,22 +69,8 @@ int main()
     
     
     std::vector<Vector2> v;
-
-    for (int i = 0; i < 3000; i++) 
-    {
-        Vector2 vec{ nu::RandomFloat(static_cast<float>(height)), nu::RandomFloat(static_cast<float>(width)) };
-        v.push_back(vec);
-    }
-
-    Vector2 vel{ 0.5, 10 };
-    Vector2 velocity{ 0.0f,0.0f };
-    Vector2 force{ 0.0f,0.0f };
-    Vector2 pos{ 0.0f,0.0f };
-
     float speed = 400.0f;
     Vector2 mouse;
-    
-
     // handle events
     SDL_Event e;
     bool quit = false;
@@ -96,7 +82,6 @@ int main()
         input.Update();
         int numkeys;
         const bool* keyState = SDL_GetKeyboardState(&numkeys);
-
         SDL_GetMouseState(&mouse.x, &mouse.y);
 
         while (SDL_PollEvent(&e)) 
@@ -109,40 +94,6 @@ int main()
             {
                 quit = true;
             }
-        }
-
-        
-        if (keyState[SDL_SCANCODE_SPACE]) { std::cout << "press\n";}
-
-       
-
-        if (input.GetKeyDown(SDL_SCANCODE_A))       {force.x  = -speed;}
-        else if (input.GetKeyDown(SDL_SCANCODE_D))  {force.x = +speed;}
-        else if (input.GetKeyDown(SDL_SCANCODE_W))  {force.y = -speed;}
-        else if (input.GetKeyDown(SDL_SCANCODE_D))  {force.y = -speed;}
-        
-       /* velocity += (force * time.getDealtaTime());
-        pos += (velocity * time.getDealtaTime());*/
-
-       
-        
-
-        /*if (input.GetButtonDown(Input::MouseButton::Left)) {
-            if (points.empty()) {
-                points.push_back(input.GetMousePos())
-            }
-            else {
-
-            }
-
-        }*/
-
-
-        for (size_t i = 0; i < v.size(); i++) 
-        {
-            renderer.SetColor (nu::RandomFloat(255), nu::RandomFloat(255), nu::RandomFloat(255), RandomFloat());
-            v[i] = v[i] + vel;
-            renderer.DrawPoint(v[i].x, v[i].y);
         }
 
         renderer.SetColor(1.0f, 1.0f, 1.0f, 1.f);
@@ -160,6 +111,7 @@ int main()
 
         renderer.Present();
     }
+
     //SHUTDOWN
     renderer.Shutdown();
 
