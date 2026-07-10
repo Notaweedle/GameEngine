@@ -21,7 +21,7 @@ namespace nu {
 		bool GetPreKeyPressed(int key) const { return !m_preKeySates[key]; }
 		bool GetKeyRelased(int key) const { return m_keySates[key]; }
 
-		Vector2 GetMousePos() { return m_mousePos; }
+		const Vector2& GetMousePosition() const { return m_mousePos; }
 
 		bool GetButtonDown(MouseButton button) const { return m_buttonSates & GetButtonBit(button); }
 		bool GetPrevButtonDown(MouseButton button) const { return m_preButtonSates & GetButtonBit(button); }

@@ -29,6 +29,7 @@ namespace nu
 
     void Renderer::Shutdown()
     {
+        std::cout << "Shutdown" << std::endl;
         SDL_DestroyRenderer(m_renderer);
         SDL_DestroyWindow(m_window);
         SDL_Quit();
@@ -57,6 +58,11 @@ namespace nu
     void Renderer::DrawPoint(float x, float y) const
     {
         SDL_RenderPoint(m_renderer, x, y);
+    }
+
+    void Renderer::DrawLine(float x, float y,float x2,float y2) const
+    {
+        SDL_RenderLine(m_renderer,x, y, x2, y2);
     }
 
     void Renderer::DrawFillRect(float x, float y, float w, float h) const

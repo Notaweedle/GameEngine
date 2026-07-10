@@ -27,27 +27,14 @@ public:
     void Draw(const Renderer& renderer) const
     {
         renderer.SetColor(1.0f, 1.0f, 1.0f);
-        renderer.DrawFillRect(m_tranform.position.x - (m_tranform.scale * 0.5f), m_tranform.position.y - ((m_tranform.scale * 0.5f)),40,40);
+        renderer.DrawFillRect(m_tranform.position.x - (m_tranform.scale * 0.5f), m_tranform.position.y - m_tranform.scale * 0.5f,30,30);
     }
 
     const Tranform& getTranform() { return m_tranform; }
-    //void getPosistion(const Vector2& pos) { m_tranform.position = pos; };
-    void setPosistion(const Vector2& pos) { m_tranform.position = pos; };
-    //void getRotation(const float rotaion) { m_tranform.rotation = rotaion; };
-    void setRotation(const float rotaion) { m_tranform.rotation = rotaion; };
-    //void getScale(const float scale) { m_tranform.scale = scale; };
-    void setScale(const float scale) { m_tranform.scale = scale; };
-
     
-
-
-
-
-
-
-
-
-private:
+    void setPosistion(const Vector2& pos) { m_tranform.position = pos; };
+    void setRotation(const float rotaion) { m_tranform.rotation = rotaion; };
+    void setScale(const float scale) { m_tranform.scale = scale; };
 
 protected:
     Tranform m_tranform;
@@ -58,7 +45,7 @@ protected:
 std::vector<Vector2> points;
 int main()
 {
-    Actor player{ Tranform {Vector2 {640.0f,512.f},0.0f,50.0f} };
+ // Actor player{ Tranform {Vector2 {640.0f,512.f},0.0f,50.0f} };
 
 
     int height = 1024;
@@ -68,9 +55,8 @@ int main()
     renderer.Initialize("Game Engine", height, width);
     
     
-    std::vector<Vector2> v;
-    float speed = 400.0f;
     Vector2 mouse;
+
     // handle events
     SDL_Event e;
     bool quit = false;
@@ -78,7 +64,8 @@ int main()
 
 
     while (!quit) 
-    {
+    {   
+        
         input.Update();
         int numkeys;
         const bool* keyState = SDL_GetKeyboardState(&numkeys);
@@ -96,15 +83,31 @@ int main()
             }
         }
 
-        renderer.SetColor(1.0f, 1.0f, 1.0f, 1.f);
+        renderer.SetColor(0.0f, 0.0f, 0.0f, 1);
         std::cout << "\033[2J\033[1;1H";
         std::cout <<"(" << mouse.x << " , " << mouse.y << ")" << std::endl;
+
         std::cout << input.GetButtonDown(Input::MouseButton::Left) << std::endl;
 
         if (input.GetButtonDown(Input::MouseButton::Left))
         {
-            renderer.DrawFillRect(mouse.x, mouse.y - 20, 40, 40);
+            if (points.empty())
+            {
+                points.push_back(mouse);
+            }
+            else if ((mouse - points.back()).Length() > 10.0f)
+            {
+                points.push_back(mouse);
+            }
         }
+
+
+        renderer.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+        for (size_t i = 0; i + 1 < points.size(); i++)
+        {
+            renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        }
+       
         
 
 

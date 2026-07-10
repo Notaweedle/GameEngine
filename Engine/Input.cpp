@@ -20,11 +20,12 @@ namespace nu {
 	};
 
 	void Input::Update() {
+		m_preKeySates = m_keySates;
 		m_preButtonSates = m_buttonSates;
 		const bool* keyState = SDL_GetKeyboardState(nullptr);
 		std::copy(keyState,keyState + m_keySates.size(), m_keySates.begin());
-
 		m_buttonSates = SDL_GetMouseState(&m_mousePos.x, &m_mousePos.y);
+
 	};
 
 	uint32_t Input::GetButtonBit(MouseButton button) const
