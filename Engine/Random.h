@@ -31,7 +31,7 @@ namespace nu {
 	
 	inline float RandomFloat() {
 		// rand() = 0 <- RAND_MAX
-		return rand() / RAND_MAX;
+		return rand() / (float)RAND_MAX;
 	}
 	inline float RandomFloat(float max) {
 		// 0 <-> 1 * max

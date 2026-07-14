@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <cassert>
 namespace nu 
 {
 	class Vector2
@@ -14,29 +15,48 @@ namespace nu
 
 
 
-		Vector2 operator + (const Vector2& v) { return Vector2{ this->x + v.x, this->y + v.y }; }
-		Vector2 operator - (const Vector2& v) { return Vector2{ this->x - v.x, this->y - v.y }; }
-		Vector2 operator * (const Vector2& v) { return Vector2{ this->x * v.x, this->y * v.y }; }
-		Vector2 operator / (const Vector2& v) { return Vector2{ this->x / v.x, this->y / v.y }; }
+		float  operator [] (unsigned int i) const { assert(i < 2); return (&x)[i]; }
+		float& operator [] (unsigned int i) { assert(i < 2); return (&x)[i]; }
 
-		Vector2 operator + (float v) { return Vector2{ this->x + v,this->y + v }; }
-		Vector2 operator - (float v) { return Vector2{ this->x - v,this->y - v }; }
-		Vector2 operator * (float v) { return Vector2{ this->x * v,this->y * v }; }
-		Vector2 operator / (float v) { return Vector2{ this->x / v,this->y / v }; }
+		bool operator == (const Vector2& v) const { return (this->x == v.x && this->y == v.y); }
+		bool operator != (const Vector2& v) const { return (this->x != v.x && this->y != v.y); }
+		
+		Vector2 operator + (const Vector2& v) const { return Vector2{ this->x + v.x, this->y + v.y }; }
+		Vector2 operator - (const Vector2& v) const { return Vector2{ this->x - v.x, this->y - v.y }; }
+		Vector2 operator * (const Vector2& v) const { return Vector2{ this->x * v.x, this->y * v.y }; }
+		Vector2 operator / (const Vector2& v) const { return Vector2{ this->x / v.x, this->y / v.y }; }
 
-		Vector2 operator += (const Vector2& v) { this->x += v.x; this->y += v.y; return *this; }
-		Vector2 operator -= (const Vector2& v) { this->x -= v.x; this->y -= v.y; return *this; }
-		Vector2 operator *= (const Vector2& v) { this->x *= v.x; this->y *= v.y; return *this; }
-		Vector2 operator /= (const Vector2& v) { this->x /= v.x; this->y /= v.y; return *this; }
+		Vector2 operator + (float v) const { return Vector2{ this->x + v,this->y + v }; }
+		Vector2 operator - (float v) const { return Vector2{ this->x - v,this->y - v }; }
+		Vector2 operator * (float v) const { return Vector2{ this->x * v,this->y * v }; }
+		Vector2 operator / (float v) const { return Vector2{ this->x / v,this->y / v }; }
+
+		Vector2& operator += (const Vector2& v) { this->x += v.x; this->y += v.y; return *this; }
+		Vector2& operator -= (const Vector2& v) { this->x -= v.x; this->y -= v.y; return *this; }
+		Vector2& operator *= (const Vector2& v) { this->x *= v.x; this->y *= v.y; return *this; }
+		Vector2& operator /= (const Vector2& v) { this->x /= v.x; this->y /= v.y; return *this; }
+
+		Vector2& operator += (float v) { this->x += v; this->y += v; return *this; }
+		Vector2& operator -= (float v) { this->x -= v; this->y -= v; return *this; }
+		Vector2& operator *= (float v) { this->x *= v; this->y *= v; return *this; }
+		Vector2& operator /= (float v) { this->x /= v; this->y /= v; return *this; }
 
 
-		Vector2 operator += (float v) { this->x += v; this->y += v; return *this; }
-		Vector2 operator -= (float v) { this->x -= v; this->y -= v; return *this; }
-		Vector2 operator *= (float v) { this->x *= v; this->y *= v; return *this; }
-		Vector2 operator /= (float v) { this->x /= v; this->y /= v; return *this; }
+		float LengthSqr() const				{ return (x * x) + (y * y); }
+		float Length() const				{ return sqrt(LengthSqr()); }
+		Vector2 Normalize() const			{ return (*this) / Length(); }
+		float Dot(const Vector2& v)			{ return  (this->x * v.x) + (this->y * v.y); }
+		float Angle() const					{ return  std::atan2(this -> y, this -> x); }
+		float AngleBetween(const Vector2 v) { return  std::acos(Dot(v)); }
+		Vector2 Rotate(const float radians) {
+			Vector2 v;
+			float x = v.x * std::cos(radians) - v.y * std::sin(radians);
+			float y = v.x * std::sin(radians) + v.y * std::cos(radians);
 
 
-		float LengthSqr() const { return (x * x) + (y * y); }
-		float Length() const { return sqrt(LengthSqr()); }
+			return { x,y };
+		}
+
+
 	};
 }
