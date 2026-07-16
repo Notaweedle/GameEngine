@@ -27,7 +27,7 @@ namespace nu
         return true;
     }
 
-    void Renderer::Shutdown()
+    void Renderer::ShutDown()
     {
         SDL_DestroyRenderer(m_renderer);
         SDL_DestroyWindow(m_window);
@@ -71,4 +71,32 @@ namespace nu
         SDL_RenderRect(m_renderer, &rect);
     }
 
+    void Renderer::DrawLine(float x1, float y1, float x2, float y2) const
+    {
+        SDL_RenderLine(m_renderer, x1, y1, x2, y2); 
+        
+    }
+
+    void Renderer::DrawModel(const Model& model , const Tranform tranform )const 
+    {
+        for (auto mesh : model.GetMeshes()) 
+        {
+            SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
+            auto& points = mesh.GetPoints();
+            for( int i = 0; i + 1< points.size(); i++ )
+            {
+                Vector2 v1 = points[i];
+                Vector2 v2 = points[i + 1];
+
+                v1 *= tranform.scale;
+                v2 *= tranform.scale;
+
+
+                v1 *= tranform.position;
+                v2 *= tranform.position;
+
+                DrawLine(v1.x,v1.y,v2.x,v2.y);
+            }
+        }
+    }
 }

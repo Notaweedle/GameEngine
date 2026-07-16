@@ -4,6 +4,9 @@ namespace nu::math {
 	constexpr float HalfPi = float(Pi / 2);
 	constexpr float TwoPi = float(Pi * 2);
 
+	constexpr float RadToDeg = 180.0f / Pi;
+	constexpr float DegToRad = Pi / 180.0f;
+
 	template<typename T>
 	T Max(T a, T b) {
 		

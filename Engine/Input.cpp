@@ -5,7 +5,7 @@
 
 namespace nu {
 
-	bool Input::Instantiate() {
+	bool Input::Initialize() {
 		int numkeys;
 		const bool* keyState = SDL_GetKeyboardState(&numkeys);
 		m_keySates.resize(numkeys);

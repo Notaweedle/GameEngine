@@ -12,7 +12,7 @@ namespace nu {
 		};
 
 	public:
-		bool Instantiate();
+		bool Initialize();
 		void ShutDown();
 		void Update();
 
