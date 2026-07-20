@@ -11,8 +11,8 @@ public:
 	}
 
 	Player(float speed,const nu::Tranform& tranform, const nu::Model& model) :
-		Actor{tranform},
-		m_speed{speed}
+		m_speed{ speed },
+		Actor{tranform, model}
 	{
 	}
 

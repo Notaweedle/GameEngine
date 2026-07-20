@@ -75,7 +75,7 @@ namespace nu
     {
         SDL_RenderLine(m_renderer, x1, y1, x2, y2); 
         
-    }
+    } 
 
     void Renderer::DrawModel(const Model& model , const Tranform tranform )const 
     {

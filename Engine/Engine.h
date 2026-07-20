@@ -13,6 +13,7 @@
 #include "Tranform.h"
 #include "Actor.h"
 #include "Model.h"
+#include "Secne.h"
 
 namespace nu {
 	class Engine {
