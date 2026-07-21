@@ -14,6 +14,7 @@
 #include "Actor.h"
 #include "Model.h"
 #include "Secne.h"
+#include "Enemy.h"
 
 namespace nu {
 	class Engine {

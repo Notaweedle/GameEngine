@@ -48,13 +48,13 @@ namespace nu
 		float Dot(const Vector2& v)			{ return  (this->x * v.x) + (this->y * v.y); }
 		float Angle() const					{ return  std::atan2(this -> y, this -> x); }
 		float AngleBetween(const Vector2 v) { return  std::acos(Dot(v)); }
-		Vector2 Rotate(const float radians) {
-			Vector2 v;
-			float x = v.x * std::cos(radians) - v.y * std::sin(radians);
-			float y = v.x * std::sin(radians) + v.y * std::cos(radians);
+		Vector2 Rotate(const float radians) const {
+			// Rotate THIS vector around the origin. (Previous version rotated an
+			// uninitialized local, so it returned garbage.)
+			float rx = this->x * std::cos(radians) - this->y * std::sin(radians);
+			float ry = this->x * std::sin(radians) + this->y * std::cos(radians);
 
-
-			return { x,y };
+			return { rx, ry };
 		}
 
 

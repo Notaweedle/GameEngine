@@ -5,12 +5,12 @@
 
 namespace nu
 {
-	void Update(float dt) {
+	void Scene::Update(float dt) {
 		for (auto actor : m_actor) {
 			actor->Update(dt);
 		}
 	}
-	void Draw(const class Renderer& renderer) {
+	void Scene::Draw(const class Renderer& renderer) {
 
 		for (auto actor : m_actor) {
 			actor->Draw(renderer);

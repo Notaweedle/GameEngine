@@ -16,6 +16,7 @@ namespace nu {
 		
 		
 		m_renderer.Initialize("Game Engine", 1280, 1024);
+		m_renderer.SetColor(0.0f,0.0f,0.0f);
 		m_input.Initialize();
 
 		return true;

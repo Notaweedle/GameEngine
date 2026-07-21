@@ -46,6 +46,7 @@ namespace nu
 
     void Renderer::Clear()
     {
+        SetColor(0.0f, 0.0f, 0.0f, 1.0f);
         SDL_RenderClear(m_renderer);
     }
 
@@ -85,15 +86,15 @@ namespace nu
             auto& points = mesh.GetPoints();
             for( int i = 0; i + 1< points.size(); i++ )
             {
-                Vector2 v1 = points[i];
-                Vector2 v2 = points[i + 1];
+                Vector2 v1 = points[i].Rotate(tranform.rotation);
+                Vector2 v2 = points[i + 1].Rotate(tranform.rotation);
 
                 v1 *= tranform.scale;
                 v2 *= tranform.scale;
 
 
-                v1 *= tranform.position;
-                v2 *= tranform.position;
+                v1 += tranform.position;
+                v2 += tranform.position;
 
                 DrawLine(v1.x,v1.y,v2.x,v2.y);
             }

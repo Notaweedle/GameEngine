@@ -7,7 +7,6 @@
 
 namespace nu {
    
-
     void Actor::Update(float dt) {
         m_tranform.position += (m_velocity * dt);
         m_velocity *= 0.987f;
