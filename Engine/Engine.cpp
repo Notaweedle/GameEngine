@@ -10,7 +10,7 @@
 
 
 namespace nu {
-	Engine engine;
+	
 
 	bool Engine::Initialize() {
 		
@@ -28,8 +28,11 @@ namespace nu {
 		return true;
 	};
 
-	bool Update() {
-	
+	bool Engine::Update() {
+		
+		m_time.Tick();
+		m_input.Update();
+
 		return true;
 	};
 }

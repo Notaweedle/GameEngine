@@ -10,13 +10,13 @@ namespace nu::math {
 	template<typename T>
 	T Max(T a, T b) {
 		
-		return (a < b) ? a : b;
+		return (a > b) ? a : b;
 	}
 
 	template<typename T>
 	T Min(T a, T b) {
 		
-		return (a > b) ? a : b;
+		return (a < b) ? a : b;
 	}
 
 	template<typename T>
@@ -30,11 +30,8 @@ namespace nu::math {
 
 	template<typename T>
 	T Clamp(T min, T max, T value) {
-			
-
-		if (value > max) value = min;
-		if (value < min) value = max;
-
+		if (value > max) value = max;
+		if (value < min) value = min;
 		return value;
 	}
 }
