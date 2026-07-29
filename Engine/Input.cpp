@@ -9,10 +9,12 @@ namespace nu {
 		int numkeys;
 		const bool* keyState = SDL_GetKeyboardState(&numkeys);
 		m_keySates.resize(numkeys);
+		m_preKeySates.resize(numkeys);
 
 		std::copy(keyState, keyState + numkeys, m_keySates.begin());
+		m_preKeySates = m_keySates;
 
-		return true; 
+		return true;
 	}
 
 	void Input::ShutDown() {
@@ -21,6 +23,8 @@ namespace nu {
 
 	void Input::Update() {
 		m_preButtonSates = m_buttonSates;
+		m_preKeySates = m_keySates;
+
 		const bool* keyState = SDL_GetKeyboardState(nullptr);
 		std::copy(keyState,keyState + m_keySates.size(), m_keySates.begin());
 

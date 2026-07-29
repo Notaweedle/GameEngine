@@ -36,19 +36,39 @@ namespace nu {
         Actor(const Tranform& tranform, const Model& model) : m_tranform{ tranform }, m_model{ model } {
 
         }
+        virtual ~Actor() = default;
+
         const Tranform& getTranform() const { return m_tranform; }
 
-        void Update(float dt);
-        void Draw(const class Renderer& renderer) const;
+        virtual void Update(float dt);
+        virtual void Draw(const class Renderer& renderer) const;
+
+        
+        void DrawHitbox(const class Renderer& renderer) const;
+
+        void Destroy() { m_destroyed = true; }
+        bool IsDestroyed() const { return m_destroyed; }
+
+        float GetRadius() const { return m_model.GetRadius() * m_tranform.scale; }
+
+        bool CheckCollision(const Actor& other) const
+        {
+            float distance = (m_tranform.position - other.m_tranform.position).Length();
+            return distance <= (GetRadius() + other.GetRadius());
+        }
 
         void setPosistion(const Vector2& pos) { m_tranform.position = pos; }
         void setRotation(const float rotaion) { m_tranform.rotation = rotaion; }
         void setScale(const float scale) { m_tranform.scale = scale; };
         void setVelocity(const Vector2& vel) { m_velocity = vel; }
+        void setName(const std::string name) { m_name = name; }
+        void setTag(const std::string tag) { m_tag = tag; }
         const Vector2& getVelocity() const { return m_velocity; }
         const std::string& getName() const { return m_name; }
         const std::string& getTag() const { return m_tag; }
+
         Scene* getScene() { return m_scene; }
+
 
         friend Scene;
 
@@ -59,6 +79,7 @@ namespace nu {
         Vector2 m_velocity {0,0};
         Model m_model;
 
+        bool m_destroyed = false;
         Scene* m_scene{ nullptr };
     };
 }

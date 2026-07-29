@@ -7,6 +7,10 @@ namespace nu::math {
 	constexpr float RadToDeg = 180.0f / Pi;
 	constexpr float DegToRad = Pi / 180.0f;
 
+	inline float randomf(float min, float max) {
+		return min + (max - min) * (rand() / static_cast<float>(RAND_MAX));
+	}
+
 	template<typename T>
 	T Max(T a, T b) {
 		

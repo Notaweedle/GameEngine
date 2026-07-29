@@ -18,8 +18,8 @@ namespace nu {
 
 		bool GetKeyDown(int key) const { return m_keySates[key]; }
 		bool GetPreKeyDown(int key) const { return m_preKeySates[key]; }
-		bool GetPreKeyPressed(int key) const { return !m_preKeySates[key]; }
-		bool GetKeyRelased(int key) const { return m_keySates[key]; }
+		bool GetKeyPressed(int key) const { return m_keySates[key] && !m_preKeySates[key]; }
+		bool GetKeyRelased(int key) const { return !m_keySates[key] && m_preKeySates[key]; }
 
 		Vector2 GetMousePos() { return m_mousePos; }
 
@@ -39,7 +39,7 @@ namespace nu {
 		uint32_t m_buttonSates=0;
 		uint32_t m_preButtonSates=0;
 
-		Vector2 m_mousePos;
+		Vector2 m_mousePos = {0.0f,0.0f};
 
 
 	};

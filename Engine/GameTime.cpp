@@ -19,8 +19,8 @@ namespace nu
 
 	void Time::Tick()
 	{
-		m_currentTicks = SDL_GetTicksNS(); // get current ticks
-		m_deltaTicks = m_currentTicks - m_frameTicks; // delta = current ticks - prev ticks
-		m_frameTicks = m_currentTicks; // set prev ticks
+		m_currentTicks = SDL_GetTicksNS(); 
+		m_deltaTicks = m_currentTicks - m_frameTicks; 
+		m_frameTicks = m_currentTicks;
 	}
 }

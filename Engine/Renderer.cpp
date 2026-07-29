@@ -78,7 +78,31 @@ namespace nu
         
     } 
 
-    void Renderer::DrawModel(const Model& model , const Tranform tranform )const 
+    // SDL has no circle primitive, so walk the perimeter and connect the points
+    void Renderer::DrawCircle(float x, float y, float radius, int segments) const
+    {
+        if (segments < 3) segments = 3;
+
+        const float fullTurn = 6.28318530718f;
+        float step = fullTurn / segments;
+
+        float prevX = x + radius;
+        float prevY = y;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = step * i;
+            float nextX = x + std::cos(angle) * radius;
+            float nextY = y + std::sin(angle) * radius;
+
+            DrawLine(prevX, prevY, nextX, nextY);
+
+            prevX = nextX;
+            prevY = nextY;
+        }
+    }
+
+    void Renderer::DrawModel(const Model& model , const Tranform tranform )const
     {
         for (auto mesh : model.GetMeshes()) 
         {

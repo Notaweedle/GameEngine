@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Color.h" />
@@ -165,9 +166,14 @@
     <ClInclude Include="Tranform.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="File.cpp" />
@@ -181,6 +187,10 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

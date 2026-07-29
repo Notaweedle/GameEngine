@@ -23,10 +23,7 @@ namespace nu {
 	inline int RandomInt(int min, int max) {
 		return min + RandomInt(max - min) + 1;
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <returns></returns>
+	
 
 	
 	inline float RandomFloat() {

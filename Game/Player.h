@@ -25,14 +25,16 @@ public:
 	{
 	}
 
-	void Update(float dt);
-	void Draw(const class nu::Renderer& renderer) const;
+	void Update(float dt) override;
+	void Draw(const class nu::Renderer& renderer) const override;
+	void Shoot();
 
 
 
 private:
 	int m_ammo = 0;
 	float m_speed = 800.0f;
+	float m_bulletSpeed = 600.0f;
 };
 
 

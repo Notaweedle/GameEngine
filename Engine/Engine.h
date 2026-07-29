@@ -15,7 +15,10 @@
 #include "Model.h"
 #include "Scene.h"
 #include "Enemy.h"
+#include "bullet.h"
 #include "File.h"
+#include "ParticleSystem.h"
+#include "Audio.h"
 
 
 namespace nu {
@@ -28,6 +31,8 @@ namespace nu {
 		Input& GetInput() { return m_input; };
 		Renderer& GetRenderer() { return m_renderer; };
 		Time& GetTime() { return m_time; };
+		ParticleSystem& GetParticleSystem() { return m_particleSystem; };
+		Audio& GetAudio() { return m_audio; };
 
 		Engine(const Engine&) = delete;
 		
@@ -36,6 +41,8 @@ namespace nu {
 		Input m_input;
 		Renderer m_renderer;
 		Time m_time;
+		ParticleSystem m_particleSystem{ 1000 };
+		Audio m_audio;
 	};
 
 }

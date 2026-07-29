@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <vector>
 #include <string>
 #include "Actor.h"
@@ -7,31 +8,54 @@ namespace nu
 	class Actor;
 	class Scene {
 	public:
-		void AddActor(Actor* actor);
+		void AddActor(std::unique_ptr<Actor> actor);
 
 
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 
+		void SetDebugDraw(bool enabled) { m_debugDraw = enabled; }
+		bool GetDebugDraw() const { return m_debugDraw; }
+
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
 
+		template<typename T = Actor>
+		std::vector<T*> GetActorsByTag(const std::string& tag);
+
 	private:
-		std::vector<Actor*> m_actor;
+		std::vector<std::unique_ptr<Actor>> m_actor;
+		bool m_debugDraw = true;
 	};
 
 
 	template<typename T>
 	inline T* Scene::GetActorByName(const std::string& name)
 	{
-		for (auto actor : m_actor)
+		for (auto& actor : m_actor)
 		{
-			T* actorT = dynamic_cast<T*>(actor);
+			T* actorT = dynamic_cast<T*>(actor.get());
 			if (actorT && actorT->m_name == name) {
 				return actorT;
 			}
 		}
 		return nullptr;
+	}
+
+	template<typename T>
+	inline std::vector<T*> Scene::GetActorsByTag(const std::string& tag)
+	{
+		std::vector<T*> actors;
+		for (auto& actor : m_actor)
+		{
+			if (actor->IsDestroyed()) continue;
+
+			T* actorT = dynamic_cast<T*>(actor.get());
+			if (actorT && actorT->m_tag == tag) {
+				actors.push_back(actorT);
+			}
+		}
+		return actors;
 	}
 
 }

@@ -2,6 +2,9 @@
 #include "Actor.h"
 #include "Model.h"
 namespace nu {
+
+
+
 	class Enemy : public nu::Actor {
 	public:
 		Enemy() = default;
@@ -16,14 +19,18 @@ namespace nu {
 		{
 		}
 
-		void Update(float dt);
-		void Draw(const class nu::Renderer& renderer) const;
+		void Update(float dt) override;
+		void Draw(const class nu::Renderer& renderer) const override;
 
+		
+		void OnKilled();
+
+		static void SpawnAtEdges(Scene& scene, int count, float worldW, float worldH);
 
 
 	private:
 		int m_ammo = 0;
-		float m_speed = 800.0f;
+		float m_speed = 400.0f;
 	};
 }
 
