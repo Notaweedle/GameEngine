@@ -1,11 +1,11 @@
 #pragma once
 namespace nu::math {
-	constexpr float Pi = 3.14159265358f;
-	constexpr float HalfPi = float(Pi / 2);
-	constexpr float TwoPi = float(Pi * 2);
+	constexpr float pi = 3.14159265358979f;
+	constexpr float HalfPi = pi / 2;
+	constexpr float TwoPi = pi * 2;
 
-	constexpr float RadToDeg = 180.0f / Pi;
-	constexpr float DegToRad = Pi / 180.0f;
+	constexpr float RadToDeg = 180.0f / pi;
+	constexpr float DegToRad = pi / 180.0f;
 
 	inline float randomf(float min, float max) {
 		return min + (max - min) * (rand() / static_cast<float>(RAND_MAX));

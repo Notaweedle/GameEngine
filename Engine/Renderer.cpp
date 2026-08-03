@@ -78,7 +78,7 @@ namespace nu
         
     } 
 
-    // SDL has no circle primitive, so walk the perimeter and connect the points
+    
     void Renderer::DrawCircle(float x, float y, float radius, int segments) const
     {
         if (segments < 3) segments = 3;
@@ -108,7 +108,7 @@ namespace nu
         {
             SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
             auto& points = mesh.GetPoints();
-            for( int i = 0; i + 1< points.size(); i++ )
+            for( size_t i = 0; i + 1 < points.size(); i++ )
             {
                 Vector2 v1 = points[i].Rotate(tranform.rotation);
                 Vector2 v2 = points[i + 1].Rotate(tranform.rotation);

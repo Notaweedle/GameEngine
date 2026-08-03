@@ -18,12 +18,12 @@ namespace nu
 		void Draw(const Renderer& renderer, float x, float y) const;
 		void Destroy();
 
-		int GetWidth() const { return m_width; }
-		int GetHeight() const { return m_height; }
+		float GetWidth() const { return m_width; }
+		float GetHeight() const { return m_height; }
 
 	private:
 		SDL_Texture* m_texture = nullptr;
-		int m_width = 0;
-		int m_height = 0;
+		float m_width = 0;
+		float m_height = 0;
 	};
 }

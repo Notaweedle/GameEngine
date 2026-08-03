@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <cstdint>   // uint32_t used in the member declarations below
 #include "Vector2.h"
 namespace nu {
 	class Input {

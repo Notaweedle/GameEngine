@@ -1,10 +1,10 @@
 #pragma once
 
+#include "pch.h"
 #include "Renderer.h"
 #include "Vector2.h"
 #include "Random.h"
 #include "mathUitl.h"
-#include "pch.h"
 #include "SDL3/SDL.h"
 
 #include <vector>
@@ -24,7 +24,7 @@
 namespace nu {
 	class Engine {
 	public:
-		static Engine& Get() { static Engine engine; return engine; }
+		static Engine& Get() { return s_instance; }
 		bool Initialize();
 		bool ShutDown();
 		bool Update();
@@ -34,15 +34,18 @@ namespace nu {
 		ParticleSystem& GetParticleSystem() { return m_particleSystem; };
 		Audio& GetAudio() { return m_audio; };
 
-		Engine(const Engine&) = delete;
+		
 		
 	private:
 		Engine() = default;
 		Input m_input;
 		Renderer m_renderer;
 		Time m_time;
-		ParticleSystem m_particleSystem{ 1000 };
+		ParticleSystem m_particleSystem{ 5000 };
 		Audio m_audio;
+		static Engine s_instance;
 	};
+
+	inline Engine Engine::s_instance;
 
 }

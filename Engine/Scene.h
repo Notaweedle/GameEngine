@@ -3,12 +3,14 @@
 #include <vector>
 #include <string>
 #include "Actor.h"
+
 namespace nu
 {
 	class Actor;
 	class Scene {
 	public:
 		void AddActor(std::unique_ptr<Actor> actor);
+		void RemoveActors();
 
 
 		void Update(float dt);
@@ -25,14 +27,16 @@ namespace nu
 
 	private:
 		std::vector<std::unique_ptr<Actor>> m_actor;
+		std::vector<std::unique_ptr<Actor>> m_pendingActor;
 		bool m_debugDraw = true;
+
 	};
 
 
 	template<typename T>
 	inline T* Scene::GetActorByName(const std::string& name)
 	{
-		for (auto& actor : m_actor)
+		for (auto const& actor : m_actor)
 		{
 			T* actorT = dynamic_cast<T*>(actor.get());
 			if (actorT && actorT->m_name == name) {
@@ -46,7 +50,7 @@ namespace nu
 	inline std::vector<T*> Scene::GetActorsByTag(const std::string& tag)
 	{
 		std::vector<T*> actors;
-		for (auto& actor : m_actor)
+		for (auto const& actor : m_actor)
 		{
 			if (actor->IsDestroyed()) continue;
 
@@ -57,5 +61,7 @@ namespace nu
 		}
 		return actors;
 	}
+
+	
 
 }

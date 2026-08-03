@@ -9,13 +9,12 @@ namespace nu {
 	public:
 		Enemy() = default;
 		Enemy(float speed, const nu::Tranform& tranform) :
-			Actor{ tranform }
+			Actor{ tranform }, m_speed{ speed }
 		{
 		}
 
 		Enemy(float speed, const nu::Tranform& tranform, const nu::Model& model) :
-			m_speed{ speed },
-			Actor{ tranform, model }
+			Actor{ tranform, model }, m_speed{ speed }
 		{
 		}
 

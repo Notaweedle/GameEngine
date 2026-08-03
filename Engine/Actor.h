@@ -61,8 +61,8 @@ namespace nu {
         void setRotation(const float rotaion) { m_tranform.rotation = rotaion; }
         void setScale(const float scale) { m_tranform.scale = scale; };
         void setVelocity(const Vector2& vel) { m_velocity = vel; }
-        void setName(const std::string name) { m_name = name; }
-        void setTag(const std::string tag) { m_tag = tag; }
+        void setName(const std::string& name) { m_name = name; }
+        void setTag(const std::string& tag) { m_tag = tag; }
         const Vector2& getVelocity() const { return m_velocity; }
         const std::string& getName() const { return m_name; }
         const std::string& getTag() const { return m_tag; }

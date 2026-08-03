@@ -15,7 +15,6 @@ namespace nu
 	void Text::Create(const Renderer& renderer, const std::string& text, const Font& font,
 		Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 	{
-		// destroy previous texture if any
 		Destroy();
 
 		SDL_Color color{ r, g, b, a };
@@ -27,8 +26,8 @@ namespace nu
 		}
 
 		m_texture = SDL_CreateTextureFromSurface(renderer.GetRenderer(), surface);
-		m_width = surface->w;
-		m_height = surface->h;
+		m_width = static_cast<float>(surface->w);
+		m_height = static_cast<float>(surface->h);
 		SDL_DestroySurface(surface);
 	}
 

@@ -7,6 +7,8 @@
 #include <iostream>
 #include <memory>
 #include "Assets.h"
+#include "mathUitl.h"
+
 
 
 void Player::Update(float dt) 
@@ -23,7 +25,7 @@ void Player::Update(float dt)
 		
 		nu::ParticleDesc pd;
 		pd.position = getTranform().position - forword * 20.0f;
-		pd.angle = getTranform().rotation + 3.14159f; 
+		pd.angle = static_cast<float>(getTranform().rotation + nu::math::pi);
 		pd.angleVariance = 0.3f;
 		pd.speed = 120.0f;
 		pd.speedVariance = 40.0f;
@@ -52,12 +54,6 @@ void Player::Update(float dt)
 	Actor::Update(dt);
 }
 
-
-void Player::Draw(const nu::Renderer& renderer) const 
-{
-	Actor::Draw(renderer);
-}
-
 void Player::Shoot() {
 	if (!nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_Q)|| nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) return;
 	if (getScene() == nullptr) return;
@@ -77,4 +73,10 @@ void Player::Shoot() {
 	getScene()->AddActor(std::move(bullet));
 
 	nu::Engine::Get().GetAudio().PlaySound("laser");
+}
+
+void Player::Draw(const nu::Renderer& renderer) const
+{
+	// Was declared 'override' in Player.h but never defined -> unresolved external.
+	Actor::Draw(renderer);
 }

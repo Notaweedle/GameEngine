@@ -5,6 +5,7 @@
 
 #include <string>
 #include <memory>
+#include <format>   // std::format used below
 #include <ParticleSystem.h>
 
 using namespace nu;
@@ -59,7 +60,7 @@ void GameManager::Update(float dt)
 		// collisions
 		if (CheckCollisions()) {
 			if (m_lives <= 0) {
-				m_finalScoreText.Create(e.GetRenderer(), "Score: " + std::to_string(m_score), m_fontSmall, 200, 200, 200);
+				m_finalScoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), m_fontSmall, 200, 200, 200);
 				m_state = GameState::GameOver;
 			}
 			else {
@@ -68,8 +69,8 @@ void GameManager::Update(float dt)
 		}
 
 		// update HUD text
-		m_scoreText.Create(e.GetRenderer(), "Score: " + std::to_string(m_score), m_fontSmall, 255, 255, 255);
-		m_livesText.Create(e.GetRenderer(), "Lives: " + std::to_string(m_lives), m_fontSmall, 255, 255, 255);
+		m_scoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), m_fontSmall, 255, 255, 255);
+		m_livesText.Create(e.GetRenderer(), std::format("Lives: {}" , std::to_string(m_lives)), m_fontSmall, 255, 255, 255);
 		break;
 	}
 

@@ -29,7 +29,7 @@ namespace nu
 
 			
 			float angle = desc.angle + RandomFloat(-desc.angleVariance, desc.angleVariance);
-			float speed = desc.speed + RandomFloat(-desc.speedVariance, desc.speedVariance);
+			float speed = static_cast<float>(desc.speed) + RandomFloat(-desc.speedVariance, desc.speedVariance);
 
 			particles->position = desc.position;
 			particles->velocity = Vector2{ std::cos(angle), std::sin(angle) } * speed;

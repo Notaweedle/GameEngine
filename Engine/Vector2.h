@@ -43,7 +43,7 @@ namespace nu
 
 
 		float LengthSqr() const				{ return (x * x) + (y * y); }
-		float Length() const				{ return sqrt(LengthSqr()); }
+		float Length() const				{ return std::sqrt(LengthSqr()); }
 		Vector2 Normalize() const			{ return (*this) / Length(); }
 		float Dot(const Vector2& v)			{ return  (this->x * v.x) + (this->y * v.y); }
 		float Angle() const					{ return  std::atan2(this -> y, this -> x); }

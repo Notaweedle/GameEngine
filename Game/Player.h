@@ -15,13 +15,12 @@ public:
 
 	Player() = default;
 	Player(float speed,const nu::Tranform& tranform) :
-		Actor{ tranform } 
+		Actor{ tranform }, m_speed{ speed }
 	{
 	}
 
 	Player(float speed,const nu::Tranform& tranform, const nu::Model& model) :
-		m_speed{ speed },
-		Actor{tranform, model}
+		Actor{ tranform, model }, m_speed{ speed }
 	{
 	}
 
