@@ -3,10 +3,11 @@
 #include "Tranform.h"
 #include "Model.h"
 #include <string>
+#include <memory>
 
 namespace nu {
 
-    \
+    
     class Scene;
 
     struct ActorDesc {
@@ -15,7 +16,7 @@ namespace nu {
 
         Tranform transform;
         Vector2 velocity;
-        Model model;
+        std::shared_ptr<Model> model;
     };
 
     class Actor {
@@ -33,7 +34,7 @@ namespace nu {
 
         }
 
-        Actor(const Tranform& tranform, const Model& model) : m_tranform{ tranform }, m_model{ model } {
+        Actor(const Tranform& tranform, const Model& model) : m_tranform{ tranform }, m_model{ std::make_shared<Model>(model) } {
 
         }
         virtual ~Actor() = default;
@@ -49,7 +50,8 @@ namespace nu {
         void Destroy() { m_destroyed = true; }
         bool IsDestroyed() const { return m_destroyed; }
 
-        float GetRadius() const { return m_model.GetRadius() * m_tranform.scale; }
+        float GetRadius() const { return m_model ? m_model->GetRadius() * m_tranform.scale : 0.0f; }
+        void SetModel(std::shared_ptr<Model> model) { m_model = model; }
 
         bool CheckCollision(const Actor& other) const
         {
@@ -63,6 +65,7 @@ namespace nu {
         void setVelocity(const Vector2& vel) { m_velocity = vel; }
         void setName(const std::string& name) { m_name = name; }
         void setTag(const std::string& tag) { m_tag = tag; }
+
         const Vector2& getVelocity() const { return m_velocity; }
         const std::string& getName() const { return m_name; }
         const std::string& getTag() const { return m_tag; }
@@ -77,7 +80,7 @@ namespace nu {
         std::string m_name;
         std::string m_tag;
         Vector2 m_velocity {0,0};
-        Model m_model;
+        std::shared_ptr<Model> m_model;
 
         bool m_destroyed = false;
         Scene* m_scene{ nullptr };

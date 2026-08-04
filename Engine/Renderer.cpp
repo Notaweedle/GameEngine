@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Renderer.h"
+#include "Texture.h"
 
 #include <iostream>
 
@@ -123,5 +124,16 @@ namespace nu
                 DrawLine(v1.x,v1.y,v2.x,v2.y);
             }
         }
+    }
+    void Renderer::DrawTexture(Texture* texture, float x, float y)
+    {
+        if (texture == nullptr || texture->m_texture == nullptr) return;
+
+        
+        float w = 0.0f, h = 0.0f;
+        SDL_GetTextureSize(texture->m_texture, &w, &h);
+
+        SDL_FRect dst{ x, y, w, h };
+        SDL_RenderTexture(m_renderer, texture->m_texture, nullptr, &dst);
     }
 }

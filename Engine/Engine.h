@@ -6,6 +6,7 @@
 #include "Random.h"
 #include "mathUitl.h"
 #include "SDL3/SDL.h"
+#include "Texture.h"
 
 #include <vector>
 #include "Input.h"

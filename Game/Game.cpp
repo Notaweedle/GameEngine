@@ -19,71 +19,8 @@ public:
 int main()
 {
 
-    std::cout << "object\n";
-    {
-        Object objectA;
-        Object objectB = objectA;
-        Object objectC;
-        objectC = objectA;
-    }
-    std::cout << "raw pointers\n";
-    {
-        Object* objectA = new Object();
-        std::cout << objectA << std::endl;
-
-        Object* objectB = new Object(*objectA);
-        std::cout << objectB << std::endl;
-
-        Object* objectC = nullptr;
-        std::cout << objectC << std::endl;
-        objectC = objectA;
-        std::cout << objectC << std::endl;
-
-        delete objectA;
-        delete objectB;
-        //delete objectC;
-    }
-    std::cout << "smart pointers\n";
-    {
-        std::unique_ptr<Object> objectA = std::make_unique<Object>();
-        std::cout << objectA.get() << std::endl;
-        std::unique_ptr<Object> objectB;
-        objectB = std::move(objectA);
-        std::cout << objectA.get() << std::endl;
-
-        objectB.reset();
 
 
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return 0;
 
     nu::Engine& e = nu::Engine::Get();
     e.Initialize();
@@ -91,6 +28,10 @@ int main()
 
     GameManager game;
     game.Initialize();
+    
+    
+    std::shared_ptr<nu::Texture> texture = std::make_shared<nu::Texture>();
+    texture->Load("Assets/889684320422338560.png", e.GetRenderer());
 
     while (!game.IsQuit())
     {
@@ -103,8 +44,12 @@ int main()
         e.GetInput().Update();
         e.GetAudio().Update();
 
-        game.Update(e.GetTime().GetDeltaTime());
-        game.Draw();
+        e.GetRenderer().Clear();                                  
+        e.GetRenderer().DrawTexture(texture.get(), 100, 100);     
+        e.GetRenderer().Present();                                
+
+        //game.Update(e.GetTime().GetDeltaTime());
+        //game.Draw();
     }
 
     TTF_Quit();

@@ -8,6 +8,7 @@ namespace nu
 	public:
 		Model() = default;
 		Model(const std::vector<Mesh>& meshes) : m_meshes{ meshes } { CalculateRadius(); }
+		Model(const Model& other) : m_meshes{ other.m_meshes }, m_radius{ other.m_radius } {}
 
 		void AddMesh(const Mesh& mesh) { m_meshes.push_back(mesh); CalculateRadius(); }
 

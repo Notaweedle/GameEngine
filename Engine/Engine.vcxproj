@@ -179,6 +179,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Tranform.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

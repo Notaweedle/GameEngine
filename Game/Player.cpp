@@ -65,7 +65,7 @@ void Player::Shoot() {
 						   getTranform().rotation,
 						   5.0f };
 
-	auto bullet = std::make_unique<nu::bullet>(m_bulletSpeed, tranform, Assets::model_bullet);
+	auto bullet = std::make_unique<nu::bullet>(m_bulletSpeed, tranform, *Assets::model_bullet);
 	bullet->setName("bullet");
 	bullet->setTag("bullet");
 	bullet->setVelocity(forword * m_bulletSpeed);

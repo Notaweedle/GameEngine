@@ -33,7 +33,7 @@ namespace nu {
 
     void Enemy::Draw(const Renderer& renderer) const
     {
-        renderer.DrawModel(m_model, m_tranform);
+        if (m_model) renderer.DrawModel(*m_model, m_tranform);
     }
 
     void Enemy::OnKilled()
@@ -52,7 +52,7 @@ namespace nu {
             auto frag = std::make_unique<Enemy>(
                 2500.0f,
                 Tranform{ m_tranform.position, dir, 7.0f },
-                Assets::model_triangle
+                *Assets::model_triangle
             );
             frag->setName("triangle_" + std::to_string(i));
             frag->setTag("enemy");
@@ -78,13 +78,13 @@ namespace nu {
             auto enemy = std::make_unique<Enemy>(
                 2000.0f,
                 Tranform{ Vector2{x, y}, 0.0f, 12.0f },
-                Assets::model_yeedi
+                *Assets::model_yeedi
             );
 
             auto rainDrop = std::make_unique<Enemy>(
                 3500.0f,
                 Tranform{ Vector2{x,y}, 0.0f, 25.f },
-                Assets::model_raincol
+                *Assets::model_raincol
             );
 
             enemy->setName("yeedi_" + std::to_string(i));

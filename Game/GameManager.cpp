@@ -179,7 +179,7 @@ void GameManager::ResetGame()
 	m_lives = 3;
 	m_waveCount = 1;
 
-	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, Assets::model_player);
+	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, *Assets::model_player);
 	player->setName("Player");
 	player->setTag("player");
 	m_scene.AddActor(std::move(player));
@@ -189,7 +189,7 @@ void GameManager::ResetGame()
 
 void GameManager::RespawnPlayer()
 {
-	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, Assets::model_player);
+	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, *Assets::model_player);
 	player->setName("Player");
 	player->setTag("player");
 	m_scene.AddActor(std::move(player));
