@@ -166,6 +166,8 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Enemy.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tranform.h" />
     <ClInclude Include="Vector2.h" />

@@ -20,6 +20,9 @@
 #include "File.h"
 #include "ParticleSystem.h"
 #include "Audio.h"
+#include "ResourceManager.h"
+#include "Resource.h"
+#include "Singleton.h"
 
 
 namespace nu {

@@ -1,12 +1,14 @@
 #pragma once
 #include <string>
 #include "Vector2.h"
+#include "Resource.h"
 struct SDL_Texture;
 
 namespace nu
 {
-	class Renderer;   
-	class Texture
+	class Renderer; 
+
+	class Texture : public Resource
 	{
 	public:
 		Texture() = default;

@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
+#include "Resource.h"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace nu
 {
-	class Font
+	class Font : public Resource
 	{
 	public:
 		Font() = default;

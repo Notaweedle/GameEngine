@@ -5,7 +5,7 @@
 
 #include <string>
 #include <memory>
-#include <format>   // std::format used below
+#include <format>   
 #include <ParticleSystem.h>
 
 using namespace nu;
@@ -18,13 +18,24 @@ void GameManager::Initialize()
 	e.GetAudio().LoadSound("music", "Assets/music.mp3");
 	e.GetAudio().PlayMusic("music");
 
-	m_font.Load("Assets/font.ttf", 48);
-	m_fontSmall.Load("Assets/font.ttf", 28);
+	// Load fonts as shared resources. Distinct IDs so the two sizes don't collide
+	// in the resource cache (they share the same filename).
+	m_font      = Resources().GetWithID<Font>("font48", "Assets/font.ttf", 48);
+	m_fontSmall = Resources().GetWithID<Font>("font28", "Assets/font.ttf", 28);
 
-	m_titleText.Create(e.GetRenderer(), "ASTEROIDS", m_font, 255, 255, 255);
-	m_startText.Create(e.GetRenderer(), "Press SPACE to Start", m_fontSmall, 200, 200, 200);
-	m_gameOverText.Create(e.GetRenderer(), "GAME OVER", m_font, 255, 80, 80);
-	m_restartText.Create(e.GetRenderer(), "Press SPACE to Restart", m_fontSmall, 200, 200, 200);
+	
+	m_titleText.SetFont(m_font);
+	m_startText.SetFont(m_fontSmall);
+	m_gameOverText.SetFont(m_font);
+	m_restartText.SetFont(m_fontSmall);
+	m_scoreText.SetFont(m_fontSmall);
+	m_livesText.SetFont(m_fontSmall);
+	m_finalScoreText.SetFont(m_fontSmall);
+
+	m_titleText.Create(e.GetRenderer(), "ASTEROIDS", Color(1.0f, 1.0f, 1.0f));
+	m_startText.Create(e.GetRenderer(), "Press SPACE to Start", Color(0.8f, 0.8f, 0.8f));
+	m_gameOverText.Create(e.GetRenderer(), "GAME OVER", Color(1.0f, 0.3f, 0.3f));
+	m_restartText.Create(e.GetRenderer(), "Press SPACE to Restart", Color(0.8f, 0.8f, 0.8f));
 }
 
 void GameManager::Update(float dt)
@@ -60,7 +71,7 @@ void GameManager::Update(float dt)
 		// collisions
 		if (CheckCollisions()) {
 			if (m_lives <= 0) {
-				m_finalScoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), m_fontSmall, 200, 200, 200);
+				m_finalScoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)) ,Color(0.8f, 0.8f, 0.8f));
 				m_state = GameState::GameOver;
 			}
 			else {
@@ -69,8 +80,8 @@ void GameManager::Update(float dt)
 		}
 
 		// update HUD text
-		m_scoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), m_fontSmall, 255, 255, 255);
-		m_livesText.Create(e.GetRenderer(), std::format("Lives: {}" , std::to_string(m_lives)), m_fontSmall, 255, 255, 255);
+		m_scoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), Color(1.0f, 1.0f, 1.0f));
+		m_livesText.Create(e.GetRenderer(), std::format("Lives: {}" , std::to_string(m_lives)), Color(1.0f, 1.0f, 1.0f));
 		break;
 	}
 

@@ -12,30 +12,50 @@ namespace nu
 		Destroy();
 	}
 
-	void Text::Create(const Renderer& renderer, const std::string& text, const Font& font,
-		Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+	bool Text::Create(Renderer& renderer, const std::string& text, const Color& color)
 	{
 		Destroy();
 
-		SDL_Color color{ r, g, b, a };
-		SDL_Surface* surface = TTF_RenderText_Blended(font.GetFont(), text.c_str(), 0, color);
+		if (m_font == nullptr)
+		{
+			std::cerr << "Text::Create - no font set (use the Text(font) ctor or SetFont())" << std::endl;
+			return false;
+		}
+
+		
+		SDL_Color sdlColor{
+			static_cast<Uint8>(color.r * 255.0f),
+			static_cast<Uint8>(color.g * 255.0f),
+			static_cast<Uint8>(color.b * 255.0f),
+			static_cast<Uint8>(color.a * 255.0f)
+		};
+
+		SDL_Surface* surface = TTF_RenderText_Blended(m_font->GetFont(), text.c_str(), 0, sdlColor);
 		if (surface == nullptr)
 		{
-			std::cerr << "Failed to render text surface" << std::endl;
-			return;
+			std::cerr << "Failed to render text surface: " << SDL_GetError() << std::endl;
+			return false;
 		}
 
 		m_texture = SDL_CreateTextureFromSurface(renderer.GetRenderer(), surface);
-		m_width = static_cast<float>(surface->w);
+		m_width  = static_cast<float>(surface->w);
 		m_height = static_cast<float>(surface->h);
 		SDL_DestroySurface(surface);
+
+		if (m_texture == nullptr)
+		{
+			std::cerr << "Failed to create text texture: " << SDL_GetError() << std::endl;
+			return false;
+		}
+
+		return true;
 	}
 
-	void Text::Draw(const Renderer& renderer, float x, float y) const
+	void Text::Draw(const Renderer& renderer, float x, float y)
 	{
 		if (m_texture == nullptr) return;
 
-		SDL_FRect dest{ x, y, (float)m_width, (float)m_height };
+		SDL_FRect dest{ x, y, m_width, m_height };
 		SDL_RenderTexture(renderer.GetRenderer(), m_texture, nullptr, &dest);
 	}
 

@@ -1,6 +1,9 @@
 #include "Engine.h"
 #include "pch.h"
 #include "GameManager.h"
+#include "Texture.h"
+#include "Text.h"
+#include "Font.h"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <iostream>
 #include <memory>
@@ -26,30 +29,38 @@ int main()
     e.Initialize();
     TTF_Init();
 
-    GameManager game;
-    game.Initialize();
     
-    
-    std::shared_ptr<nu::Texture> texture = std::make_shared<nu::Texture>();
-    texture->Load("Assets/889684320422338560.png", e.GetRenderer());
+    nu::res_t<nu::Texture> texture =
+        nu::Resources().Get<nu::Texture>("Assets/889684320422338560.png", e.GetRenderer());
 
-    while (!game.IsQuit())
+    
+    nu::res_t<nu::Font> font =
+        nu::Resources().Get<nu::Font>("Assets/font.ttf", 48);
+
+    nu::Text text(font);
+    text.Create(e.GetRenderer(), "Hello, ResourceManager!", nu::Color(1.0f, 1.0f, 1.0f));
+
+    bool quit = false;
+    
+
+
+
+    while (!quit)
     {
+
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT) return 0;
+            if (event.type == SDL_EVENT_QUIT) quit = true;
         }
 
-        e.GetTime().Tick();
-        e.GetInput().Update();
-        e.GetAudio().Update();
+       /* e.GetTime().Tick();
+        e.GetInput().Update();*/
 
-        e.GetRenderer().Clear();                                  
-        e.GetRenderer().DrawTexture(texture.get(), 100, 100);     
-        e.GetRenderer().Present();                                
-
-        //game.Update(e.GetTime().GetDeltaTime());
-        //game.Draw();
+       
+        e.GetRenderer().Clear();
+        e.GetRenderer().DrawTexture(texture.get(), 100.0f, 100.0f);   
+        text.Draw(e.GetRenderer(), 100.0f, 300.0f);                   
+        e.GetRenderer().Present();
     }
 
     TTF_Quit();

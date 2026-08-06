@@ -129,11 +129,10 @@ namespace nu
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
 
-        
         float w = 0.0f, h = 0.0f;
         SDL_GetTextureSize(texture->m_texture, &w, &h);
 
-        SDL_FRect dst{ x, y, w, h };
+        SDL_FRect dst{ x - w * 0.5f, y - h * 0.5f, w, h };
         SDL_RenderTexture(m_renderer, texture->m_texture, nullptr, &dst);
     }
 }
