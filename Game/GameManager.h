@@ -2,6 +2,7 @@
 #include <Scene.h>
 #include <Font.h>
 #include <Text.h>
+#include <Texture.h>
 
 enum class GameState { StartGame, InGame, GameOver };
 
@@ -14,7 +15,10 @@ public:
 
 	bool IsQuit() const { return m_quit; }
 
-	// fonts (shared resources; the Text objects reference these)
+	// background sprite
+	nu::res_t<nu::Texture> m_background;
+
+	// fonts
 	nu::res_t<nu::Font> m_font;
 	nu::res_t<nu::Font> m_fontSmall;
 

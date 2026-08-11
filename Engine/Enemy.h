@@ -26,10 +26,13 @@ namespace nu {
 
 		static void SpawnAtEdges(Scene& scene, int count, float worldW, float worldH);
 
+		
+
 
 	private:
 		int m_ammo = 0;
 		float m_speed = 400.0f;
 	};
+
 }
 

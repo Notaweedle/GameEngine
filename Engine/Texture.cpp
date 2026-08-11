@@ -30,6 +30,10 @@ bool Texture::Load(const std::string& filename, Renderer& renderer){
         return false;
     }
 
+    // Nearest-neighbor sampling keeps pixel art crisp when scaled up
+    // (default is linear, which blurs it).
+    SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
+
     return true;
 }
 

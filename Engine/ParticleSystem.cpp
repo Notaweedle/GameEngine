@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ParticleSystem.h"
 #include "Renderer.h"
+#include "Texture.h"
 #include "Random.h"
 #include <cmath>
 
@@ -63,12 +64,22 @@ namespace nu
 
 	void ParticleSystem::Draw(const Renderer& renderer) const
 	{
-		for (auto& particles : m_particles)
+		for (auto& p : m_particles)
 		{
-			if (!particles.isActive) continue;
+			if (!p.isActive) continue;
 
-			renderer.SetColor(particles.color.r, particles.color.g, particles.color.b, particles.color.a);
-			renderer.DrawFillRect(particles.position.x - 1.0f, particles.position.y - 1.0f, 2.0f, 2.0f);
+			if (m_texture)
+			{
+				// Draw each particle as a sprite, shrinking as its life runs out.
+				float t = (p.maxLifetime > 0.0f) ? (p.lifetime / p.maxLifetime) : 1.0f; // 1 -> 0
+				float scale = 0.6f * t + 0.1f;
+				renderer.DrawTexture(m_texture.get(), p.position.x, p.position.y, 0.0f, scale, p.color);
+			}
+			else
+			{
+				renderer.SetColor(p.color.r, p.color.g, p.color.b, p.color.a);
+				renderer.DrawFillRect(p.position.x - 1.0f, p.position.y - 1.0f, 2.0f, 2.0f);
+			}
 		}
 	}
 }

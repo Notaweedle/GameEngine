@@ -7,6 +7,7 @@
 #include <memory>
 #include <format>   
 #include <ParticleSystem.h>
+#include <ParticleManager.h>
 
 using namespace nu;
 
@@ -18,10 +19,12 @@ void GameManager::Initialize()
 	e.GetAudio().LoadSound("music", "Assets/music.mp3");
 	e.GetAudio().PlayMusic("music");
 
-	// Load fonts as shared resources. Distinct IDs so the two sizes don't collide
-	// in the resource cache (they share the same filename).
 	m_font      = Resources().GetWithID<Font>("font48", "Assets/font.ttf", 48);
 	m_fontSmall = Resources().GetWithID<Font>("font28", "Assets/font.ttf", 28);
+
+	// background sprite + particle sprite
+	m_background = Resources().Get<Texture>("Assets/background.png", e.GetRenderer());
+	e.GetParticleSystem().SetTexture(Resources().Get<Texture>("Assets/particle.png", e.GetRenderer()));
 
 	
 	m_titleText.SetFont(m_font);
@@ -106,6 +109,9 @@ void GameManager::Draw()
 
 	e.GetRenderer().Clear();
 
+	// background sprite fills the screen (2560x1600), drawn behind everything
+	if (m_background) e.GetRenderer().DrawTexture(m_background.get(), cx, cy, 0.0f, 1.0f);
+
 	switch (m_state)
 	{
 	case GameState::StartGame:
@@ -140,14 +146,8 @@ bool GameManager::CheckCollisions()
 			if (enemy->IsDestroyed()) continue;
 
 			if (bullet->CheckCollision(*enemy)) {
-				ParticleDesc pd;
+				auto pd = enmy_expl();
 				pd.position = enemy->getTranform().position;
-				pd.speed = 150.0f;
-				pd.speedVariance = 80.0f;
-				pd.lifetime = 0.8f;
-				pd.lifetimeVariance = 0.3f;
-				pd.color = Color{ 1.0f, 0.5f, 0.0f, 1.0f };
-				pd.count = 20;
 				Engine::Get().GetParticleSystem().Emit(pd);
 
 				bullet->Destroy();
@@ -163,14 +163,8 @@ bool GameManager::CheckCollisions()
 
 	for (Actor* enemy : enemies) {
 		if (!enemy->IsDestroyed() && player->CheckCollision(*enemy)) {
-			ParticleDesc pd;
+			auto pd = player_expl();
 			pd.position = player->getTranform().position;
-			pd.speed = 200.0f;
-			pd.speedVariance = 100.0f;
-			pd.lifetime = 1.0f;
-			pd.lifetimeVariance = 0.4f;
-			pd.color = Color{ 1.0f, 0.2f, 0.2f, 1.0f };
-			pd.count = 30;
 			Engine::Get().GetParticleSystem().Emit(pd);
 
 			enemy->Destroy();
@@ -190,18 +184,29 @@ void GameManager::ResetGame()
 	m_lives = 3;
 	m_waveCount = 1;
 
-	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, *Assets::model_player);
-	player->setName("Player");
-	player->setTag("player");
-	m_scene.AddActor(std::move(player));
-
+	RespawnPlayer();
+	
 	Enemy::SpawnAtEdges(m_scene, 5, 2560.0f, 1600.0f);
 }
 
+
 void GameManager::RespawnPlayer()
 {
-	auto player = std::make_unique<Player>(2000.0f, Tranform{ Vector2{2560.0f / 2, 1600.0f / 2}, 0.0f, 15.0f }, *Assets::model_player);
-	player->setName("Player");
-	player->setTag("player");
+	
+
+	PlayerDesc playerDesc;
+	playerDesc.speed = 1500.f;
+	playerDesc.transform.position = { 2560.0f / 2, 1600.0f / 2 };
+	playerDesc.transform.rotation = 0.f;
+	playerDesc.transform.scale = 3.f;
+	playerDesc.tag = "player";
+	playerDesc.name = "Player";
+	/*playerDesc.model = *Assets::model_player;*/
+	playerDesc.texture = Resources().Get<Texture>("Assets/PlayerShip.png", Engine::Get().GetRenderer());
+
+	auto player = std::make_unique<Player>(playerDesc);
+	player->SetRadius(30.f);
 	m_scene.AddActor(std::move(player));
 }
+
+

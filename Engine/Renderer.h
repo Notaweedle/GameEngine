@@ -29,7 +29,8 @@ namespace nu
 		void DrawLine(float x1, float y1, float x2, float y2) const;
 		void DrawCircle(float x, float y, float radius, int segments = 24) const;
 		void DrawModel(const Model& model, const Tranform tranform) const;
-		void DrawTexture(Texture* texture, float x, float y);
+		void DrawTexture(Texture* texture, float x, float y, float rot, float scale) const;
+		void DrawTexture(Texture* texture, float x, float y, float rot, float scale, const Color& tint) const;
 
 		SDL_Renderer* GetRenderer() const { return m_renderer; }
 

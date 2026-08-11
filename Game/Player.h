@@ -14,6 +14,13 @@ public:
 
 
 	Player() = default;
+
+	
+	Player(const PlayerDesc& desc) :
+		Actor{ desc }, m_speed{ desc.speed }
+	{
+	}
+
 	Player(float speed,const nu::Tranform& tranform) :
 		Actor{ tranform }, m_speed{ speed }
 	{

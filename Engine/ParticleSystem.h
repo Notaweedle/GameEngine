@@ -2,11 +2,13 @@
 #include "Vector2.h"
 #include "Color.h"
 #include "mathUitl.h"
+#include "Resource.h"   // res_t
 #include <vector>
 
 namespace nu
 {
 	class Renderer;
+	class Texture;
 
 	struct Particle
 	{
@@ -42,7 +44,10 @@ namespace nu
 		void Update(float dt);
 		void Draw(const Renderer& renderer) const;
 
+		void SetTexture(res_t<Texture> texture) { m_texture = texture; }
+
 	private:
 		std::vector<Particle> m_particles;
+		res_t<Texture> m_texture;   // sprite used to draw each particle
 	};
 }

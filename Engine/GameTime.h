@@ -12,7 +12,8 @@ namespace nu
 		void Tick();
 
 		float GetTime() { return TicksToSeconds(m_currentTicks - m_startTicks); }
-		float GetDeltaTime() { return TicksToSeconds(m_deltaTicks); }
+		// clamp so a long pause (e.g. alt-tab / minimize) doesn't produce one huge step
+		float GetDeltaTime() { float dt = TicksToSeconds(m_deltaTicks); return dt > 0.1f ? 0.1f : dt; }
 
 		float TicksToSeconds(uint64_t ticks) { return (float)ticks / 1'000'000'000;	}
 

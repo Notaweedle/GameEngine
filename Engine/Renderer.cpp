@@ -25,6 +25,9 @@ namespace nu
             return false;
         }
 
+        // cap the frame rate to the monitor refresh so frame timing is stable
+        SDL_SetRenderVSync(m_renderer, 1);
+
         return true;
     }
 
@@ -125,14 +128,37 @@ namespace nu
             }
         }
     }
-    void Renderer::DrawTexture(Texture* texture, float x, float y)
+    void Renderer::DrawTexture(Texture* texture, float x, float y, float rot, float scale) const
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
 
+        // native size, scaled
         float w = 0.0f, h = 0.0f;
         SDL_GetTextureSize(texture->m_texture, &w, &h);
+        w *= scale;
+        h *= scale;
 
+        // (x, y) is the CENTER of the sprite
         SDL_FRect dst{ x - w * 0.5f, y - h * 0.5f, w, h };
-        SDL_RenderTexture(m_renderer, texture->m_texture, nullptr, &dst);
+
+        // engine rotation is radians; SDL wants degrees. center = null -> rotate about dst center.
+        double angleDeg = static_cast<double>(rot) * (180.0 / 3.14159265358979);
+        SDL_RenderTextureRotated(m_renderer, texture->m_texture, nullptr, &dst, angleDeg, nullptr, SDL_FLIP_NONE);
+    }
+
+    void Renderer::DrawTexture(Texture* texture, float x, float y, float rot, float scale, const Color& tint) const
+    {
+        if (texture == nullptr || texture->m_texture == nullptr) return;
+
+        // tint the sprite by the given color (0..1). Needs alpha blending on for the alpha to show.
+        SDL_SetTextureBlendMode(texture->m_texture, SDL_BLENDMODE_BLEND);
+        SDL_SetTextureColorModFloat(texture->m_texture, tint.r, tint.g, tint.b);
+        SDL_SetTextureAlphaModFloat(texture->m_texture, tint.a);
+
+        DrawTexture(texture, x, y, rot, scale);
+
+        // reset so other draws of the same texture aren't left tinted
+        SDL_SetTextureColorModFloat(texture->m_texture, 1.0f, 1.0f, 1.0f);
+        SDL_SetTextureAlphaModFloat(texture->m_texture, 1.0f);
     }
 }

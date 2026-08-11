@@ -2,21 +2,25 @@
 #include "Vector2.h"
 #include "Tranform.h"
 #include "Model.h"
+#include "Resource.h"   // res_t template alias
 #include <string>
 #include <memory>
 
 namespace nu {
 
-    
     class Scene;
+    class Texture;   // res_t<Texture> below only needs a forward declaration
 
     struct ActorDesc {
         std::string name;
         std::string tag;
 
         Tranform transform;
-        Vector2 velocity;
-        std::shared_ptr<Model> model;
+        Vector2 velocity{ 0.0f, 0.0f };   // must be zero-initialized; Vector2's default leaves it garbage
+        float damping{ 0.f };
+        float lifespan{ 0.f };
+        res_t<Model> model;
+        res_t<Texture> texture;
     };
 
     class Actor {
@@ -27,7 +31,8 @@ namespace nu {
             m_name{actorDesc.name},
             m_tag{actorDesc.tag},
             m_velocity{ actorDesc.velocity },
-            m_model{ actorDesc.model } 
+            m_model{ actorDesc.model },
+            m_texture{ actorDesc.texture }
         {};
 
         Actor(const Tranform& tranform) : m_tranform{ tranform } {
@@ -50,8 +55,17 @@ namespace nu {
         void Destroy() { m_destroyed = true; }
         bool IsDestroyed() const { return m_destroyed; }
 
-        float GetRadius() const { return m_model ? m_model->GetRadius() * m_tranform.scale : 0.0f; }
+        // Collision radius: an explicit radius (set via SetRadius) wins; otherwise
+        // fall back to the vector model's radius * scale. Sprites have no model, so
+        // they need SetRadius to get a hitbox.
+        float GetRadius() const
+        {
+            if (m_radius > 0.0f) return m_radius;
+            return m_model ? m_model->GetRadius() * m_tranform.scale : 0.0f;
+        }
+        void SetRadius(float radius) { m_radius = radius; }
         void SetModel(std::shared_ptr<Model> model) { m_model = model; }
+        void SetTexture(res_t<Texture> texture) { m_texture = texture; }
 
         bool CheckCollision(const Actor& other) const
         {
@@ -80,7 +94,9 @@ namespace nu {
         std::string m_name;
         std::string m_tag;
         Vector2 m_velocity {0,0};
-        std::shared_ptr<Model> m_model;
+        res_t<Model> m_model;
+        res_t<Texture> m_texture;
+        float m_radius = 0.0f;   // explicit collision radius (0 = use model)
 
         bool m_destroyed = false;
         Scene* m_scene{ nullptr };

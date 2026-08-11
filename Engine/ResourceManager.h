@@ -43,11 +43,11 @@ namespace nu
 		// check if exists
 		if (iter != m_resources.end())
 		{
-			// get value in iterator
+			
 			auto base = iter->second;
-			// cast to data type T
+		
 			auto resource = std::dynamic_pointer_cast<T>(base);
-			// check if cast was successful
+			
 			if (resource == nullptr)
 			{
 				std::cerr << "Resource type mismatch: " << id << std::endl;

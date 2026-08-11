@@ -8,12 +8,14 @@
 #include <memory>
 #include "Assets.h"
 #include "mathUitl.h"
+#include "ResourceManager.h"
+#include "Texture.h"
 
 
 
 void Player::Update(float dt) 
 {
-	float speed = 6000.0f;
+	float speed = 4000.0f;
 	nu::Vector2 forword = { std::cos(getTranform().rotation),
 							std::sin(getTranform().rotation)};
 	nu::Vector2 force{ 0.0f,0.0f };
@@ -32,7 +34,7 @@ void Player::Update(float dt)
 		pd.lifetime = 0.4f;
 		pd.lifetimeVariance = 0.15f;
 		pd.color = nu::Color{ 0.3f, 0.6f, 1.0f, 1.0f }; 
-		pd.count = 3;
+		pd.count = 10;
 		nu::Engine::Get().GetParticleSystem().Emit(pd);
 	}
 	
@@ -63,12 +65,14 @@ void Player::Shoot() {
 
 	nu::Tranform tranform{ getTranform().position + (forword * 30.0f),
 						   getTranform().rotation,
-						   5.0f };
+						   1.5f };
 
 	auto bullet = std::make_unique<nu::bullet>(m_bulletSpeed, tranform, *Assets::model_bullet);
 	bullet->setName("bullet");
 	bullet->setTag("bullet");
 	bullet->setVelocity(forword * m_bulletSpeed);
+	bullet->SetTexture(nu::Resources().Get<nu::Texture>("Assets/Bullet_1.png", nu::Engine::Get().GetRenderer()));
+	bullet->SetRadius(15.f);
 
 	getScene()->AddActor(std::move(bullet));
 
@@ -77,6 +81,5 @@ void Player::Shoot() {
 
 void Player::Draw(const nu::Renderer& renderer) const
 {
-	// Was declared 'override' in Player.h but never defined -> unresolved external.
 	Actor::Draw(renderer);
 }

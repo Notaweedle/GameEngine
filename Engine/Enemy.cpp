@@ -5,6 +5,9 @@
 #include "Random.h"
 #include "Scene.h"
 #include "../Game/Assets.h"
+#include "ResourceManager.h"
+#include "Texture.h"
+#include "Engine.h"
 #include <cmath>
 
 
@@ -25,7 +28,7 @@ namespace nu {
         }
 
         m_tranform.position += (m_velocity * dt);
-        m_velocity *= 0.987f;
+        m_velocity *= std::pow(0.02f, dt);   
         
 
     }
@@ -33,7 +36,10 @@ namespace nu {
 
     void Enemy::Draw(const Renderer& renderer) const
     {
-        if (m_model) renderer.DrawModel(*m_model, m_tranform);
+        if (m_texture)
+            renderer.DrawTexture(m_texture.get(), m_tranform.position.x, m_tranform.position.y, m_tranform.rotation, m_tranform.scale);
+        else if (m_model)
+            renderer.DrawModel(*m_model, m_tranform);
     }
 
     void Enemy::OnKilled()
@@ -46,14 +52,17 @@ namespace nu {
         float angle = RandomFloat(0.0f, 6.28f);
 
         for (int i = 0; i < 2; i++) {
-            float dir = angle + (i * 3.14159f);
+            float dir = angle + (i * math::pi);
             Vector2 vel = Vector2{ std::cos(dir), std::sin(dir) } *200.0f;
 
             auto frag = std::make_unique<Enemy>(
                 2500.0f,
-                Tranform{ m_tranform.position, dir, 7.0f },
+                Tranform{ m_tranform.position, dir, 4.0f },
                 *Assets::model_triangle
             );
+            frag->SetTexture(Resources().Get<Texture>("Assets/Trita.png", Engine::Get().GetRenderer()));
+            frag->SetRadius(24.f);
+
             frag->setName("triangle_" + std::to_string(i));
             frag->setTag("enemy");
             frag->setVelocity(vel);
@@ -66,7 +75,7 @@ namespace nu {
 
         for (int i = 0; i < count; i++) {
             float x, y;
-            int edge = rand() % 4;
+            int edge = RandomInt() % 4;
 
             switch (edge) {
             case 0: x = nu::math::randomf(0.0f, worldW); y = -MARGIN;          break;
@@ -76,16 +85,20 @@ namespace nu {
             }
 
             auto enemy = std::make_unique<Enemy>(
-                2000.0f,
-                Tranform{ Vector2{x, y}, 0.0f, 12.0f },
+                1500.0f,
+                Tranform{ Vector2{x, y}, 0.0f, 3.0f },
                 *Assets::model_yeedi
             );
+            enemy->SetTexture(Resources().Get<Texture>("Assets/yeedi_.png", Engine::Get().GetRenderer()));
+            enemy->SetRadius(30.f);
 
             auto rainDrop = std::make_unique<Enemy>(
-                3500.0f,
-                Tranform{ Vector2{x,y}, 0.0f, 25.f },
+                2500.0f,
+                Tranform{ Vector2{x,y}, 0.0f, 4.f },
                 *Assets::model_raincol
             );
+            rainDrop->SetTexture(Resources().Get<Texture>("Assets/rainDrop.png", Engine::Get().GetRenderer()));
+            rainDrop->SetRadius(40.f);
 
             enemy->setName("yeedi_" + std::to_string(i));
             rainDrop->setName("rainDrop_" + std::to_string(i));

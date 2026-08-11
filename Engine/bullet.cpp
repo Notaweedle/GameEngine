@@ -15,7 +15,10 @@ namespace nu {
 
     void bullet::Draw(const Renderer& renderer) const
     {
-        if (m_model) renderer.DrawModel(*m_model, m_tranform);
+        if (m_texture)
+            renderer.DrawTexture(m_texture.get(), m_tranform.position.x, m_tranform.position.y, m_tranform.rotation, m_tranform.scale);
+        else if (m_model)
+            renderer.DrawModel(*m_model, m_tranform);
     }
 
 }
