@@ -10,8 +10,6 @@ namespace nu {
    
     void Actor::Update(float dt) {
         m_tranform.position += (m_velocity * dt);
-        // Frame-rate-independent damping. 0.05 = fraction of velocity KEPT per second:
-        // lower = tighter / less slide, raise toward 1.0 for more drift/slippery.
         m_velocity *= std::pow(0.05f, dt);
 
         m_tranform.position.x = math::Wrap(0.0f, 2560.0f, m_tranform.position.x);

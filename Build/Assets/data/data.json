@@ -1,0 +1,8 @@
+{
+    "name": "Robert",
+    "age": 21,
+    "speed": 3,
+    "isAwake": true,
+    "position": [100, 200],
+    "color": [0.82, 0.984, 0.87]
+}

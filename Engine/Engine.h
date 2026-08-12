@@ -10,6 +10,8 @@
 
 #include <vector>
 #include "Input.h"
+#include "Factory.h"
+#include "StringUtil.h"
 #include "GameTime.h"
 #include "Tranform.h"
 #include "Actor.h"

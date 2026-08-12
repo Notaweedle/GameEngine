@@ -39,9 +39,6 @@ namespace nu {
 		std::uniform_int_distribution<> dist(min, max);
 		return dist(Generator());
 	}
-	
-
-	
 	inline float RandomFloat() {
 		static std::uniform_real_distribution<> dist;
 		return dist(Generator());
