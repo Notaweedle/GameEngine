@@ -30,6 +30,7 @@ namespace nu {
 
 
 	private:
+		
 		int m_ammo = 0;
 		float m_speed = 400.0f;
 	};

@@ -1,39 +1,41 @@
 #pragma once
+#include "Object.h"
 #include "Vector2.h"
 #include "Tranform.h"
 #include "Model.h"
-#include "Resource.h"   // res_t template alias
+#include "Resource.h"   
 #include <string>
 #include <memory>
 
 namespace nu {
 
     class Scene;
-    class Texture;   // res_t<Texture> below only needs a forward declaration
+    class Texture;  
 
     struct ActorDesc {
-        std::string name;
+        std::string name = "actor";
         std::string tag;
-
         Tranform transform;
-        Vector2 velocity{ 0.0f, 0.0f };   // must be zero-initialized; Vector2's default leaves it garbage
+        Vector2 velocity{ 0.0f, 0.0f };   
         float damping{ 0.f };
         float lifespan{ 0.f };
         res_t<Model> model;
         res_t<Texture> texture;
     };
 
-    class Actor {
+    class Actor : public Object{
     public:
         Actor() = default;
         Actor(const ActorDesc& actorDesc) :
+            Object(),
             m_tranform{ actorDesc.transform },
-            m_name{actorDesc.name},
             m_tag{actorDesc.tag},
             m_velocity{ actorDesc.velocity },
             m_model{ actorDesc.model },
             m_texture{ actorDesc.texture }
-        {};
+        {
+            Object::m_name = { actorDesc.name };
+        };
 
         Actor(const Tranform& tranform) : m_tranform{ tranform } {
 
@@ -54,10 +56,6 @@ namespace nu {
 
         void Destroy() { m_destroyed = true; }
         bool IsDestroyed() const { return m_destroyed; }
-
-        // Collision radius: an explicit radius (set via SetRadius) wins; otherwise
-        // fall back to the vector model's radius * scale. Sprites have no model, so
-        // they need SetRadius to get a hitbox.
         float GetRadius() const
         {
             if (m_radius > 0.0f) return m_radius;
@@ -77,12 +75,12 @@ namespace nu {
         void setRotation(const float rotaion) { m_tranform.rotation = rotaion; }
         void setScale(const float scale) { m_tranform.scale = scale; };
         void setVelocity(const Vector2& vel) { m_velocity = vel; }
-        void setName(const std::string& name) { m_name = name; }
+        void setName(const std::string& name) { Object::m_name = name; }
         void setTag(const std::string& tag) { m_tag = tag; }
 
-        const Vector2& getVelocity() const { return m_velocity; }
-        const std::string& getName() const { return m_name; }
-        const std::string& getTag() const { return m_tag; }
+        virtual const std::string& GetName() const override { return Object::m_name; }
+        inline const Vector2& getVelocity() const { return m_velocity; }
+        inline const std::string& getTag() const { return m_tag; }
 
         Scene* getScene() { return m_scene; }
 
@@ -91,13 +89,12 @@ namespace nu {
 
     protected:
         Tranform m_tranform;
-        std::string m_name;
         std::string m_tag;
         Vector2 m_velocity {0,0};
         res_t<Model> m_model;
         res_t<Texture> m_texture;
-        float m_radius = 0.0f;   // explicit collision radius (0 = use model)
-
+        float m_radius = 0.0f;   
+        
         bool m_destroyed = false;
         Scene* m_scene{ nullptr };
     };

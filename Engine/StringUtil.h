@@ -6,7 +6,7 @@ namespace nu {
 	{
 		std::string lower = str;
 		for (auto& c : lower) {
-			c = std::tolower(c);
+			c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
 		}
 		return lower;
 	};
@@ -14,7 +14,7 @@ namespace nu {
 	{
 		std::string upper = str;
 		for (auto& c : upper) {
-			c = std::toupper(c);
+			c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
 		}
 		return upper;
 	};

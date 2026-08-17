@@ -5,7 +5,11 @@ namespace nu
 	class Color
 	{
 	public:
-		float r, g, b, a;
+		float 
+			r,
+			g,
+			b,
+			a = 1.0f;
 
 
 		Color() = default;
@@ -39,5 +43,8 @@ namespace nu
 		Color& operator -= (float v) { this->r -= v; this->g -= v; this->b -= v; this->a -= v; return *this; }
 		Color& operator *= (float v) { this->r *= v; this->g *= v; this->b *= v; this->a *= v; return *this; }
 		Color& operator /= (float v) { this->r /= v; this->g /= v; this->b /= v; this->a /= v; return *this; }
+
+
+		
 	};
 }
