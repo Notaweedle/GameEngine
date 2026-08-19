@@ -12,7 +12,7 @@
 
 
 namespace nu {
-
+   /* FACTORY_REGISTER(Enemy);*/
     
     void Enemy::Update(float dt) {
         Actor* player = (m_scene) ? m_scene->GetActorByName<Actor>("Player") : nullptr;

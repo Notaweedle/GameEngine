@@ -71,7 +71,6 @@ namespace nu::json
 
         return true;
     }
-
     bool Read(const rapidjson::Value& value, const std::string& name, bool& data)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsBool())
@@ -84,7 +83,6 @@ namespace nu::json
 
         return true;
     }
-
     bool Read(const rapidjson::Value& value, const std::string& name, std::string& data)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].GetString())

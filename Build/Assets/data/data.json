@@ -1,8 +1,12 @@
 {
-    "name": "Robert",
-    "age": 21,
-    "speed": 3.432,
-    "isAwake": true,
-    "position": [100.10, 200.20],
-    "color": [0.82, 0.984, 0.87]
+   "name": "Player",
+   "tag": "Player",
+   "type": "Player",
+   "active": true,
+  "speed": 750.0,
+  "tranfrom": {
+    "position": [ 2.4, 5.5 ],
+    "rotaion": 45,
+    "scale": 2
+  }
 }

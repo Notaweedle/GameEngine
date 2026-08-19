@@ -189,7 +189,6 @@ void GameManager::ResetGame()
 	Enemy::SpawnAtEdges(m_scene, 5, 2560.0f, 1600.0f);
 }
 
-
 void GameManager::RespawnPlayer()
 {
 	

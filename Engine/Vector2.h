@@ -44,6 +44,8 @@ namespace nu
 
 		float LengthSqr() const				{ return (x * x) + (y * y); }
 
+		float Distance(const Vector2& v)const	{ return (v-*this).Length(); }
+
 		float Length() const				{ return std::sqrt(LengthSqr()); }
 		
 		Vector2 Normalize() const			{ return (*this) / Length(); }

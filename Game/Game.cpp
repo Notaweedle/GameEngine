@@ -16,8 +16,16 @@ using namespace nu;
 GameManager game;
 
 
+
+
+
+
+
+
 int main()
 {
+  
+
     
     // load the json data from a file
     
@@ -57,22 +65,22 @@ int main()
     //return 0;
 
 
-    Factory::Instance().Register<Actor>("actor");
+   
     Factory::Instance().Register<Player>("player");
     Factory::Instance().Register<Enemy>("enemy");
+    Factory::Instance().Register<Bullet>("bullet");
 
-    auto actor = Factory::Instance().Create("actor");
-    auto player = Factory::Instance().Create("player");
-    auto enemy = Factory::Instance().Create("enemy");
+    auto enemy = Factory::Instance().Create<Enemy>("enemy");
+    
+    
 
-    std::cout << actor->IsActive()  << std::endl;
-    std::cout << actor->GetName() << std::endl;
+    std::cout << enemy->IsActive()<< std::endl;
+    enemy->SetRadius(60.5f);
+    std::cout << enemy->GetRadius()<< std::endl;
+    
+    
 
-    std::cout << player->IsActive()  << std::endl;
-    std::cout << player->GetName()  << std::endl;
-
-    std::cout << enemy->IsActive()  << std::endl;
-    std::cout << enemy->GetName()  << std::endl;
+   
 
 
 

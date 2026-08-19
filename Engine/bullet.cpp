@@ -4,7 +4,7 @@
 
 namespace nu {
 
-    void bullet::Update(float dt) {
+    void Bullet::Update(float dt) {
         m_lifespan -= dt;
         if (m_lifespan <= 0.0f) {
             Destroy();
@@ -13,7 +13,7 @@ namespace nu {
         m_tranform.position += (m_velocity * dt);
     }
 
-    void bullet::Draw(const Renderer& renderer) const
+    void Bullet::Draw(const Renderer& renderer) const
     {
         if (m_texture)
             renderer.DrawTexture(m_texture.get(), m_tranform.position.x, m_tranform.position.y, m_tranform.rotation, m_tranform.scale);

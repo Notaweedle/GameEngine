@@ -12,7 +12,7 @@ namespace nu
 		void AddActor(std::unique_ptr<Actor> actor);
 		void RemoveActors();
 
-
+		void UpdateCollisions();
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 

@@ -1,11 +1,27 @@
-#pragma once
+﻿#pragma once
 #include <rapidjson/document.h>   
 #include <string>
 #include "Vector2.h"
 #include "Color.h"
 
+#define JSON_READ(value, data) nu::json::Read(value, #data, data)
+#define JSON_READ_NAME(value, name, data) nu::json::Read(value, name, data)
+
+#define JSON_READ_REQ(value, data) nu::json::Read(value, #data, data, true)
+#define JSON_READ_NAME_REQ(value, name, data) nu::json::Read(value, name, data, true)
+
+#define JSON_HAS(value, data)   value.HasMember(#data)
+#define JSON_HAS_NAME(value, name)   value.HasMember(name)
+
+#define JSON_GET(value, data)  value[#data]
+#define JSON_GET_NAME(value, name)  value[name]
+
+
 namespace nu::json
 {
+    using value_t = rapidjson::Value;
+    using documnet_t = rapidjson::Value;
+
     bool Load(const std::string& filename, rapidjson::Document& document);
 
     bool Read(const rapidjson::Value& value, const std::string& name, int& data);
@@ -19,9 +35,4 @@ namespace nu::json
     bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data);
 
     bool Read(const rapidjson::Value& value, const std::string& name, Color& data);
-    
-
-    // TODO (assignment): add overloads following the same pattern as Read(int) for:
-    //   float, bool, std::string, and your Vector2 / Color types.
-    // e.g.  bool Read(const rapidjson::Value& value, const std::string& name, float& data);
 }

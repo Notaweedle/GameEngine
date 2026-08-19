@@ -3,17 +3,17 @@
 #include "Model.h"
 
 namespace nu  {
-	class bullet : public nu::Actor {
+	class Bullet : public nu::Actor {
 	public:
-		bullet() = default;
+		Bullet() = default;
 
-		bullet(float speed, const nu::Tranform& tranform) :
+		Bullet(float speed, const nu::Tranform& tranform) :
 			Actor{ tranform },
 			m_speed{ speed }
 		{
 		}
 
-		bullet(float speed, const nu::Tranform& tranform, const nu::Model& model) :
+		Bullet(float speed, const nu::Tranform& tranform, const nu::Model& model) :
 			Actor{ tranform, model },
 			m_speed{ speed }
 		{

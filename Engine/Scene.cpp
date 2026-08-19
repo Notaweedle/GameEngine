@@ -41,4 +41,6 @@ namespace nu
 		}
 	}
 
+	//void Scene::UpdateCollisions();
+
 };
