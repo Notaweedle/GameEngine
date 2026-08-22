@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "json.h"
 namespace nu {
 	class Actor;
 
@@ -12,7 +13,7 @@ namespace nu {
 		virtual void Start() {}
 		virtual void Destroyed() {}
 		virtual void Update(float dt) {}
-
+		virtual void Read(const json::value_t& value) {}
 		Actor* GetOwner() const { return m_owner; }
 		void SetOwner(Actor* owner) { m_owner = owner; }
 		

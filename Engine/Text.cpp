@@ -16,9 +16,9 @@ namespace nu
 	{
 		Destroy();
 
-		if (m_font == nullptr)
+		if (m_font == nullptr || m_font->GetFont() == nullptr)
 		{
-			std::cerr << "Text::Create - no font set (use the Text(font) ctor or SetFont())" << std::endl;
+			std::cerr << "Text::Create - no valid font set (font missing or failed to load)" << std::endl;
 			return false;
 		}
 

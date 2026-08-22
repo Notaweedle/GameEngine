@@ -15,7 +15,9 @@ namespace nu {
 	bool Engine::Initialize() {
 		
 		
-		m_renderer.Initialize("Astroid", 2560, 1600);
+		// physical window is 1280x800 (a quarter of the pixels of 2560x1600);
+		// the renderer's logical presentation maps the 2560x1600 world onto it.
+		m_renderer.Initialize("Astroid", 1280, 800);
 		m_renderer.SetColor(0.0f,0.0f,0.0f);
 		m_input.Initialize();
 		m_audio.Initialize();

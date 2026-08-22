@@ -28,6 +28,11 @@ namespace nu
         // cap the frame rate to the monitor refresh so frame timing is stable
         SDL_SetRenderVSync(m_renderer, 1);
 
+        // Render at a fixed logical size (the world size) but present into whatever
+        // the actual window size is. This lets us use a smaller physical window
+        // (far fewer pixels to push each frame) while keeping all world coordinates.
+        SDL_SetRenderLogicalPresentation(m_renderer, 2560, 1600, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
         return true;
     }
 
@@ -106,7 +111,7 @@ namespace nu
         }
     }
 
-    void Renderer::DrawModel(const Model& model , const Tranform tranform )const
+    void Renderer::DrawModel(const Model& model , const Transform transform )const
     {
         for (auto mesh : model.GetMeshes()) 
         {
@@ -114,15 +119,15 @@ namespace nu
             auto& points = mesh.GetPoints();
             for( size_t i = 0; i + 1 < points.size(); i++ )
             {
-                Vector2 v1 = points[i].Rotate(tranform.rotation);
-                Vector2 v2 = points[i + 1].Rotate(tranform.rotation);
+                Vector2 v1 = points[i].Rotate(transform.rotation);
+                Vector2 v2 = points[i + 1].Rotate(transform.rotation);
 
-                v1 *= tranform.scale;
-                v2 *= tranform.scale;
+                v1 *= transform.scale;
+                v2 *= transform.scale;
 
 
-                v1 += tranform.position;
-                v2 += tranform.position;
+                v1 += transform.position;
+                v2 += transform.position;
 
                 DrawLine(v1.x,v1.y,v2.x,v2.y);
             }

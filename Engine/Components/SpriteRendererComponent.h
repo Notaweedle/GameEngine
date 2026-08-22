@@ -13,7 +13,7 @@ namespace nu
 
 		void Draw(const Renderer& renderer) override;
 
-		//void Read(const json::value_t& value) override;
+		void Read(const json::value_t& value) override;
 
 
 	protected:

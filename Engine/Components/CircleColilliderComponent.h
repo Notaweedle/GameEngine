@@ -1,20 +1,19 @@
 #pragma once
 #include "Components/ColliderComponet.h"
-namespace nu 
-{                                 
-	
-	/*class CircleColilliderComponent  : public ColilliderComponent
+
+namespace nu
+{
+	class CircleColilliderComponent : public ColilliderComponent
 	{
-	public: 
+	public:
 		CLASS_PROTOTYPE(CircleColilliderComponent)
 
-		bool CheckCollision(const ColliderComponet& other);
-		void read(const json::value_t& vlaue)override;
+		bool CheckCollision(const ColilliderComponent& other) override;
+		void Read(const json::value_t& value) override;
 
-		float const GetRadius() { return m_radius };
+		float GetRadius() const override { return m_radius; }
 
 	protected:
-		float m_radius;
-	};*/
+		float m_radius = 0.0f;
+	};
 }
-

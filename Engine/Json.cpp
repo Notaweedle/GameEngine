@@ -6,6 +6,7 @@
 #include <rapidjson/error/en.h>
 #include <sstream>
 #include <iostream>
+#include <Transform.h>
 
 namespace nu::json
 {
@@ -61,7 +62,7 @@ namespace nu::json
     }
     bool Read(const rapidjson::Value& value, const std::string& name, float& data)
     {
-        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsFloat())
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsNumber())
         {
             std::cerr << "Could not read JSON value (float):" << name << std::endl;
             return false;
@@ -110,6 +111,24 @@ namespace nu::json
         
         return true;
     }
+
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data)
+    {
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsObject()) {
+            std::cerr << "Could not read JSON value (Transform): " << name << std::endl;
+            return false;
+        }
+        const rapidjson::Value& obj = value[name.c_str()];
+        Read(obj, "position", data.position);   
+        Read(obj, "rotation", data.rotation);    
+        Read(obj, "scale", data.scale);       
+        return true;
+    }
+
+    
+
+    
+
     bool Read(const rapidjson::Value& value, const std::string& name, Color& data)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray())

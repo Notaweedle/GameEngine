@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Assets.h"
-
+#include "Scene.h"
 #include <string>
 #include <memory>
 #include <format>   
@@ -14,6 +14,7 @@ using namespace nu;
 void GameManager::Initialize()
 {
 	auto& e = Engine::Get();
+	TTF_Init();
 
 	e.GetAudio().LoadSound("laser", "Assets/laserShoot.wav");
 	e.GetAudio().LoadSound("music", "Assets/music.mp3");
@@ -22,7 +23,7 @@ void GameManager::Initialize()
 	m_font      = Resources().GetWithID<Font>("font48", "Assets/font.ttf", 48);
 	m_fontSmall = Resources().GetWithID<Font>("font28", "Assets/font.ttf", 28);
 
-	// background sprite + particle sprite
+	
 	m_background = Resources().Get<Texture>("Assets/background.png", e.GetRenderer());
 	e.GetParticleSystem().SetTexture(Resources().Get<Texture>("Assets/particle.png", e.GetRenderer()));
 
@@ -67,8 +68,9 @@ void GameManager::Update(float dt)
 
 		// wave spawning
 		if (m_scene.GetActorsByTag("enemy").empty()) {
+
 			m_waveCount++;
-			Enemy::SpawnAtEdges(m_scene, 5 * m_waveCount, 2560.0f, 1600.0f);
+			GameManager::SpawnAtEdges( 5 * m_waveCount, 2560.0f, 1600.0f);
 		}
 
 		// collisions
@@ -82,9 +84,15 @@ void GameManager::Update(float dt)
 			}
 		}
 
-		// update HUD text
-		m_scoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)), Color(1.0f, 1.0f, 1.0f));
-		m_livesText.Create(e.GetRenderer(), std::format("Lives: {}" , std::to_string(m_lives)), Color(1.0f, 1.0f, 1.0f));
+		
+		if (m_score != m_lastScore) {
+			m_scoreText.Create(e.GetRenderer(), std::format("Score: {}", m_score), Color(1.0f, 1.0f, 1.0f));
+			m_lastScore = m_score;
+		}
+		if (m_lives != m_lastLives) {
+			m_livesText.Create(e.GetRenderer(), std::format("Lives: {}", m_lives), Color(1.0f, 1.0f, 1.0f));
+			m_lastLives = m_lives;
+		}
 		break;
 	}
 
@@ -109,7 +117,6 @@ void GameManager::Draw()
 
 	e.GetRenderer().Clear();
 
-	// background sprite fills the screen (2560x1600), drawn behind everything
 	if (m_background) e.GetRenderer().DrawTexture(m_background.get(), cx, cy, 0.0f, 1.0f);
 
 	switch (m_state)
@@ -147,7 +154,7 @@ bool GameManager::CheckCollisions()
 
 			if (bullet->CheckCollision(*enemy)) {
 				auto pd = enmy_expl();
-				pd.position = enemy->getTranform().position;
+				pd.position = enemy->getTransform().position;
 				Engine::Get().GetParticleSystem().Emit(pd);
 
 				bullet->Destroy();
@@ -164,7 +171,7 @@ bool GameManager::CheckCollisions()
 	for (Actor* enemy : enemies) {
 		if (!enemy->IsDestroyed() && player->CheckCollision(*enemy)) {
 			auto pd = player_expl();
-			pd.position = player->getTranform().position;
+			pd.position = player->getTransform().position;
 			Engine::Get().GetParticleSystem().Emit(pd);
 
 			enemy->Destroy();
@@ -177,34 +184,66 @@ bool GameManager::CheckCollisions()
 	return false;
 }
 
+void GameManager::SpawnAtEdges(int count, float worldW, float worldH) {
+    const float MARGIN = 20.0f;
+
+    for (int i = 0; i < count; i++) {
+        float x = 0.f;
+        float y = 0.f;
+        int edge = RandomInt() % 4;
+
+        switch (edge) {
+        case 0: x = nu::math::randomf(0.0f, worldW); y = -MARGIN;          break;
+        case 1: x = nu::math::randomf(0.0f, worldW); y = worldH + MARGIN;  break;
+        case 2: x = -MARGIN;          y = nu::math::randomf(0.0f, worldH);  break;
+        case 3: x = worldW + MARGIN;  y = nu::math::randomf(0.0f, worldH);  break;
+        }
+
+       
+        const std::string type = (math::randomf(0.0f, 1.0f) <= 0.1f) ? "RainDrop" : "yeedi";
+
+        auto enemy = Factory::Instance().Create<Actor>(type);
+        if (enemy)
+        {
+            enemy->setPosistion({ x, y });
+            m_scene.AddActor(std::move(enemy));
+        }
+    }
+}
+
 void GameManager::ResetGame()
 {
-	m_scene = Scene();
+	
+	m_scene.RemoveActors();
+
+	m_scene.Load("Assets/Data/data.json");
+
+
+
+
+
 	m_score = 0;
 	m_lives = 3;
 	m_waveCount = 1;
+	m_lastScore = -1;  
+	m_lastLives = -1;
 
 	RespawnPlayer();
 	
-	Enemy::SpawnAtEdges(m_scene, 5, 2560.0f, 1600.0f);
+	GameManager::SpawnAtEdges(5, 2560.0f, 1600.0f);
 }
+
+
+
 
 void GameManager::RespawnPlayer()
 {
-	
-
-	PlayerDesc playerDesc;
-	playerDesc.speed = 1500.f;
-	playerDesc.transform.position = { 2560.0f / 2, 1600.0f / 2 };
-	playerDesc.transform.rotation = 0.f;
-	playerDesc.transform.scale = 3.f;
-	playerDesc.tag = "player";
-	playerDesc.name = "Player";
-	/*playerDesc.model = *Assets::model_player;*/
-	playerDesc.texture = Resources().Get<Texture>("Assets/PlayerShip.png", Engine::Get().GetRenderer());
-
-	auto player = std::make_unique<Player>(playerDesc);
-	player->SetRadius(30.f);
+	auto player = Factory::Instance().Create<Actor>("PlayerPrototype");
+	std::cout << "[DEBUG] player components=" << player->ComponentCount()
+	          << " scale=" << player->getTransform().scale
+	          << " tag=" << player->getTag() << std::endl;
+	player->setName("Player");   
+	player->setPosistion({ 1280.0f, 800.0f });
 	m_scene.AddActor(std::move(player));
 }
 

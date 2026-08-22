@@ -9,25 +9,26 @@
 #include "Texture.h"
 #include "Engine.h"
 #include <cmath>
+#include <Json.h>
 
 
 namespace nu {
-   /* FACTORY_REGISTER(Enemy);*/
+    FACTORY_REGISTER(Enemy);
     
     void Enemy::Update(float dt) {
         Actor* player = (m_scene) ? m_scene->GetActorByName<Actor>("Player") : nullptr;
         if (player) {
-            nu::Vector2 direction = player->getTranform().position - m_tranform.position;
+            nu::Vector2 direction = player->getTransform().position - m_transform.position;
 
             float rotation = direction.Angle();
             setRotation(rotation);
 
             
-            nu::Vector2 forword = nu::Vector2{ 1, 0 }.Rotate(m_tranform.rotation);
+            nu::Vector2 forword = nu::Vector2{ 1, 0 }.Rotate(m_transform.rotation);
             m_velocity += forword * m_speed * dt;
         }
 
-        m_tranform.position += (m_velocity * dt);
+        m_transform.position += (m_velocity * dt);
         m_velocity *= std::pow(0.02f, dt);   
         
 
@@ -37,9 +38,9 @@ namespace nu {
     void Enemy::Draw(const Renderer& renderer) const
     {
         if (m_texture)
-            renderer.DrawTexture(m_texture.get(), m_tranform.position.x, m_tranform.position.y, m_tranform.rotation, m_tranform.scale);
+            renderer.DrawTexture(m_texture.get(), m_transform.position.x, m_transform.position.y, m_transform.rotation, m_transform.scale);
         else if (m_model)
-            renderer.DrawModel(*m_model, m_tranform);
+            renderer.DrawModel(*m_model, m_transform);
     }
 
     void Enemy::OnKilled()
@@ -57,7 +58,7 @@ namespace nu {
 
             auto frag = std::make_unique<Enemy>(
                 2500.0f,
-                Tranform{ m_tranform.position, dir, 4.0f },
+                Transform{ m_transform.position, dir, 4.0f },
                 *Assets::model_triangle
             );
             frag->SetTexture(Resources().Get<Texture>("Assets/Trita.png", Engine::Get().GetRenderer()));
@@ -70,49 +71,14 @@ namespace nu {
         }
     }
 
-    void Enemy::SpawnAtEdges(Scene& scene, int count, float worldW, float worldH) {
-        const float MARGIN = 20.0f;
+     
 
-        for (int i = 0; i < count; i++) {
-            float x, y;
-            int edge = RandomInt() % 4;
+    void Enemy::Read(const nu::json::value_t& value)  {
+        Actor::Read(value);
 
-            switch (edge) {
-            case 0: x = nu::math::randomf(0.0f, worldW); y = -MARGIN;          break;
-            case 1: x = nu::math::randomf(0.0f, worldW); y = worldH + MARGIN;  break;
-            case 2: x = -MARGIN;          y = nu::math::randomf(0.0f, worldH);  break;
-            case 3: x = worldW + MARGIN;  y = nu::math::randomf(0.0f, worldH);  break;
-            }
-
-            auto enemy = std::make_unique<Enemy>(
-                1500.0f,
-                Tranform{ Vector2{x, y}, 0.0f, 3.0f },
-                *Assets::model_yeedi
-            );
-            enemy->SetTexture(Resources().Get<Texture>("Assets/yeedi_.png", Engine::Get().GetRenderer()));
-            enemy->SetRadius(30.f);
-
-            auto rainDrop = std::make_unique<Enemy>(
-                2500.0f,
-                Tranform{ Vector2{x,y}, 0.0f, 4.f },
-                *Assets::model_raincol
-            );
-            rainDrop->SetTexture(Resources().Get<Texture>("Assets/rainDrop.png", Engine::Get().GetRenderer()));
-            rainDrop->SetRadius(40.f);
-
-            enemy->setName("yeedi_" + std::to_string(i));
-            rainDrop->setName("rainDrop_" + std::to_string(i));
-
-            enemy->setTag("enemy");
-            rainDrop->setTag("enemy");
-
-            if (math::randomf(0.0f, 1.f) <= 0.1f) {
-                scene.AddActor(std::move(rainDrop));
-            }else{
-                scene.AddActor(std::move(enemy));
-            }
-
-            
-        }
+       
+        JSON_READ_NAME(value, "health", m_health);
+        JSON_READ_NAME(value, "speed", m_speed);
+        JSON_READ_NAME(value, "speed", m_speed);    
     }
 }

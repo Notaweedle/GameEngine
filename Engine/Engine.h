@@ -16,7 +16,7 @@
 
 #include "StringUtil.h"
 #include "GameTime.h"
-#include "Tranform.h"
+#include "Transform.h"
 
 #include "Actor.h"
 #include "Model.h"

@@ -35,6 +35,7 @@ public:
 protected:
 	bool CheckCollisions();
 	void ResetGame();
+	void SpawnAtEdges(int count, float worldW, float worldH);
 	void RespawnPlayer();
 
 	nu::Scene m_scene;
@@ -44,6 +45,10 @@ protected:
 	int m_lives = 3;
 	int m_waveCount = 1;
 	bool m_quit = false;
+
+	
+	int m_lastScore = -1;
+	int m_lastLives = -1;
 
 	
 };

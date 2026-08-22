@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include "Model.h"
-#include "Tranform.h"
+#include "Transform.h"
 
 namespace nu
 {
@@ -28,7 +28,7 @@ namespace nu
 		void DrawRect(float x, float y, float w, float h) const;
 		void DrawLine(float x1, float y1, float x2, float y2) const;
 		void DrawCircle(float x, float y, float radius, int segments = 24) const;
-		void DrawModel(const Model& model, const Tranform tranform) const;
+		void DrawModel(const Model& model, const Transform transform) const;
 		void DrawTexture(Texture* texture, float x, float y, float rot, float scale) const;
 		void DrawTexture(Texture* texture, float x, float y, float rot, float scale, const Color& tint) const;
 

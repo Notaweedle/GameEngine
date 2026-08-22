@@ -19,6 +19,9 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{36c55f6b-e8de-4bd6-89da-f0f968b96375}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Component_cpp">
+      <UniqueIdentifier>{66d89481-e7d5-42b0-a127-c5ad84ab17af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -48,7 +51,7 @@
     <ClInclude Include="GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tranform.h">
+    <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Actor.h">
@@ -132,6 +135,12 @@
     <ClInclude Include="Components\CircleColilliderComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="Components\RigidBodyComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MeshRendererComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -182,11 +191,17 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\SpriteRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components\CircleColilliderComponent.cpp">
-      <Filter>Component</Filter>
+      <Filter>Component\Component_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MeshRendererComponent.cpp">
+      <Filter>Component\Component_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RigidBodyComponent.cpp">
+      <Filter>Component\Component_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\SpriteRendererComponent.cpp">
+      <Filter>Component\Component_cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

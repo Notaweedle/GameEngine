@@ -7,22 +7,26 @@ namespace nu  {
 	public:
 		Bullet() = default;
 
-		Bullet(float speed, const nu::Tranform& tranform) :
-			Actor{ tranform },
+		Bullet(float speed, const nu::Transform& transform) :
+			Actor{ transform },
 			m_speed{ speed }
 		{
 		}
 
-		Bullet(float speed, const nu::Tranform& tranform, const nu::Model& model) :
-			Actor{ tranform, model },
+		Bullet(float speed, const nu::Transform& transform, const nu::Model& model) :
+			Actor{ transform, model },
 			m_speed{ speed }
 		{
 		}
+
+		CLASS_PROTOTYPE(Bullet)
 
 		void Update(float dt) override;
 		void Draw(const class nu::Renderer& renderer) const override;
 
 		void setLifespan(float lifespan) { m_lifespan = lifespan; }
+
+		void Read(const nu::json::value_t& value) override;
 
 	private:
 		float m_speed = 2000.0f;

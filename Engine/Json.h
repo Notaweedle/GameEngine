@@ -2,6 +2,7 @@
 #include <rapidjson/document.h>   
 #include <string>
 #include "Vector2.h"
+#include "Transform.h"
 #include "Color.h"
 
 #define JSON_READ(value, data) nu::json::Read(value, #data, data)
@@ -13,14 +14,14 @@
 #define JSON_HAS(value, data)   value.HasMember(#data)
 #define JSON_HAS_NAME(value, name)   value.HasMember(name)
 
-#define JSON_GET(value, data)  value[#data]
-#define JSON_GET_NAME(value, name)  value[name]
+#define JSON_GET(value, data)  value[#data]
+#define JSON_GET_NAME(value, name)  value[name]
 
 
 namespace nu::json
 {
     using value_t = rapidjson::Value;
-    using documnet_t = rapidjson::Value;
+    using document_t = rapidjson::Document;
 
     bool Load(const std::string& filename, rapidjson::Document& document);
 
@@ -33,6 +34,8 @@ namespace nu::json
     bool Read(const rapidjson::Value& value, const std::string& name, std::string& data);
 
     bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data);
+
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data);
 
     bool Read(const rapidjson::Value& value, const std::string& name, Color& data);
 }

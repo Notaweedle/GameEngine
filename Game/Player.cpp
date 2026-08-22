@@ -10,15 +10,17 @@
 #include "mathUitl.h"
 #include "ResourceManager.h"
 #include "Texture.h"
+#include "Factory.h"
 
-
+// Player lives in the global namespace, so register it here at global scope.
+FACTORY_REGISTER(Player);
 
 
 void Player::Update(float dt) 
 {
 	float speed = 4000.0f;
-	nu::Vector2 forword = { std::cos(getTranform().rotation),
-							std::sin(getTranform().rotation)};
+	nu::Vector2 forword = { std::cos(getTransform().rotation),
+							std::sin(getTransform().rotation)};
 	nu::Vector2 force{ 0.0f,0.0f };
 
 	
@@ -27,8 +29,8 @@ void Player::Update(float dt)
 
 		
 		nu::ParticleDesc pd;
-		pd.position = getTranform().position - forword * 20.0f;
-		pd.angle = static_cast<float>(getTranform().rotation + nu::math::pi);
+		pd.position = getTransform().position - forword * 20.0f;
+		pd.angle = getTransform().rotation + nu::math::pi;
 		pd.angleVariance = 0.3f;
 		pd.speed = 120.0f;
 		pd.speedVariance = 40.0f;
@@ -45,10 +47,10 @@ void Player::Update(float dt)
 	
 	float turnSpeed = 8.0f;
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)||
-		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT)) setRotation(getTranform().rotation - turnSpeed * dt);
+		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT)) setRotation(getTransform().rotation - turnSpeed * dt);
 
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)||
-		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) setRotation(getTranform().rotation + turnSpeed * dt);
+		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) setRotation(getTransform().rotation + turnSpeed * dt);
 
 	setVelocity(getVelocity() + (force * dt));
 
@@ -61,26 +63,20 @@ void Player::Shoot() {
 	if (!nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_Q)|| nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) return;
 	if (getScene() == nullptr) return;
 
-	nu::Vector2 forword = { std::cos(getTranform().rotation),
-							std::sin(getTranform().rotation) };
+	nu::Vector2 forword = { std::cos(getTransform().rotation),
+							std::sin(getTransform().rotation) };
 
-	nu::Tranform tranform{ getTranform().position + (forword * 30.0f),
-						   getTranform().rotation,
-						   1.5f };
+	
+	auto bullet = nu::Factory::Instance().Create<nu::Bullet>("bulletPrototype");
+	if (bullet == nullptr) return;
 
-
-
-	auto bullet_ = nu::Factory::Instance().Create<nu::Bullet>("bulletPrototype");
-	bullet_->setTranform(m_tranform);
-
-	auto bullet = std::make_unique<nu::Bullet>(m_bulletSpeed, tranform, *Assets::model_bullet);
-	bullet->setName("bullet");
-	bullet->setTag("bullet");
+	nu::Transform t = getTransform();
+	t.position = getTransform().position + (forword * 30.0f); 
+	bullet->setTransform(t);
 	bullet->setVelocity(forword * m_bulletSpeed);
-	bullet->SetTexture(nu::Resources().Get<nu::Texture>("Assets/Bullet_1.png", nu::Engine::Get().GetRenderer()));
-	bullet->SetRadius(15.f);
+	bullet->SetRadius(15.0f);
 
-	getScene()->AddActor(std::move(bullet));
+	m_scene->AddActor(std::move(bullet));
 
 	nu::Engine::Get().GetAudio().PlaySound("laser");
 }
@@ -88,4 +84,15 @@ void Player::Shoot() {
 void Player::Draw(const nu::Renderer& renderer) const
 {
 	Actor::Draw(renderer);
+}
+
+void Player::Read(const nu::json::value_t& value) {
+	Actor::Read(value);
+
+	JSON_READ_NAME(value, "speed", m_speed);
+	
+	JSON_READ_NAME(value, "tag", m_tag);
+	JSON_READ_NAME(value, "name", m_name);
+	JSON_READ_NAME(value, "speed", m_speed);
+	JSON_READ_NAME(value, "speed", m_speed);
 }
