@@ -1,9 +1,8 @@
- #include "pch.h"
+#include "pch.h"
 #include "Texture.h"
 #include "Renderer.h"   
-#include <SDL3/SDL_surface.h>
-#include <SDL3_image/SDL_image.h>
-#include <iostream>
+
+
 
 namespace nu
 {
@@ -30,8 +29,7 @@ bool Texture::Load(const std::string& filename, Renderer& renderer){
         return false;
     }
 
-    // Nearest-neighbor sampling keeps pixel art crisp when scaled up
-    // (default is linear, which blurs it).
+    
     SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
 
     return true;

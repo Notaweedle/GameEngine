@@ -6,7 +6,7 @@
 
 namespace nu {
 
-    // registers as "bullet" (Factory lowercases the name, matching the JSON type)
+    
     FACTORY_REGISTER(Bullet);
 
     void Bullet::Update(float dt) {

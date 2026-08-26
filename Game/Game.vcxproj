@@ -179,6 +179,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameManager.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\Animations\bat_idle.json" />
+    <None Include="..\Build\Assets\data\data.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -3,7 +3,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include "Model.h"
-#include "Transform.h"
+#include "math/Transform.h"
+#include <Math/Rect.h>
 
 namespace nu
 {
@@ -31,6 +32,8 @@ namespace nu
 		void DrawModel(const Model& model, const Transform transform) const;
 		void DrawTexture(Texture* texture, float x, float y, float rot, float scale) const;
 		void DrawTexture(Texture* texture, float x, float y, float rot, float scale, const Color& tint) const;
+
+		void DrawTexture(Texture* texture,const Rect& source, float x, float y, float rot, float scale, const Color& tint) const;
 
 		SDL_Renderer* GetRenderer() const { return m_renderer; }
 

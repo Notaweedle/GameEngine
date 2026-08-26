@@ -30,6 +30,7 @@ namespace nu  {
 
 	private:
 		float m_speed = 2000.0f;
+		float m_bulletSpeed = 1400.0f;
 		float m_lifespan = 1.5f;
 	};
 }

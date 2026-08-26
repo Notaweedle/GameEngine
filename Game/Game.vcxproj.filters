@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{b7310cf2-7561-4257-b924-b89346cb9e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Anim">
+      <UniqueIdentifier>{ab04bcbd-42a1-46e3-b058-4c229189728c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -38,5 +44,13 @@
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\Animations\bat_idle.json">
+      <Filter>Assets\Anim</Filter>
+    </None>
+    <None Include="..\Build\Assets\data\data.json">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

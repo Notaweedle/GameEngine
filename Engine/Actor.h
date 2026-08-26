@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
-#include "Vector2.h"
-#include "Transform.h"
+#include "Math/Vector2.h"
+#include "Math/Transform.h"
 #include "Model.h"
 #include "json.h"
 #include "Resource.h"   

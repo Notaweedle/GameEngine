@@ -2,7 +2,7 @@
 #include "RigidBodyComponent.h"
 #include "Factory.h"
 #include "Actor.h"          
-#include "mathUitl.h"
+#include "math/mathUitl.h"
 #include <cmath>
 
 namespace nu

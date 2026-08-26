@@ -3,10 +3,10 @@
 #include "pch.h"
 
 #include "Renderer.h"
-#include "Vector2.h"
+#include "Math/Vector2.h"
 
 #include "Random.h"
-#include "mathUitl.h"
+#include "Math/mathUitl.h"
 #include "SDL3/SDL.h"
 #include "Texture.h"
 
@@ -16,7 +16,7 @@
 
 #include "StringUtil.h"
 #include "GameTime.h"
-#include "Transform.h"
+#include "Math/Transform.h"
 
 #include "Actor.h"
 #include "Model.h"

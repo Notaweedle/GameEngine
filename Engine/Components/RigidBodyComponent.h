@@ -1,6 +1,6 @@
 #pragma once
 #include "Framework/Component.h"
-#include "Vector2.h"
+#include "math/Vector2.h"
 #include "json.h"
 
 namespace nu

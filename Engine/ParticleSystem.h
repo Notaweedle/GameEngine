@@ -1,8 +1,8 @@
 #pragma once
-#include "Vector2.h"
+#include "Math/Vector2.h"
 #include "Color.h"
-#include "mathUitl.h"
-#include "Resource.h"   // res_t
+#include "Math/mathUitl.h"
+#include "Resource.h"
 #include <vector>
 
 namespace nu

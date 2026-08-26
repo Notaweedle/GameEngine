@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "Enemy.h"
 #include "Renderer.h"
-#include "mathUitl.h"
+#include "math/mathUitl.h"
 #include "Random.h"
 #include "Scene.h"
 #include "../Game/Assets.h"
 #include "ResourceManager.h"
 #include "Texture.h"
-#include "Engine.h"
+//#include "Engine.h"
+#include "Factory.h"
 #include <cmath>
 #include <Json.h>
 
@@ -16,7 +17,7 @@ namespace nu {
     FACTORY_REGISTER(Enemy);
     
     void Enemy::Update(float dt) {
-        Actor* player = (m_scene) ? m_scene->GetActorByName<Actor>("Player") : nullptr;
+        Actor const* player = (m_scene) ? m_scene->GetActorByName<Actor>("Player") : nullptr;
         if (player) {
             nu::Vector2 direction = player->getTransform().position - m_transform.position;
 
@@ -48,26 +49,25 @@ namespace nu {
         Destroy();
 
         if (m_scene == nullptr) return;
-        if (m_name.find("yeedi_") == std::string::npos) return;
+
+        
+        if (m_name.find("yeedi") == std::string::npos) return;
         if (RandomFloat() > 0.5f) return;
+
         float angle = RandomFloat(0.0f, 6.28f);
 
         for (int i = 0; i < 2; i++) {
+
             float dir = angle + (i * math::pi);
-            Vector2 vel = Vector2{ std::cos(dir), std::sin(dir) } *200.0f;
+            Vector2 vel = Vector2{ std::cos(dir), std::sin(dir) } * 200.0f;
 
-            auto frag = std::make_unique<Enemy>(
-                2500.0f,
-                Transform{ m_transform.position, dir, 4.0f },
-                *Assets::model_triangle
-            );
-            frag->SetTexture(Resources().Get<Texture>("Assets/Trita.png", Engine::Get().GetRenderer()));
-            frag->SetRadius(24.f);
+            auto trita = Factory::Instance().Create<Actor>("trita");
+            if (trita == nullptr) { continue; }
+            trita->setPosistion(m_transform.position);
+            trita->setRotation(dir);
+            trita->setVelocity(vel);
 
-            frag->setName("triangle_" + std::to_string(i));
-            frag->setTag("enemy");
-            frag->setVelocity(vel);
-            m_scene->AddActor(std::move(frag));
+            m_scene->AddActor(std::move(trita));
         }
     }
 
