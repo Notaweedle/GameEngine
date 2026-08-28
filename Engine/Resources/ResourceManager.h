@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>   
 #include "Resource.h"
-#include "Singleton.h"
+#include "Core/Singleton.h"
 
 namespace nu
 {

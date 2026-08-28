@@ -1,14 +1,14 @@
 #include "Player.h"
-#include "Renderer.h"
+#include "renderer/Renderer.h"
 #include "Engine.h"
-#include "Scene.h"
-#include "bullet.h"
-#include "ParticleSystem.h"
+#include "Framework/Scene.h"
+#include "core/bullet.h"
+#include "Renderer/ParticleSystem.h"
 #include "Assets.h"
 #include "math/mathUitl.h"
-#include "ResourceManager.h"
-#include "Texture.h"
-#include "Factory.h"
+#include "Resources/ResourceManager.h"
+#include "Renderer/Texture.h"
+#include "Core/Factory.h"
 
 #include <iostream>
 #include <memory>
@@ -27,7 +27,7 @@ void Player::Update(float dt)
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)|| nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_UP)) {
 		force = forword * speed;
 
-		//todo Remake this to use factorys 
+		//TODO Remake this to use factorys 
 		nu::ParticleDesc pd;
 		pd.position = getTransform().position - forword * 20.0f;
 		pd.angle = getTransform().rotation + nu::math::pi;

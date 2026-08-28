@@ -1,8 +1,8 @@
 #pragma once
 #include "RendererComponent.h"
-#include "Resource.h"
-#include "Model.h"
-#include "json.h"
+#include "Resources/Resource.h"
+#include "Serialization/json.h"
+#include <Renderer/Model.h>
 
 namespace nu
 {

@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "SpriteRendererComponent.h"
-#include "Renderer.h"
-#include "Actor.h"
+#include "Renderer/Renderer.h"
+#include "Framework/Actor.h"
 #include "Engine.h"
-#include <json.h>
+#include <Serialization/json.h>
 
 
 
@@ -18,7 +18,7 @@ namespace nu {
             std::cout << "m_texture can NOT be null" << std::endl;
             return; 
         }
-        if (m_texture) {
+        if (m_texture) { 
             renderer.DrawTexture(
                 m_texture.get(),
                 GetOwner()->getTransform().position.x,

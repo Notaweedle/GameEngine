@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Resource.h"
+#include "Resources/Resource.h"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace nu

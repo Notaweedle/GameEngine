@@ -1,7 +1,7 @@
 #pragma once 
-#include "Actor.h"
-#include "Model.h"
-#include <Json.h>
+#include "Framework/Actor.h"
+#include "Renderer/Model.h"
+#include <Serialization/Json.h>
 
 
 struct PlayerDesc : public nu::ActorDesc

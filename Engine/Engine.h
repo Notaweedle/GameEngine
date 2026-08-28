@@ -2,35 +2,39 @@
 
 #include "pch.h"
 
-#include "Renderer.h"
+
+#include "Core/Random.h"
+#include "Core/Factory.h"
+#include "Core/Singleton.h"
+#include "Core/StringUtil.h"
+#include "Core/GameTime.h"
+#include "Core/File.h"
+#include "Core/Enemy.h"
+#include "Core/bullet.h"
+
+#include "Math/mathUitl.h"
+#include "Math/Transform.h"
 #include "Math/Vector2.h"
 
-#include "Random.h"
-#include "Math/mathUitl.h"
+
+#include "Framework/Actor.h"
+#include "Framework/Scene.h"
+
+
+#include "Audio/Audio.h"
+
+#include "Resources/ResourceManager.h"
+#include "Resources/Resource.h"
+
+#include "Renderer/Texture.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Model.h"
+#include "Renderer/ParticleSystem.h"
+
+#include "Input/Input.h"
+
 #include "SDL3/SDL.h"
-#include "Texture.h"
-
 #include <vector>
-#include "Input.h"
-#include "Factory.h"
-
-#include "StringUtil.h"
-#include "GameTime.h"
-#include "Math/Transform.h"
-
-#include "Actor.h"
-#include "Model.h"
-#include "Scene.h"
-#include "Enemy.h"
-#include "bullet.h"
-
-#include "File.h"
-#include "ParticleSystem.h"
-#include "Audio.h"
-#include "ResourceManager.h"
-#include "Resource.h"
-#include "Singleton.h"
-
 
 namespace nu {
 	class Engine {

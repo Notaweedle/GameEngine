@@ -2,12 +2,12 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Assets.h"
-#include "Scene.h"
+#include "Framework/Scene.h"
 #include <string>
 #include <memory>
 #include <format>   
-#include <ParticleSystem.h>
-#include <ParticleManager.h>
+#include <Renderer/ParticleSystem.h>
+#include <Renderer/ParticleManager.h>
 
 using namespace nu;
 

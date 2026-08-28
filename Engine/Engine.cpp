@@ -2,9 +2,9 @@
 //
 
 #include "pch.h"
-#include "framework.h"
+#include "framework/framework.h"
 #include "Engine.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include <Iostream>
 
 

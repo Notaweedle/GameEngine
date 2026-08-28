@@ -2,9 +2,9 @@
 #include "Object.h"
 #include "Math/Vector2.h"
 #include "Math/Transform.h"
-#include "Model.h"
-#include "json.h"
-#include "Resource.h"   
+#include "Renderer/Model.h"
+#include "Serialization/json.h"
+#include "Resources/Resource.h"   
 #include <string>
 #include <memory>
 #include <Framework/Component.h>
@@ -61,6 +61,10 @@ namespace nu {
 
         virtual void Update(float dt);
         virtual void Draw(const class Renderer& renderer) const;
+        virtual void Start();
+        virtual void OnDestroy();
+
+
         void Read(const nu::json::value_t& value) override;
 
         void DrawHitbox(const class Renderer& renderer) const;
@@ -78,7 +82,8 @@ namespace nu {
             }
             return nullptr;
         }
-        void Destroy() { m_destroyed = true; }
+
+        void Destroy () { m_destroyed = true; }
 
         bool IsDestroyed() const { return m_destroyed; }
         void SetRadius(float radius) { m_radius = radius; }

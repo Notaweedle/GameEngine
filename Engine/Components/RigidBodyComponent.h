@@ -1,7 +1,7 @@
 #pragma once
 #include "Framework/Component.h"
 #include "math/Vector2.h"
-#include "json.h"
+#include "Serialization/json.h"
 
 namespace nu
 {

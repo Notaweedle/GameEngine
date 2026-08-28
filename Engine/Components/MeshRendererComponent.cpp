@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "MeshRendererComponent.h"
-#include "Factory.h"
-#include "Renderer.h"
-#include "Actor.h"
+#include "Core/Factory.h"
+#include "Renderer/Renderer.h"
+#include "framework/Actor.h"
 
 namespace nu
 {

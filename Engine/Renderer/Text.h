@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <SDL3/SDL.h>
-#include "Resource.h"   // res_t
-#include "Color.h"      // Color
+#include "Resources/Resource.h"   // res_t
+#include "Core/Color.h"      // Color
 
 namespace nu
 {

@@ -1,6 +1,6 @@
 #pragma once
 #include "object.h"
-#include "json.h"
+#include "Serialization/json.h"
 namespace nu {
 	class Actor;
 
@@ -11,7 +11,8 @@ namespace nu {
 		virtual ~Component() = default;
 
 		virtual void Start() {}
-		virtual void Destroyed() {}
+		virtual void onDestroy() {}
+
 		virtual void Update(float dt) {}
 		virtual void Read(const json::value_t& value) {}
 		Actor* GetOwner() const { return m_owner; }

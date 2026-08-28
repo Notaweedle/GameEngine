@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "Actor.h"
-#include "Renderer.h"
+#include "Renderer/Renderer.h"
 #include "Math/mathUitl.h"
 #include <cmath>
 #include "Engine.h"
 #include "Components/RendererComponent.h"
-#include "ResourceManager.h"
-#include "Texture.h"
-#include <Json.h>
+#include "Resources/ResourceManager.h"
+#include "Renderer/Texture.h"
+#include <Serialization/Json.h>
 
 
 
@@ -116,5 +116,19 @@ namespace nu {
             }
         }
     }
+
+     void Actor::Start() {
+         for (auto& component : m_componet)
+         {
+             component->Start();
+         }
+     };
+
+     void Actor::OnDestroy() {
+         for (auto& component : m_componet)
+         {
+             component->onDestroy();
+         }
+     };
 
 }

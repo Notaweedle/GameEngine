@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "Resources/Resource.h"
 #include <string>
 #include <Math/Vector2.h>
 #include <Math/Rect.h>
@@ -12,7 +12,8 @@ namespace nu
 		bool Load(const std::string& fileName, class Renderer& renderere);
 		Rect GetFrameRect(unsigned int frame);
 
-
+		unsigned int GetTotalFrames() const { return m_totalFrame; }
+		 res_t <class Texture>  GetTexture() const { return m_texture; }
 	private:
 		int m_numColumns = 0;
 		int m_numRows = 0;

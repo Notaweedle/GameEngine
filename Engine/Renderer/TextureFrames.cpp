@@ -1,6 +1,6 @@
-#include "pch.h"
+ #include "pch.h"
 #include "TextureFrames.h"
-#include "json.h"
+#include "Serialization/json.h"
 #include "Texture.h"
 
 
@@ -18,21 +18,21 @@ namespace nu {
 		}
 
 		std::string texture_name;
-		//JSON_READ_REQ(doc, texture_name);
+		JSON_READ_REQ(doc, texture_name);
 		if(texture_name.empty()){
 			return false;
 		}
 
-		/*m_texture = Resource().Get<Texture>(texture_name, renderer);
+		m_texture = Resource().Get<Texture>(texture_name, renderer);
 		if (!m_texture) {
 			std::cerr << "Could not load Texture Frame texture: " << fileName << std::endl;
 			return false;
-		}*/
+		}
 
-		/*JSON_READ(doc, "columns", m_numColumns);
+		JSON_READ(doc, "columns", m_numColumns);
 		JSON_READ(doc, "rows", m_numRows);
 		JSON_READ(doc, "start_frame", m_startFrame);
-		JSON_READ(doc, "total_frame", m_totalFrame);*/
+		JSON_READ(doc, "total_frame", m_totalFrame);
 
 		if(m_numColumns <= 0 || m_numRows <= 0){
 			std::cerr << "Could not load Texture Frame texture: " << fileName << std::endl;
@@ -41,7 +41,7 @@ namespace nu {
 		}
 
 		Vector2 textureSize = m_texture->GetSize();
-		/*m_FrameSize = textureSize / Vector2{ m_numColumns , m_numRows };*/
+		m_FrameSize = textureSize / Vector2{static_cast<float> (m_numColumns) ,static_cast<float> (m_numRows) };
 
 
 		return true;
@@ -64,12 +64,10 @@ namespace nu {
 
 
 
-		return Rect
-		{
-		x,
-		y,
-		m_FrameSize.x,
-		m_FrameSize.y
+		return Rect{
+			x,y,
+			m_FrameSize.x,
+			m_FrameSize.y
 		};
 	}
 

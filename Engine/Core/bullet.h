@@ -1,6 +1,6 @@
 #pragma once
-#include "Actor.h"
-#include "Model.h"
+#include "Framework/Actor.h"
+#include "Renderer/Model.h"
 
 namespace nu  {
 	class Bullet : public nu::Actor {

@@ -1,8 +1,8 @@
 #pragma once
-#include <Scene.h>
-#include <Font.h>
-#include <Text.h>
-#include <Texture.h>
+#include <Framework/Scene.h>
+#include <Renderer/Font.h>
+#include <Renderer/Text.h>
+#include <Renderer/Texture.h>
 
 enum class GameState { StartGame, InGame, GameOver };
 

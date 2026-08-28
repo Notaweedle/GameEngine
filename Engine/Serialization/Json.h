@@ -3,7 +3,7 @@
 #include <string>
 #include "Math/Vector2.h"
 #include "Math/Transform.h"
-#include "Color.h"
+#include "Core/Color.h"
 
 #define JSON_READ(value, data) nu::json::Read(value, #data, data)
 #define JSON_READ_NAME(value, name, data) nu::json::Read(value, name, data)

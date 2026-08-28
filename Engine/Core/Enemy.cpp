@@ -1,16 +1,15 @@
 #include "pch.h"
 #include "Enemy.h"
-#include "Renderer.h"
+#include "Renderer/Renderer.h"
 #include "math/mathUitl.h"
 #include "Random.h"
-#include "Scene.h"
+#include "framework/Scene.h"
 #include "../Game/Assets.h"
-#include "ResourceManager.h"
-#include "Texture.h"
-//#include "Engine.h"
+#include "Resources/ResourceManager.h"
+#include "Renderer/Texture.h"
 #include "Factory.h"
 #include <cmath>
-#include <Json.h>
+#include <Serialization/Json.h>
 
 
 namespace nu {

@@ -1,11 +1,11 @@
 #include "Engine.h"
 #include "pch.h"
 #include "GameManager.h"
-#include "Texture.h"
-#include "Text.h"
-#include "Font.h"
-#include "Json.h"    
-#include "File.h"   
+#include "Renderer/Texture.h"
+#include "Renderer/Text.h"
+#include "Renderer/Font.h"
+#include "Serialization/Json.h"    
+#include "core/File.h"   
 #include "Player.h"
 
 #include <SDL3_ttf/SDL_ttf.h>
