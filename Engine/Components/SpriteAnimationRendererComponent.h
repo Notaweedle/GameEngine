@@ -6,10 +6,10 @@
 namespace nu
 {
 
-	class SpriteAnimationComponent : public RendererComponent
+	class SpriteAnimationRendererComponent : public RendererComponent
 	{
 	public :
-		CLASS_PROTOTYPE(SpriteAnimationComponent)
+		CLASS_PROTOTYPE(SpriteAnimationRendererComponent)
 
 		void Draw(const Renderer& renderer) override;
 		void Update(float dt) override;

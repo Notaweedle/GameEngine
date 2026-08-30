@@ -182,7 +182,7 @@
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RendererComponent.h" />
     <ClInclude Include="Components\RigidBodyComponent.h" />
-    <ClInclude Include="Components\SpriteAnimationComponent.h" />
+    <ClInclude Include="Components\SpriteAnimationRendererComponent.h" />
     <ClInclude Include="Components\SpriteRendererComponent.h" />
     <ClInclude Include="Components\TilemapRendererComponent.h" />
     <ClInclude Include="Core\bullet.h" />
@@ -229,7 +229,7 @@
     <ClCompile Include="Components\MeshRendererComponent.cpp" />
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Components\RigidBodyComponent.cpp" />
-    <ClCompile Include="Components\SpriteAnimationComponent.cpp" />
+    <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp" />
     <ClCompile Include="Components\SpriteRendererComponent.cpp" />
     <ClCompile Include="Core\bullet.cpp" />
     <ClCompile Include="Core\Enemy.cpp" />

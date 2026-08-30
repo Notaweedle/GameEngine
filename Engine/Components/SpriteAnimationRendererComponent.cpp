@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "SpriteAnimationComponent.h"
+#include "SpriteAnimationRendererComponent.h"
 #include "Renderer/Renderer.h" 
 #include "Framework/Actor.h" 
 #include "Resources/ResourceManager.h"
@@ -11,9 +11,9 @@
 namespace nu {
 
 
-	FACTORY_REGISTER(SpriteAnimationComponent)
+	FACTORY_REGISTER(SpriteAnimationRendererComponent)
 
-	void SpriteAnimationComponent::Update(float dt)
+	void SpriteAnimationRendererComponent::Update(float dt)
 	{
 		if (!m_textureFrames || m_textureFrames->GetTotalFrames() == 0) return;
 
@@ -28,7 +28,7 @@ namespace nu {
 
 	}
 
-	void SpriteAnimationComponent::Draw(const Renderer& renderer)
+	void SpriteAnimationRendererComponent::Draw(const Renderer& renderer)
 	{
 		if (!m_textureFrames) return;
 
@@ -46,7 +46,7 @@ namespace nu {
 			false);
 	}
 
-	void SpriteAnimationComponent::Read(const json::value_t& value)
+	void SpriteAnimationRendererComponent::Read(const json::value_t& value)
 	{
 
 		RendererComponent::Read(value);

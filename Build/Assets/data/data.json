@@ -3,7 +3,7 @@
     {
       "type": "Actor",
       "prototype": false,
-      "name": "Bat",
+      "name": "  ",
       "tag": "enemy",
       "active": true,
       "transform": {
@@ -16,7 +16,7 @@
       },
       "components": [
         {
-          "type": "SpriteAnimationComponent",
+          "type": "SpriteAnimationRendererComponent",
           "frames_per_second": 12,
           "loop": true,
           "texture_frames": "Assets/Animations/bat_idle.json"

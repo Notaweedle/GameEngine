@@ -186,7 +186,7 @@
     <ClInclude Include="Components\TilemapRendererComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Components\SpriteAnimationComponent.h">
+    <ClInclude Include="Components\SpriteAnimationRendererComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,8 +266,8 @@
     <ClCompile Include="Physics\Physics.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Components\SpriteAnimationComponent.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp">
+      <Filter>Component\Component_cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
