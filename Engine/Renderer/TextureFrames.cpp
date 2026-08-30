@@ -2,6 +2,7 @@
 #include "TextureFrames.h"
 #include "Serialization/json.h"
 #include "Texture.h"
+#include <Resources/ResourceManager.h>
 
 
 
@@ -18,21 +19,21 @@ namespace nu {
 		}
 
 		std::string texture_name;
-		JSON_READ_REQ(doc, texture_name);
+		JSON_READ(doc, texture_name);   // reads the "texture_name" key
 		if(texture_name.empty()){
 			return false;
 		}
 
-		m_texture = Resource().Get<Texture>(texture_name, renderer);
+		m_texture = Resources().Get<Texture>(texture_name, renderer);
 		if (!m_texture) {
 			std::cerr << "Could not load Texture Frame texture: " << fileName << std::endl;
 			return false;
 		}
 
-		JSON_READ(doc, "columns", m_numColumns);
-		JSON_READ(doc, "rows", m_numRows);
-		JSON_READ(doc, "start_frame", m_startFrame);
-		JSON_READ(doc, "total_frame", m_totalFrame);
+		JSON_READ_NAME(doc, "columns", m_numColumns);
+		JSON_READ_NAME(doc, "rows", m_numRows);
+		JSON_READ_NAME(doc, "start_frame", m_startFrame);
+		JSON_READ_NAME(doc, "total_frame", m_totalFrame);
 
 		if(m_numColumns <= 0 || m_numRows <= 0){
 			std::cerr << "Could not load Texture Frame texture: " << fileName << std::endl;

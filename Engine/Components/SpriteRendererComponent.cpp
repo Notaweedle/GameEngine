@@ -34,7 +34,8 @@ namespace nu {
         RendererComponent::Read(value);
 
         std::string textureName;
-        if (JSON_READ_NAME(value, "texture", textureName) && !textureName.empty())
+        JSON_READ_NAME(value, "texture", textureName);
+        if (!textureName.empty())
         {
             m_texture = Resources().Get<Texture>(textureName, Engine::Get().GetRenderer());
         }

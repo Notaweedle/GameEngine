@@ -2,20 +2,26 @@
   "actors": [
     {
       "type": "Actor",
-      "prototype": true,
+      "prototype": false,
       "name": "Bat",
-      "tag":"enemy",
-      "active": true ,
+      "tag": "enemy",
+      "active": true,
       "transform": {
-        "position": [0.0,0.0],
-        "rotation": 45.0,
+        "position": [
+          200.0,
+          200.0
+        ],
+        "rotation": 0.0,
         "scale": 6.0
       },
       "components": [
         {
-          "type": "SpriteRendererComponent",
-          "texture": "Assets/bat.png"
-        }]
+          "type": "SpriteAnimationComponent",
+          "frames_per_second": 12,
+          "loop": true,
+          "texture_frames": "Assets/Animations/bat_idle.json"
+        }
+      ]
     },
     {
       "name": "PlayerPrototype",
@@ -149,11 +155,17 @@
       "active": true,
       "speed": 1250.0,
       "damping": 1.0,
-      "velocity": [0.0,0.0],
+      "velocity": [
+        0.0,
+        0.0
+      ],
       "texture": "Assets/RainDrop.png",
       "health": 1,
       "transform": {
-        "position": [2.4,5.5],
+        "position": [
+          2.4,
+          5.5
+        ],
         "rotation": 45.0,
         "scale": 4.0
       },
@@ -162,12 +174,16 @@
           "type": "CircleColilliderComponent",
           "radius": 32.0
         },
-        { "type": "SpriteRendererComponent",
+        {
+          "type": "SpriteRendererComponent",
           "texture": "Assets/RainDrop.png"
         },
         {
           "type": "RigidBodyComponent",
-          "velocity": [50,0],
+          "velocity": [
+            50,
+            0
+          ],
           "damping": 0.8
         }
       ]
@@ -188,13 +204,18 @@
       "texture": "Assets/Bullet_1.png",
       "health": 1,
       "transform": {
-        "position": [2.4,5.5],
+        "position": [
+          2.4,
+          5.5
+        ],
         "rotation": 45.0,
         "scale": 1.0
       },
       "components": [
-        {"type": "CircleColilliderComponent",
-          "radius": 15.0}
+        {
+          "type": "CircleColilliderComponent",
+          "radius": 15.0
+        }
       ]
     }
   ]

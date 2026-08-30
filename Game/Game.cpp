@@ -34,13 +34,17 @@ int main()
     game.Initialize(); 
 
     // --- TEMP frame-time diagnostics ---
-    float  fpsAccum = 0.0f;   // seconds accumulated this reporting window
+    float  fpsAccum = 0.0f;    // seconds accumulated this reporting window
     int    fpsFrames = 0;     // frames this window
     float  fpsWorst = 0.0f;   // worst (largest) frame time this window, in ms
+
+    const Uint64 targetFrameMs = 1000 / 60;   // ~16 ms per frame -> cap at 60 FPS
 
     bool quit = false;
     while (!quit)
     {
+        Uint64 frameStart = SDL_GetTicks();
+
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT) quit = true;
@@ -67,6 +71,9 @@ int main()
         game.Update(dt);
         game.Draw();
 
+        // cap the frame rate to 60 FPS
+        Uint64 frameMs = SDL_GetTicks() - frameStart;
+        if (frameMs < targetFrameMs) SDL_Delay(static_cast<Uint32>(targetFrameMs - frameMs));
     }
 
     return 0;

@@ -140,7 +140,7 @@ namespace nu {
         std::string m_tag = "_actor";
         Vector2 m_velocity {0,0};
         res_t<Model> m_model = nullptr;
-        res_t<Texture> m_texture = nullptr;
+        res_t<Texture> m_texture;
         float m_radius = 0.0f;   
         float m_lifespan = 0.0f;
         float m_damping = 0.0f;

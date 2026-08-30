@@ -2,7 +2,7 @@
 #include "ParticleSystem.h"
 #include "Renderer.h"
 #include "Texture.h"
-#include "Random.h"
+#include "Core/Random.h" n
 #include <cmath>
 
 namespace nu

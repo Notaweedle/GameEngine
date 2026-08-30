@@ -3,6 +3,7 @@
 #include "Texture.h"
 
 #include <iostream>
+#include <rapidjson/document.h>
 
 namespace nu
 {
@@ -133,22 +134,22 @@ namespace nu
             }
         }
     }
-    void Renderer::DrawTexture(Texture* texture, float x, float y, float rot, float scale) const
+    void Renderer::DrawTexture(Texture* texture, float x, float y, float rot, float scale, bool flipH) const
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
 
-        // native size, scaled
+       
         float w = 0.0f, h = 0.0f;
         SDL_GetTextureSize(texture->m_texture, &w, &h);
         w *= scale;
         h *= scale;
 
-        // (x, y) is the CENTER of the sprite
+        
         SDL_FRect dst{ x - w * 0.5f, y - h * 0.5f, w, h };
 
-        // engine rotation is radians; SDL wants degrees. center = null -> rotate about dst center.
+        
         double angleDeg = static_cast<double>(rot) * (180.0 / 3.14159265358979);
-        SDL_RenderTextureRotated(m_renderer, texture->m_texture, nullptr, &dst, angleDeg, nullptr, SDL_FLIP_NONE);
+        SDL_RenderTextureRotated(m_renderer, texture->m_texture, nullptr, &dst, angleDeg, nullptr, flipH ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     }
 
     void Renderer::DrawTexture(Texture* texture, float x, float y, float rot, float scale, const Color& tint) const
@@ -160,10 +161,45 @@ namespace nu
         SDL_SetTextureColorModFloat(texture->m_texture, tint.r, tint.g, tint.b);
         SDL_SetTextureAlphaModFloat(texture->m_texture, tint.a);
 
-        DrawTexture(texture, x, y, rot, scale);
+        DrawTexture(texture, x, y, rot, scale,false);
 
         // reset so other draws of the same texture aren't left tinted
         SDL_SetTextureColorModFloat(texture->m_texture, 1.0f, 1.0f, 1.0f);
         SDL_SetTextureAlphaModFloat(texture->m_texture, 1.0f);
+    }
+    void Renderer::DrawTexture(Texture* texture, const Rect& source, float x, float y, float rot, float scale, bool flipH) const
+    {
+        if (texture == nullptr || texture->m_texture == nullptr) return;
+
+        SDL_FRect sourceRect;
+        sourceRect.x = source.x;
+        sourceRect.y = source.y;
+        sourceRect.w = source.w;
+        sourceRect.h = source.h;
+
+        SDL_FRect destRect;
+        destRect.w = source.w * scale;
+        destRect.h = source.h * scale;
+
+        destRect.x = x - (destRect.w * 0.5f);
+        destRect.y = y - (destRect.h * 0.5f);
+
+        
+        double angleDeg = static_cast<double>(rot) * (180.0 / 3.14159265358979);
+
+        SDL_RenderTextureRotated(
+            m_renderer,
+            texture->m_texture,
+            &sourceRect,
+            &destRect,
+            angleDeg,
+            nullptr,
+            flipH ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE
+        );
+    }
+
+    void Renderer::DrawTexture(Texture& texture, const Rect& source, float x, float y, float rot, float scale, bool flipH) const
+    {
+        DrawTexture(&texture, source, x, y, rot, scale, flipH);
     }
 }

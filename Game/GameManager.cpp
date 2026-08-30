@@ -185,7 +185,8 @@ bool GameManager::CheckCollisions()
 }
 
 void GameManager::SpawnAtEdges(int count, float worldW, float worldH) {
-    const float MARGIN = 20.0f;
+
+    const float MARGIN = 25.0f;
 
     for (int i = 0; i < count; i++) {
         float x = 0.f;

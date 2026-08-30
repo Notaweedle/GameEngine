@@ -6,7 +6,7 @@ namespace nu
 	class RendererComponent : public Component
 	{
 	public:
-		virtual void Draw(const class Renderer& renderere) = 0;
+		virtual void Draw(const class Renderer& renderer) = 0;
 	};
 
 }

@@ -94,7 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\box2d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
@@ -117,7 +117,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\box2d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
@@ -138,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\box2d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
@@ -161,7 +161,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\box2d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
@@ -179,9 +179,12 @@
     <ClInclude Include="Components\CircleColilliderComponent.h" />
     <ClInclude Include="Components\ColliderComponet.h" />
     <ClInclude Include="Components\MeshRendererComponent.h" />
+    <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RendererComponent.h" />
     <ClInclude Include="Components\RigidBodyComponent.h" />
+    <ClInclude Include="Components\SpriteAnimationComponent.h" />
     <ClInclude Include="Components\SpriteRendererComponent.h" />
+    <ClInclude Include="Components\TilemapRendererComponent.h" />
     <ClInclude Include="Core\bullet.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Enemy.h" />
@@ -202,6 +205,8 @@
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
+    <ClInclude Include="Physics\Physics.h" />
+    <ClInclude Include="Physics\PhysicsBody.h" />
     <ClInclude Include="Renderer\Font.h" />
     <ClInclude Include="Renderer\Mesh.h" />
     <ClInclude Include="Renderer\Model.h" />
@@ -222,7 +227,9 @@
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Components\CircleColilliderComponent.cpp" />
     <ClCompile Include="Components\MeshRendererComponent.cpp" />
+    <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Components\RigidBodyComponent.cpp" />
+    <ClCompile Include="Components\SpriteAnimationComponent.cpp" />
     <ClCompile Include="Components\SpriteRendererComponent.cpp" />
     <ClCompile Include="Core\bullet.cpp" />
     <ClCompile Include="Core\Enemy.cpp" />
@@ -238,6 +245,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Physics\Physics.cpp" />
+    <ClCompile Include="Physics\PhysicsBody.cpp" />
     <ClCompile Include="Renderer\Font.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />

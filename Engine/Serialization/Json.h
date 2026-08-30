@@ -25,17 +25,20 @@ namespace nu::json
 
     bool Load(const std::string& filename, rapidjson::Document& document);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, int& data);
+  
+    bool Read(const rapidjson::Value& value, const std::string& name, int& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, bool& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, unsigned int& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, float& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, bool& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, std::string& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, float& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, std::string& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data, bool required = false);
 
-    bool Read(const rapidjson::Value& value, const std::string& name, Color& data);
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data, bool required = false);
+
+    bool Read(const rapidjson::Value& value, const std::string& name, Color& data, bool required = false);
 }

@@ -46,12 +46,12 @@ namespace nu::json
         return true;
     }
 
-    bool Read(const rapidjson::Value& value, const std::string& name, int& data)
+    bool Read(const rapidjson::Value& value, const std::string& name, int& data, bool required)
     {
         // check if the value has the "<name>" and the correct data type
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsInt())
         {
-            std::cerr << "Could not read JSON value (int):" << name << std::endl;
+            if (required) std::cerr << "Could not read required JSON value (int): " << name << std::endl;
             return false;
         }
 
@@ -60,11 +60,28 @@ namespace nu::json
 
         return true;
     }
-    bool Read(const rapidjson::Value& value, const std::string& name, float& data)
+
+    bool Read(const rapidjson::Value& value, const std::string& name, unsigned int& data, bool required)
+    {
+        // check if the value has the "<name>" and the correct data type
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsUint())
+        {
+            if (required) std::cerr << "Could not read required JSON value (unsigned int): " << name << std::endl;
+            return false;
+        }
+
+        // get the data
+        data = value[name.c_str()].GetUint();
+
+        return true;
+    }
+
+
+    bool Read(const rapidjson::Value& value, const std::string& name, float& data, bool required)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsNumber())
         {
-            std::cerr << "Could not read JSON value (float):" << name << std::endl;
+            if (required) std::cerr << "Could not read required JSON value (float): " << name << std::endl;
             return false;
         }
         // get the data
@@ -72,11 +89,11 @@ namespace nu::json
 
         return true;
     }
-    bool Read(const rapidjson::Value& value, const std::string& name, bool& data)
+    bool Read(const rapidjson::Value& value, const std::string& name, bool& data, bool required)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsBool())
         {
-            std::cerr << "Could not read JSON value (Bool):" << name << std::endl;
+            if (required) std::cerr << "Could not read required JSON value (Bool): " << name << std::endl;
             return false;
         }
         // get the data
@@ -84,65 +101,55 @@ namespace nu::json
 
         return true;
     }
-    bool Read(const rapidjson::Value& value, const std::string& name, std::string& data)
+    bool Read(const rapidjson::Value& value, const std::string& name, std::string& data, bool required)
     {
-        if (!value.HasMember(name.c_str()) || !value[name.c_str()].GetString())
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsString())
         {
-            std::cerr << "Could not read JSON value (String):" << name << std::endl;
+            if (required) std::cerr << "Could not read required JSON value (String): " << name << std::endl;
             return false;
         }
-        
+
         data = value[name.c_str()].GetString();
 
         return true;
     }
-    bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data)
-    {
-        if (!value.HasMember(name.c_str())|| !value[name.c_str()].IsArray())
-        {
-            std::cerr << "Could not read JSON value (Vector2):" << name << std::endl;
-            return false;
-        }
-        if (value[name.c_str()].IsArray()) {
-            for (rapidjson::SizeType i = 0; i < value[name.c_str()].Size(); i++)
-                data[i] = value[name.c_str()][i].GetFloat();
-        }
-        else { return false; }
-        
-        return true;
-    }
-
-    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data)
-    {
-        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsObject()) {
-            std::cerr << "Could not read JSON value (Transform): " << name << std::endl;
-            return false;
-        }
-        const rapidjson::Value& obj = value[name.c_str()];
-        Read(obj, "position", data.position);   
-        Read(obj, "rotation", data.rotation);    
-        Read(obj, "scale", data.scale);       
-        return true;
-    }
-
-    
-
-    
-
-    bool Read(const rapidjson::Value& value, const std::string& name, Color& data)
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Vector2& data, bool required)
     {
         if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray())
         {
-            std::cerr << "Could not read JSON value (Color):" << name << std::endl;
+            if (required) std::cerr << "Could not read required JSON value (Vector2): " << name << std::endl;
             return false;
         }
-        if (value[name.c_str()].IsArray()) {
-            for (rapidjson::SizeType i = 0; i < value[name.c_str()].Size(); i++)
-                data[i] = value[name.c_str()][i].GetFloat();
-        }
-        else { return false; }
+        for (rapidjson::SizeType i = 0; i < value[name.c_str()].Size(); i++)
+            data[i] = value[name.c_str()][i].GetFloat();
 
         return true;
     }
-    
+
+    bool Read(const rapidjson::Value& value, const std::string& name, nu::Transform& data, bool required)
+    {
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsObject()) {
+            if (required) std::cerr << "Could not read required JSON value (Transform): " << name << std::endl;
+            return false;
+        }
+        const rapidjson::Value& obj = value[name.c_str()];
+        Read(obj, "position", data.position, required);
+        Read(obj, "rotation", data.rotation, required);
+        Read(obj, "scale", data.scale, required);
+        return true;
+    }
+
+    bool Read(const rapidjson::Value& value, const std::string& name, Color& data, bool required)
+    {
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray())
+        {
+            if (required) std::cerr << "Could not read required JSON value (Color): " << name << std::endl;
+            return false;
+        }
+        for (rapidjson::SizeType i = 0; i < value[name.c_str()].Size(); i++)
+            data[i] = value[name.c_str()][i].GetFloat();
+
+        return true;
+    }
+
 }
