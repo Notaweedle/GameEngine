@@ -26,6 +26,9 @@ namespace nu
 		Rect GetTileRect(const Layer& layer, int tileId);
 		Vector2 GetTilePosition(const Layer& layer, int tileIndex);
 
+		int GetTileWidth() const { return m_tileWidth; }
+		int GetTileHeight() const { return m_tileHeight; }
+
 	private:
 		int m_tileWidth{ 0 };
 		int m_tileHeight{ 0 };

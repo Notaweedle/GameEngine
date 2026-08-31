@@ -152,4 +152,20 @@ namespace nu::json
         return true;
     }
 
+    bool Read(const rapidjson::Value& value, const std::string& name, std::vector<int>& data, bool required)
+    {
+        if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray())
+        {
+            if (required) std::cerr << "Could not read required JSON value (vector<int>): " << name << std::endl;
+            return false;
+        }
+        const auto& arr = value[name.c_str()];
+        data.clear();
+        data.reserve(arr.Size());
+        for (rapidjson::SizeType i = 0; i < arr.Size(); i++)
+            data.push_back(arr[i].GetInt());
+
+        return true;
+    }
+
 }

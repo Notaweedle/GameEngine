@@ -5,6 +5,7 @@
 #include <Renderer/Renderer.h>
 #include <Components/RendererComponent.h>
 #include <Resources/Resource.h>
+#include <Physics/PhysicsBody.h>
 
 namespace nu
 {

@@ -232,6 +232,7 @@
     <ClCompile Include="Components\RigidBodyPhysicsComponet.cpp" />
     <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp" />
     <ClCompile Include="Components\SpriteRendererComponent.cpp" />
+    <ClCompile Include="Components\TilemapRendererComponent.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\GameTime.cpp" />
     <ClCompile Include="Engine.cpp" />

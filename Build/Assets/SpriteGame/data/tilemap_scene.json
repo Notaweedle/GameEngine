@@ -1,0 +1,13 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Tilemap",
+      "tag": "tilemap",
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 3.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "data/untitled.tmj" }
+      ]
+    }
+  ]
+}

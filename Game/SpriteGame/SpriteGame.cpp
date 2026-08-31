@@ -10,7 +10,8 @@ bool SpriteGame::Initialize()
 	Game::Initialize();
 	m_scene = std::make_unique<Scene>();
 
-	// TODO: load the new game's scene / set up state here
+	
+	m_scene->Load("data/tilemap_scene.json");
 
 	return true;
 }
