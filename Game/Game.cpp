@@ -25,7 +25,7 @@ int main()
     nu::Engine& e = nu::Engine::Get();
     e.Initialize();
 
-    std::unique_ptr<nu::Game> game = std::make_unique<SpriteGame>();
+    std::unique_ptr<nu::Game> game = std::make_unique<SpaceGame>();
     game->Initialize();
 
     // --- TEMP frame-time diagnostics ---
