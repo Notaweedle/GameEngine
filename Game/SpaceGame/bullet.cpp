@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "bullet.h"
 #include "Renderer/Renderer.h"
-#include "Factory.h"
+#include "Core/Factory.h"
 #include <Serialization/Json.h>
 
 namespace nu {

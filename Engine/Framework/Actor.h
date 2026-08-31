@@ -19,8 +19,6 @@ namespace nu {
         std::string name = "actor";
         std::string tag = "_actor";
         Transform transform;
-        Vector2 velocity{ 0.0f, 0.0f };   
-        float damping{ 0.f };
         float lifespan{ 0.f };
         res_t<Model> model;
         res_t<Texture> texture;
@@ -33,11 +31,9 @@ namespace nu {
             Object(),
             m_transform{ actorDesc.transform },
             m_tag{ actorDesc.tag },
-            m_velocity{ actorDesc.velocity },
             m_model{ actorDesc.model },
             m_texture{ actorDesc.texture },
-            m_lifespan{actorDesc.lifespan},
-            m_damping{actorDesc.damping }
+            m_lifespan{actorDesc.lifespan}
         {
 
             Object::m_name = { actorDesc.name };
@@ -51,18 +47,20 @@ namespace nu {
         explicit Actor(const Transform& transform) : m_transform{ transform } {
 
         }
-
         Actor(const Transform& transform, const Model& model) : m_transform{ transform }, m_model{ std::make_shared<Model>(model) } {
 
         }
+
         virtual ~Actor() = default;
 
 
 
         virtual void Update(float dt);
         virtual void Draw(const class Renderer& renderer) const;
+        virtual void OnKilled() {}   // overridden by game entities (e.g. Enemy); lets Scene notify without knowing the type
         virtual void Start();
         virtual void OnDestroy();
+
 
 
         void Read(const nu::json::value_t& value) override;
@@ -95,7 +93,8 @@ namespace nu {
         void setPosistion(const Vector2& pos) { m_transform.position = pos; }
         void setRotation(const float rotaion) { m_transform.rotation = rotaion; }
         void setScale(const float scale) { m_transform.scale = scale; };
-        void setVelocity(const Vector2& vel) { m_velocity = vel; }
+        void setVelocity(const Vector2& velocity) { m_velocity = velocity; }
+      
         void setName(const std::string& name) { Object::m_name = name; }
         void setTag(const std::string& tag) { m_tag = tag; }
 
@@ -108,11 +107,12 @@ namespace nu {
             if (m_radius > 0.0f) return m_radius;
             return m_model ? m_model->GetRadius() * m_transform.scale : 0.0f;
         }
-        inline const Vector2& getVelocity() const { return m_velocity; }
+        
         inline const std::string& getTag() const { return m_tag; }
         inline float getLifeSpan() const { return m_lifespan; }
-        inline float getDamping() const { return m_damping; }
+        
         inline const Transform& getTransform() const { return m_transform; }
+        inline const Vector2& getVelocity() const { return m_velocity; }
         inline const Scene* getScene() const { return m_scene; }
         inline res_t<Texture> getTexture() const { return m_texture; }
 
@@ -138,12 +138,11 @@ namespace nu {
     protected:
         Transform m_transform;
         std::string m_tag = "_actor";
-        Vector2 m_velocity {0,0};
+        Vector2 m_velocity{ 0.0f, 0.0f };   // manual movement for non-physics actors (bullets, enemies)
         res_t<Model> m_model = nullptr;
         res_t<Texture> m_texture;
         float m_radius = 0.0f;   
         float m_lifespan = 0.0f;
-        float m_damping = 0.0f;
         bool m_destroyed = false;
         Scene* m_scene{ nullptr };
 

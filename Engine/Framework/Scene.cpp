@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "Actor.h"
 #include "Core/Factory.h"
+#include "Engine.h"
+#include "Renderer/ParticleManager.h"
 
 
 namespace nu
@@ -10,9 +12,8 @@ namespace nu
 	void Scene::AddActor(std::unique_ptr<Actor> actor)
 	{
 		actor->m_scene = this;
+		actor->Start();                     // start components (creates physics bodies, etc.)
 		m_actor.push_back(std::move(actor));
-	
-	
 	}
 
 	void Scene::RemoveActors() {
@@ -55,7 +56,7 @@ namespace nu
 				}
 				else {
 					// not a prototype, add actor to scene
-					AddActor(std::move(actor));
+					AddActor(std::move(actor)); 
 				}
 
 			}
@@ -72,10 +73,12 @@ namespace nu
 			if (!m_actor[i]->IsDestroyed()) m_actor[i]->Update(dt);
 		}
 
+		UpdateCollisions();
+
 		std::erase_if(m_actor, [](const std::unique_ptr<Actor>& actor) { return actor->IsDestroyed(); });
 
 		for (auto& actor : m_pendingActor) {
-
+			actor->Start();
 			m_actor.push_back(std::move(actor));
 		}
 		m_pendingActor.clear();
@@ -88,6 +91,42 @@ namespace nu
 		}
 	}
 
-	//void Scene::UpdateCollisions();
+	void Scene::UpdateCollisions()
+	{
+		std::vector<Actor*> enemies = GetActorsByTag("enemy");
+
+		for (Actor* bullet : GetActorsByTag("bullet")) {
+			for (Actor* enemy : enemies) {
+				if (enemy->IsDestroyed()) continue;
+
+				if (bullet->CheckCollision(*enemy)) {
+					ParticleDesc pd = enmy_expl();
+					pd.position = enemy->getTransform().position;
+					Engine::Get().GetParticleSystem().Emit(pd);
+
+					bullet->Destroy();
+					enemy->OnKilled();   // virtual on Actor; game entities (Enemy) override it
+					m_enemyKills++;
+					break;
+				}
+			}
+		}
+
+		Actor* player = GetActorByName<Actor>("Player");
+		if (player == nullptr) return;
+
+		for (Actor* enemy : enemies) {
+			if (!enemy->IsDestroyed() && player->CheckCollision(*enemy)) {
+				ParticleDesc pd = player_expl();
+				pd.position = player->getTransform().position;
+				Engine::Get().GetParticleSystem().Emit(pd);
+
+				enemy->Destroy();
+				player->Destroy();
+				m_playerHit = true;
+				return;
+			}
+		}
+	}
 
 };

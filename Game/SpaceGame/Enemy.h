@@ -25,7 +25,7 @@ namespace nu {
 		void Read(const nu::json::value_t& value);
 
 		
-		void OnKilled();
+		void OnKilled() override;
 
 		
 

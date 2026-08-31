@@ -166,8 +166,11 @@
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">EditAndContinue</DebugInformationFormat>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EditAndContinue</DebugInformationFormat>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="SpaceGame\Player.cpp" />
+    <ClCompile Include="SpaceGame\SpaceGame.cpp" />
+    <ClCompile Include="SpaceGame\Enemy.cpp" />
+    <ClCompile Include="SpaceGame\bullet.cpp" />
+    <ClCompile Include="SpriteGame\SpriteGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
@@ -176,12 +179,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="GameManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Build\Assets\Animations\bat_idle.json" />
-    <None Include="..\Build\Assets\data\data.json" />
+    <ClInclude Include="SpaceGame\Player.h" />
+    <ClInclude Include="SpaceGame\SpaceGame.h" />
+    <ClInclude Include="SpaceGame\Enemy.h" />
+    <ClInclude Include="SpaceGame\bullet.h" />
+    <ClInclude Include="SpriteGame\SpriteGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

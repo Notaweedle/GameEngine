@@ -2,9 +2,9 @@
 #include "renderer/Renderer.h"
 #include "Engine.h"
 #include "Framework/Scene.h"
-#include "core/bullet.h"
+#include "bullet.h"
 #include "Renderer/ParticleSystem.h"
-#include "Assets.h"
+#include "../Assets.h"
 #include "math/mathUitl.h"
 #include "Resources/ResourceManager.h"
 #include "Renderer/Texture.h"
@@ -12,50 +12,43 @@
 
 #include <iostream>
 #include <memory>
+#include <Components/PhysicsComponent.h>
 
 FACTORY_REGISTER(Player);
 
 
-void Player::Update(float dt) 
+void Player::Update(float dt)
 {
-	float speed = 4000.0f;
-	nu::Vector2 forword = { std::cos(getTransform().rotation),
-							std::sin(getTransform().rotation)};
-	nu::Vector2 force{ 0.0f,0.0f };
+	nu::PhysicsComponent* physics = GetComponent<nu::PhysicsComponent>();
 
 	
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)|| nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_UP)) {
-		force = forword * speed;
+	nu::Vector2 forward = nu::Vector2{ 1.0f, 0.0f }.Rotate(getTransform().rotation);
 
-		//TODO Remake this to use factorys 
+	
+	const float turnRate = nu::math::pi;  
+	float turn = 0.0f;
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT))  turn -= turnRate;
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) turn += turnRate;
+	if (physics) physics->SetAngularVelocity(turn);
+
+	
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_UP)) {
+		if (physics) physics->ApplyForce(forward * m_speed);
+
 		nu::ParticleDesc pd;
-		pd.position = getTransform().position - forword * 20.0f;
+		pd.position = getTransform().position - forward * 20.0f;
 		pd.angle = getTransform().rotation + nu::math::pi;
 		pd.angleVariance = 0.3f;
 		pd.speed = 120.0f;
 		pd.speedVariance = 40.0f;
 		pd.lifetime = 0.4f;
 		pd.lifetimeVariance = 0.15f;
-		pd.color = nu::Color{ 0.3f, 0.6f, 1.0f, 1.0f }; 
+		pd.color = nu::Color{ 0.3f, 0.6f, 1.0f, 1.0f };
 		pd.count = 10;
 		nu::Engine::Get().GetParticleSystem().Emit(pd);
 	}
-	
-
-	
-
-	
-	float turnSpeed = 8.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)||
-		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT)) setRotation(getTransform().rotation - turnSpeed * dt);
-
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)||
-		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) setRotation(getTransform().rotation + turnSpeed * dt);
-
-	setVelocity(getVelocity() + (force * dt));
 
 	Shoot();
-
 	Actor::Update(dt);
 }
 

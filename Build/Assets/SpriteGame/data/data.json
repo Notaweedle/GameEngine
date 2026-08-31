@@ -3,7 +3,7 @@
     {
       "type": "Actor",
       "prototype": false,
-      "name": "  ",
+      "name": "bat",
       "tag": "enemy",
       "active": true,
       "transform": {
@@ -19,7 +19,7 @@
           "type": "SpriteAnimationRendererComponent",
           "frames_per_second": 12,
           "loop": true,
-          "texture_frames": "Assets/Animations/bat_idle.json"
+          "texture_frames": "Animations/bat_idle.json"
         }
       ]
     },
@@ -29,7 +29,7 @@
       "tag": "Player",
       "type": "Player",
       "active": true,
-      "speed": 1250.0,
+      "speed": 40.0,
       "bulletSpeed": 1400.0,
       "lifespan": 10.0,
       "velocity": [
@@ -47,19 +47,23 @@
       "components": [
         {
           "type": "SpriteRendererComponent",
-          "texture": "Assets/PlayerShip.png"
-        },
-        {
-          "type": "RigidBodyComponent",
-          "velocity": [
-            50,
-            0
-          ],
-          "damping": 0.8
+          "texture": "PlayerShip.png"
         },
         {
           "type": "CircleColilliderComponent",
           "radius": 48.0
+        },
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "circle",
+          "size": [
+            1,
+            1
+          ],
+          "is_dynamic": true,
+          "density": 1.0,
+          "linear_damping": 3.0,
+          "constrain_angle": false
         }
       ]
     },
@@ -76,7 +80,7 @@
         0.0,
         0.0
       ],
-      "texture": "Assets/yeedi_.png",
+      "texture": "yeedi_.png",
       "health": 1,
       "transform": {
         "position": [
@@ -89,7 +93,7 @@
       "components": [
         {
           "type": "SpriteRendererComponent",
-          "texture": "Assets/yeedi_.png"
+          "texture": "yeedi_.png"
         },
         {
           "type": "RigidBodyComponent",
@@ -118,7 +122,7 @@
         0.0,
         0.0
       ],
-      "texture": "Assets/trita.png",
+      "texture": "trita.png",
       "health": 1,
       "transform": {
         "position": [
@@ -135,7 +139,7 @@
         },
         {
           "type": "SpriteRendererComponent",
-          "texture": "Assets/trita.png"
+          "texture": "trita.png"
         },
         {
           "type": "RigidBodyComponent",
@@ -159,7 +163,7 @@
         0.0,
         0.0
       ],
-      "texture": "Assets/RainDrop.png",
+      "texture": "RainDrop.png",
       "health": 1,
       "transform": {
         "position": [
@@ -176,7 +180,7 @@
         },
         {
           "type": "SpriteRendererComponent",
-          "texture": "Assets/RainDrop.png"
+          "texture": "RainDrop.png"
         },
         {
           "type": "RigidBodyComponent",
@@ -201,7 +205,7 @@
         0.0,
         0.0
       ],
-      "texture": "Assets/Bullet_1.png",
+      "texture": "Bullet_1.png",
       "health": 1,
       "transform": {
         "position": [

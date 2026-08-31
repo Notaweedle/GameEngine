@@ -2,6 +2,7 @@
 #include "SpriteAnimationRendererComponent.h"
 #include "Renderer/Renderer.h" 
 #include "Framework/Actor.h" 
+#include "Math/mathUitl.h" 
 #include "Resources/ResourceManager.h"
 #include "Renderer/TextureFrames.h"
 #include "Core/Factory.h"
@@ -18,11 +19,18 @@ namespace nu {
 		if (!m_textureFrames || m_textureFrames->GetTotalFrames() == 0) return;
 
 		m_frameTimer += dt;
-		float frameTime = 1.0f / m_framesPerSec;
-		if (m_frameTimer >= frameTime) {
-			m_frameTimer -= frameTime;                 // reset the accumulator so we step ~once per frameTime
-			m_frame = (m_frame + 1) % m_textureFrames->GetTotalFrames();
+		float frameTime = 1.0f / m_framesPerSec;   // seconds each frame is shown
+
+		// advance one frame for every frameTime that has elapsed
+		while (m_frameTimer >= frameTime) {
+			m_frameTimer -= frameTime;
+			m_frame++;
+
+			if (m_frame >= m_textureFrames->GetTotalFrames()) {
+				m_frame = m_loop ? 0u : m_textureFrames->GetTotalFrames() - 1;
+			}
 		}
+		
 		
 
 
@@ -60,7 +68,14 @@ namespace nu {
 
 		if(!texture_frames.empty()){
 			m_textureFrames = Resources().Get<TextureFrames>(texture_frames, Engine::Get().GetRenderer());
+			if (!m_textureFrames) {
+				std::cerr << "Could not load texture frame: " << texture_frames << std::endl;
+			}
+
 		}
+
+
+
 
 	}
 

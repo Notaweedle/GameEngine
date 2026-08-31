@@ -22,12 +22,11 @@ namespace nu {
         Object{ other },
         m_transform{ other.m_transform },
         m_tag{ other.m_tag },
-        m_velocity{ other.m_velocity },
         m_model{ other.m_model },
         m_texture{ other.m_texture },
         m_radius{ other.m_radius },
-        m_lifespan{ other.m_lifespan },
-        m_damping{ other.m_damping }{
+        m_lifespan{ other.m_lifespan }
+       {
 
         for (const auto& comp : other.m_componet)
         {
@@ -87,8 +86,8 @@ namespace nu {
 
         JSON_READ_NAME(value, "tag", m_tag);
         JSON_READ_NAME(value, "transform", m_transform);
-        JSON_READ_NAME(value, "velocity", m_velocity);
-        JSON_READ_NAME(value, "damping", m_damping);
+        /*JSON_READ_NAME(value, "velocity", m_velocity);
+        JSON_READ_NAME(value, "damping", m_damping);*/
 
        
         if (JSON_HAS_NAME(value, "texture"))

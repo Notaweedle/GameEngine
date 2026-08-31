@@ -13,7 +13,7 @@ namespace nu
 		// set body definition
 		bodyDef.type = (def.isDynamic) ? b2_dynamicBody : b2_staticBody;
 		bodyDef.position = Physics::ToB2(Physics::PixelToWorld(transform.position));
-		bodyDef.rotation = b2MakeRot(transform.rotation * math::DegToRad);
+		bodyDef.rotation = b2MakeRot(transform.rotation);   // engine rotation is already in radians
 		bodyDef.motionLocks.angularZ = def.constrainAngle;
 		bodyDef.gravityScale = def.gravityScale;
 		bodyDef.linearDamping = def.linearDamping;

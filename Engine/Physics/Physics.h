@@ -19,7 +19,7 @@ namespace nu
 			
 
 			b2WorldDef worldDef = b2DefaultWorldDef();
-			worldDef.gravity = b2Vec2{ 0.0f, 10.0f };	
+			worldDef.gravity = b2Vec2{ 0.0f, 0.0f };	
 			m_worldId = b2CreateWorld(&worldDef);
 		}
 

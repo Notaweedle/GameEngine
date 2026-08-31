@@ -9,8 +9,6 @@
 #include "Core/StringUtil.h"
 #include "Core/GameTime.h"
 #include "Core/File.h"
-#include "Core/Enemy.h"
-#include "Core/bullet.h"
 
 #include "Math/mathUitl.h"
 #include "Math/Transform.h"
@@ -19,6 +17,7 @@
 
 #include "Framework/Actor.h"
 #include "Framework/Scene.h"
+#include "Framework/Game.h"
 
 
 #include "Audio/Audio.h"
@@ -32,6 +31,8 @@
 #include "Renderer/ParticleSystem.h"
 
 #include "Input/Input.h"
+
+#include "Physics/Physics.h"
 
 #include "SDL3/SDL.h"
 #include <vector>
@@ -48,6 +49,7 @@ namespace nu {
 		Time& GetTime() { return m_time; };
 		ParticleSystem& GetParticleSystem() { return m_particleSystem; };
 		Audio& GetAudio() { return m_audio; };
+		Physics& GetPhysics() { return m_physics; };
 
 		
 		
@@ -58,6 +60,7 @@ namespace nu {
 		Time m_time;
 		ParticleSystem m_particleSystem{ 5000 };
 		Audio m_audio;
+		Physics m_physics;
 		static Engine s_instance;
 	};
 

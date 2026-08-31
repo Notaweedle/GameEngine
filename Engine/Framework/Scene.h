@@ -19,6 +19,11 @@ namespace nu
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 
+		// collision outcomes for the game layer to consume each frame
+		// (Scene resolves the physical collision; the game decides score/lives)
+		int  TakeEnemyKills() { int n = m_enemyKills; m_enemyKills = 0; return n; }
+		bool TakePlayerHit()  { bool h = m_playerHit; m_playerHit = false; return h; }
+
 		void SetDebugDraw(bool enabled) { m_debugDraw = enabled; }
 		bool GetDebugDraw() const { return m_debugDraw; }
 
@@ -32,6 +37,9 @@ namespace nu
 		std::vector<std::unique_ptr<Actor>> m_actor;
 		std::vector<std::unique_ptr<Actor>> m_pendingActor;
 		bool m_debugDraw = false;
+
+		int  m_enemyKills = 0;   // enemies killed by bullets since last consumed
+		bool m_playerHit  = false;   // player hit an enemy since last consumed
 
 	};
 

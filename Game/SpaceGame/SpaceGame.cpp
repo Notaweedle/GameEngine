@@ -1,7 +1,7 @@
-#include "GameManager.h"
+#include "SpaceGame.h"
 #include "Engine.h"
 #include "Player.h"
-#include "Assets.h"
+#include "../Assets.h"
 #include "Framework/Scene.h"
 #include <string>
 #include <memory>
@@ -11,21 +11,25 @@
 
 using namespace nu;
 
-void GameManager::Initialize()
+bool SpaceGame::Initialize()
 {
+	SetWorkingDirectory("SpaceGame");
+	Game::Initialize();
+	m_scene = std::make_unique<nu::Scene>();
+
 	auto& e = Engine::Get();
 	TTF_Init();
 
-	e.GetAudio().LoadSound("laser", "Assets/laserShoot.wav");
-	e.GetAudio().LoadSound("music", "Assets/music.mp3");
+	e.GetAudio().LoadSound("laser", "Audio/laserShoot.wav");
+	e.GetAudio().LoadSound("music", "Audio/music.mp3");
 	e.GetAudio().PlayMusic("music");
 
-	m_font      = Resources().GetWithID<Font>("font48", "Assets/font.ttf", 48);
-	m_fontSmall = Resources().GetWithID<Font>("font28", "Assets/font.ttf", 28);
+	m_font      = Resources().GetWithID<Font>("font48", "font.ttf", 48);
+	m_fontSmall = Resources().GetWithID<Font>("font28", "font.ttf", 28);
 
 	
-	m_background = Resources().Get<Texture>("Assets/background.png", e.GetRenderer());
-	e.GetParticleSystem().SetTexture(Resources().Get<Texture>("Assets/particle.png", e.GetRenderer()));
+	m_background = Resources().Get<Texture>("background.png", e.GetRenderer());
+	e.GetParticleSystem().SetTexture(Resources().Get<Texture>("particle.png", e.GetRenderer()));
 
 	
 	m_titleText.SetFont(m_font);
@@ -40,9 +44,11 @@ void GameManager::Initialize()
 	m_startText.Create(e.GetRenderer(), "Press SPACE to Start", Color(0.8f, 0.8f, 0.8f));
 	m_gameOverText.Create(e.GetRenderer(), "GAME OVER", Color(1.0f, 0.3f, 0.3f));
 	m_restartText.Create(e.GetRenderer(), "Press SPACE to Restart", Color(0.8f, 0.8f, 0.8f));
+
+	return true;
 }
 
-void GameManager::Update(float dt)
+void SpaceGame::Update(float dt)
 {
 	auto& e = Engine::Get();
 
@@ -60,21 +66,24 @@ void GameManager::Update(float dt)
 	case GameState::InGame:
 	{
 		if (e.GetInput().GetKeyPressed(SDL_SCANCODE_F1)) {
-			m_scene.SetDebugDraw(!m_scene.GetDebugDraw());
+			m_scene->SetDebugDraw(!m_scene->GetDebugDraw());
 		}
 
-		m_scene.Update(dt);
+		m_scene->Update(dt);
 		e.GetParticleSystem().Update(dt);
 
 		// wave spawning
-		if (m_scene.GetActorsByTag("enemy").empty()) {
+		if (m_scene->GetActorsByTag("enemy").empty()) {
 
 			m_waveCount++;
-			GameManager::SpawnAtEdges( 5 * m_waveCount, 2560.0f, 1600.0f);
+			SpaceGame::SpawnAtEdges( 5 * m_waveCount, 2560.0f, 1600.0f);
 		}
 
-		// collisions
-		if (CheckCollisions()) {
+		// collision outcomes (detection/resolution now lives in Scene::UpdateCollisions)
+		m_score += 100 * m_scene->TakeEnemyKills();
+
+		if (m_scene->TakePlayerHit()) {
+			m_lives--;
 			if (m_lives <= 0) {
 				m_finalScoreText.Create(e.GetRenderer(), std::format("Score: {}" , std::to_string(m_score)) ,Color(0.8f, 0.8f, 0.8f));
 				m_state = GameState::GameOver;
@@ -109,7 +118,7 @@ void GameManager::Update(float dt)
 	}
 }
 
-void GameManager::Draw()
+void SpaceGame::Draw()
 {
 	auto& e = Engine::Get();
 	float cx = 2560.0f / 2.0f;
@@ -127,7 +136,7 @@ void GameManager::Draw()
 		break;
 
 	case GameState::InGame:
-		m_scene.Draw(e.GetRenderer());
+		m_scene->Draw(e.GetRenderer());
 		e.GetParticleSystem().Draw(e.GetRenderer());
 		m_scoreText.Draw(e.GetRenderer(), 20.0f, 20.0f);
 		m_livesText.Draw(e.GetRenderer(), 20.0f, 55.0f);
@@ -144,47 +153,7 @@ void GameManager::Draw()
 	e.GetRenderer().Present();
 }
 
-bool GameManager::CheckCollisions()
-{
-	std::vector<Actor*> enemies = m_scene.GetActorsByTag("enemy");
-
-	for (Actor* bullet : m_scene.GetActorsByTag("bullet")) {
-		for (Actor* enemy : enemies) {
-			if (enemy->IsDestroyed()) continue;
-
-			if (bullet->CheckCollision(*enemy)) {
-				auto pd = enmy_expl();
-				pd.position = enemy->getTransform().position;
-				Engine::Get().GetParticleSystem().Emit(pd);
-
-				bullet->Destroy();
-				static_cast<Enemy*>(enemy)->OnKilled();
-				m_score += 100;
-				break;
-			}
-		}
-	}
-
-	Player* player = m_scene.GetActorByName<Player>("Player");
-	if (player == nullptr) return false;
-
-	for (Actor* enemy : enemies) {
-		if (!enemy->IsDestroyed() && player->CheckCollision(*enemy)) {
-			auto pd = player_expl();
-			pd.position = player->getTransform().position;
-			Engine::Get().GetParticleSystem().Emit(pd);
-
-			enemy->Destroy();
-			player->Destroy();
-			m_lives--;
-			return true;
-		}
-	}
-
-	return false;
-}
-
-void GameManager::SpawnAtEdges(int count, float worldW, float worldH) {
+void SpaceGame::SpawnAtEdges(int count, float worldW, float worldH) {
 
     const float MARGIN = 25.0f;
 
@@ -207,17 +176,17 @@ void GameManager::SpawnAtEdges(int count, float worldW, float worldH) {
         if (enemy)
         {
             enemy->setPosistion({ x, y });
-            m_scene.AddActor(std::move(enemy));
+            m_scene->AddActor(std::move(enemy));
         }
     }
 }
 
-void GameManager::ResetGame()
+void SpaceGame::ResetGame()
 {
 	
-	m_scene.RemoveActors();
+	m_scene->RemoveActors();
 
-	m_scene.Load("Assets/Data/data.json");
+	m_scene->Load("data/data.json");
 
 
 
@@ -231,21 +200,18 @@ void GameManager::ResetGame()
 
 	RespawnPlayer();
 	
-	GameManager::SpawnAtEdges(5, 2560.0f, 1600.0f);
+	SpaceGame::SpawnAtEdges(5, 2560.0f, 1600.0f);
 }
 
 
 
 
-void GameManager::RespawnPlayer()
+void SpaceGame::RespawnPlayer()
 {
 	auto player = Factory::Instance().Create<Actor>("PlayerPrototype");
-	std::cout << "[DEBUG] player components=" << player->ComponentCount()
-	          << " scale=" << player->getTransform().scale
-	          << " tag=" << player->getTag() << std::endl;
-	player->setName("Player");   
+	player->setName("Player");
 	player->setPosistion({ 1280.0f, 800.0f });
-	m_scene.AddActor(std::move(player));
+	m_scene->AddActor(std::move(player));
 }
 
 

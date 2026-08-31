@@ -2,12 +2,12 @@
 #include "Enemy.h"
 #include "Renderer/Renderer.h"
 #include "math/mathUitl.h"
-#include "Random.h"
+#include "Core/Random.h"
 #include "framework/Scene.h"
-#include "../Game/Assets.h"
+#include "../Assets.h"
 #include "Resources/ResourceManager.h"
 #include "Renderer/Texture.h"
-#include "Factory.h"
+#include "Core/Factory.h"
 #include <cmath>
 #include <Serialization/Json.h>
 
@@ -29,7 +29,7 @@ namespace nu {
         }
 
         m_transform.position += (m_velocity * dt);
-        m_velocity *= std::pow(0.02f, dt);   
+        m_velocity *= std::pow(0.02f, dt);
         
 
     }
@@ -64,7 +64,7 @@ namespace nu {
             if (trita == nullptr) { continue; }
             trita->setPosistion(m_transform.position);
             trita->setRotation(dir);
-            trita->setVelocity(vel);
+            //trita->setVelocity(vel);
 
             m_scene->AddActor(std::move(trita));
         }
