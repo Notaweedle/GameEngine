@@ -26,12 +26,10 @@ namespace nu
             return false;
         }
 
-        // cap the frame rate to the monitor refresh so frame timing is stable
+        SDL_SetDefaultTextureScaleMode(m_renderer, SDL_SCALEMODE_PIXELART);
         SDL_SetRenderVSync(m_renderer, 1);
 
-        // Render at a fixed logical size (the world size) but present into whatever
-        // the actual window size is. This lets us use a smaller physical window
-        // (far fewer pixels to push each frame) while keeping all world coordinates.
+        
         SDL_SetRenderLogicalPresentation(m_renderer, 2560, 1600, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
         return true;
@@ -138,15 +136,16 @@ namespace nu
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
 
+        Vector2 size = texture->GetSize();
+        float cameraX = (m_cameraEnabled) ? (m_camera.x - m_width * 0.5f) : 0.0f;
+        float cameraY = (m_cameraEnabled) ? (m_camera.y - m_height * 0.5f ): 0.0f;
        
-        float w = 0.0f, h = 0.0f;
-        SDL_GetTextureSize(texture->m_texture, &w, &h);
-        w *= scale;
-        h *= scale;
+        SDL_FRect dst;
+        dst.w = size.x * scale;
+        dst.h = size.y * scale;
 
-        
-        SDL_FRect dst{ x - w * 0.5f, y - h * 0.5f, w, h };
-
+        dst.x = (x - cameraX) - (dst.w * 0.5);
+        dst.y = (y - cameraY) - (dst.h * 0.5);
         
         double angleDeg = static_cast<double>(rot) * (180.0 / 3.14159265358979);
         SDL_RenderTextureRotated(m_renderer, texture->m_texture, nullptr, &dst, angleDeg, nullptr, flipH ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
@@ -156,20 +155,24 @@ namespace nu
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
 
-        // tint the sprite by the given color (0..1). Needs alpha blending on for the alpha to show.
+        
         SDL_SetTextureBlendMode(texture->m_texture, SDL_BLENDMODE_BLEND);
         SDL_SetTextureColorModFloat(texture->m_texture, tint.r, tint.g, tint.b);
         SDL_SetTextureAlphaModFloat(texture->m_texture, tint.a);
 
         DrawTexture(texture, x, y, rot, scale,false);
 
-        // reset so other draws of the same texture aren't left tinted
+       
         SDL_SetTextureColorModFloat(texture->m_texture, 1.0f, 1.0f, 1.0f);
         SDL_SetTextureAlphaModFloat(texture->m_texture, 1.0f);
     }
     void Renderer::DrawTexture(Texture* texture, const Rect& source, float x, float y, float rot, float scale, bool flipH) const
     {
         if (texture == nullptr || texture->m_texture == nullptr) return;
+
+        Vector2 size = texture->GetSize();
+        float cameraX = (m_cameraEnabled) ? (m_camera.x - m_width * 0.5f) : 0.0f;
+        float cameraY = (m_cameraEnabled) ? (m_camera.y - m_height * 0.5f) : 0.0f;
 
         SDL_FRect sourceRect;
         sourceRect.x = source.x;
@@ -181,8 +184,8 @@ namespace nu
         destRect.w = source.w * scale;
         destRect.h = source.h * scale;
 
-        destRect.x = x - (destRect.w * 0.5f);
-        destRect.y = y - (destRect.h * 0.5f);
+        destRect.x = (x - cameraX) - (destRect.w * 0.5f);
+        destRect.y = (y - cameraY )-(destRect.h * 0.5f);
 
         
         double angleDeg = static_cast<double>(rot) * (180.0 / 3.14159265358979);

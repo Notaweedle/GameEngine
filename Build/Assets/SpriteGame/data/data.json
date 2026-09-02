@@ -2,18 +2,47 @@
   "actors": [
     {
       "type": "Actor",
+      "name": "Tilemap",
+      "tag": "tilemap",
       "prototype": false,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 3.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "data/untitled.tmj" }
+      ]
+    },
+    {
+      "type": "Player",
+      "name": "Player",
+      "tag": "Player",
+      "prototype": false,
+      "active": true,
+      "speed": 40.0,
+      "bulletSpeed": 1400.0,
+      "lifespan": 10.0,
+      "velocity": [0.0, 0.0],
+      "transform": { "position": [700.0, 480.0], "rotation": 0.0, "scale": 3.0 },
+      "components": [
+        { "type": "SpriteRendererComponent", "texture": "PlayerShip.png" },
+        { "type": "CircleColilliderComponent", "radius": 24.0 },
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "circle",
+          "size": [1, 1],
+          "is_dynamic": true,
+          "density": 1.0,
+          "linear_damping": 3.0,
+          "constrain_angle": false
+        }
+      ]
+    },
+    {
+      "type": "Actor",
       "name": "bat",
       "tag": "enemy",
+      "prototype": false,
       "active": true,
-      "transform": {
-        "position": [
-          200.0,
-          200.0
-        ],
-        "rotation": 0.0,
-        "scale": 6.0
-      },
+      "transform": { "position": [300.0, 250.0], "rotation": 0.0, "scale": 4.0 },
       "components": [
         {
           "type": "SpriteAnimationRendererComponent",
@@ -24,202 +53,20 @@
       ]
     },
     {
-      "name": "PlayerPrototype",
-      "prototype": true,
-      "tag": "Player",
-      "type": "Player",
-      "active": true,
-      "speed": 40.0,
-      "bulletSpeed": 1400.0,
-      "lifespan": 10.0,
-      "velocity": [
-        0.0,
-        0.0
-      ],
-      "transform": {
-        "position": [
-          0.0,
-          0.0
-        ],
-        "rotation": 45.0,
-        "scale": 6.0
-      },
-      "components": [
-        {
-          "type": "SpriteRendererComponent",
-          "texture": "PlayerShip.png"
-        },
-        {
-          "type": "CircleColilliderComponent",
-          "radius": 48.0
-        },
-        {
-          "type": "RigidBodyPhysicsComponent",
-          "shape": "circle",
-          "size": [
-            1,
-            1
-          ],
-          "is_dynamic": true,
-          "density": 1.0,
-          "linear_damping": 3.0,
-          "constrain_angle": false
-        }
-      ]
-    },
-    {
-      "name": "yeedi",
-      "prototype": true,
-      "tag": "enemy",
-      "type": "Enemy",
-      "active": true,
-      "speed": 750.0,
-      "lifespan": 10.0,
-      "damping": 1.0,
-      "velocity": [
-        0.0,
-        0.0
-      ],
-      "texture": "yeedi_.png",
-      "health": 1,
-      "transform": {
-        "position": [
-          2.4,
-          5.5
-        ],
-        "rotation": 45.0,
-        "scale": 4.0
-      },
-      "components": [
-        {
-          "type": "SpriteRendererComponent",
-          "texture": "yeedi_.png"
-        },
-        {
-          "type": "RigidBodyComponent",
-          "velocity": [
-            50,
-            0
-          ],
-          "damping": 0.8
-        },
-        {
-          "type": "CircleColilliderComponent",
-          "radius": 40.0
-        }
-      ]
-    },
-    {
-      "name": "trita",
-      "prototype": true,
-      "tag": "enemy",
-      "type": "Enemy",
-      "active": true,
-      "speed": 550.0,
-      "lifespan": 10.0,
-      "damping": 1.0,
-      "velocity": [
-        0.0,
-        0.0
-      ],
-      "texture": "trita.png",
-      "health": 1,
-      "transform": {
-        "position": [
-          2.4,
-          5.5
-        ],
-        "rotation": 45.0,
-        "scale": 4.0
-      },
-      "components": [
-        {
-          "type": "CircleColilliderComponent",
-          "radius": 20.0
-        },
-        {
-          "type": "SpriteRendererComponent",
-          "texture": "trita.png"
-        },
-        {
-          "type": "RigidBodyComponent",
-          "velocity": [
-            50,
-            0
-          ],
-          "damping": 0.8
-        }
-      ]
-    },
-    {
-      "name": "RainDrop",
-      "prototype": true,
-      "tag": "enemy",
-      "type": "Enemy",
-      "active": true,
-      "speed": 1250.0,
-      "damping": 1.0,
-      "velocity": [
-        0.0,
-        0.0
-      ],
-      "texture": "RainDrop.png",
-      "health": 1,
-      "transform": {
-        "position": [
-          2.4,
-          5.5
-        ],
-        "rotation": 45.0,
-        "scale": 4.0
-      },
-      "components": [
-        {
-          "type": "CircleColilliderComponent",
-          "radius": 32.0
-        },
-        {
-          "type": "SpriteRendererComponent",
-          "texture": "RainDrop.png"
-        },
-        {
-          "type": "RigidBodyComponent",
-          "velocity": [
-            50,
-            0
-          ],
-          "damping": 0.8
-        }
-      ]
-    },
-    {
-      "name": "bulletPrototype",
-      "prototype": true,
-      "tag": "bullet",
       "type": "bullet",
+      "name": "bulletPrototype",
+      "tag": "bullet",
+      "prototype": true,
       "active": true,
       "speed": 1050.0,
       "lifespan": 10.0,
       "damping": 1.0,
-      "velocity": [
-        0.0,
-        0.0
-      ],
+      "velocity": [0.0, 0.0],
       "texture": "Bullet_1.png",
       "health": 1,
-      "transform": {
-        "position": [
-          2.4,
-          5.5
-        ],
-        "rotation": 45.0,
-        "scale": 1.0
-      },
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 1.0 },
       "components": [
-        {
-          "type": "CircleColilliderComponent",
-          "radius": 15.0
-        }
+        { "type": "CircleColilliderComponent", "radius": 15.0 }
       ]
     }
   ]

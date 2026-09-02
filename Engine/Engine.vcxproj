@@ -184,6 +184,7 @@
     <ClInclude Include="Components\RigidBodyComponent.h" />
     <ClInclude Include="Components\RigidBodyPhysicsComponet.h" />
     <ClInclude Include="Components\SpriteAnimationRendererComponent.h" />
+    <ClInclude Include="Components\SpriteAnimatorRendererComponet.h" />
     <ClInclude Include="Components\SpriteRendererComponent.h" />
     <ClInclude Include="Components\TilemapRendererComponent.h" />
     <ClInclude Include="Core\Color.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Components\RigidBodyComponent.cpp" />
     <ClCompile Include="Components\RigidBodyPhysicsComponet.cpp" />
     <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp" />
+    <ClCompile Include="Components\SpriteAnimatorRendererComponet.cpp" />
     <ClCompile Include="Components\SpriteRendererComponent.cpp" />
     <ClCompile Include="Components\TilemapRendererComponent.cpp" />
     <ClCompile Include="Core\File.cpp" />

@@ -107,6 +107,7 @@
     <ClCompile Include="Serialization\Json.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="Components\SpriteAnimatorRendererComponet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio\Audio.h">
@@ -248,6 +249,9 @@
     </ClInclude>
     <ClInclude Include="Serialization\Json.h">
       <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SpriteAnimatorRendererComponet.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,21 +22,27 @@ void Player::Update(float dt)
 	nu::PhysicsComponent* physics = GetComponent<nu::PhysicsComponent>();
 
 	
-	nu::Vector2 forward = nu::Vector2{ 1.0f, 0.0f }.Rotate(getTransform().rotation);
+	nu::Vector2 pos = nu::Vector2{ 1.0f, 0.0f }.Rotate(getTransform().rotation);
 
 	
 	const float turnRate = nu::math::pi;  
 	float turn = 0.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT))  turn -= turnRate;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) turn += turnRate;
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A) ||
+		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_LEFT))  turn -= turnRate;
+
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D) ||
+		nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_RIGHT)) turn += turnRate;
+
 	if (physics) physics->SetAngularVelocity(turn);
 
 	
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W) || nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_UP)) {
-		if (physics) physics->ApplyForce(forward * m_speed);
+		if (physics) physics->ApplyForce(pos * m_speed);
+
+		nu::Engine::Get().GetRenderer().setCamera(pos);
 
 		nu::ParticleDesc pd;
-		pd.position = getTransform().position - forward * 20.0f;
+		pd.position = getTransform().position - pos * 20.0f;
 		pd.angle = getTransform().rotation + nu::math::pi;
 		pd.angleVariance = 0.3f;
 		pd.speed = 120.0f;

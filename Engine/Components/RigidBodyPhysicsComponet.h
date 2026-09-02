@@ -5,8 +5,7 @@
 
 namespace nu {
 
-	// Box2D-backed physics component: wraps a PhysicsBody and drives the owner's
-	// transform from the simulation each frame.
+	
 	class RigidBodyPhysicsComponent : public PhysicsComponent {
 	public:
 		CLASS_PROTOTYPE(RigidBodyPhysicsComponent);

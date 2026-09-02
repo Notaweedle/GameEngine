@@ -4,8 +4,6 @@
 
 namespace nu
 {
-	// ctor/dtor defined here (not in the header) so the unique_ptr<Scene> only needs
-	// the full Scene definition in this translation unit.
 	Game::Game() = default;
 	Game::~Game() = default;
 

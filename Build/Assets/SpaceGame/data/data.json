@@ -20,6 +20,24 @@
           "frames_per_second": 12,
           "loop": true,
           "texture_frames": "Animations/bat_idle.json"
+        },
+        {
+          "type": "SpriteAnimatorRendererComponet",
+          "defaulet_animation":"run",
+          "animations":[
+            {
+              "name": "run",
+              "texture_frames": "Animations/bat_idle.json",
+              "frames_per_second": 12,
+              "loop" : true
+            },
+            {
+              "name": "idle",
+              "texture_frames": "Animations/bat_idle.json",
+              "frames_per_second": 12,
+              "loop" : true
+            }
+          ]
         }
       ]
     },
@@ -28,7 +46,7 @@
       "prototype": true,
       "tag": "Player",
       "type": "Player",
-      "active": true,
+      "active": false,
       "speed": 40.0,
       "bulletSpeed": 1400.0,
       "lifespan": 10.0,
@@ -45,10 +63,6 @@
         "scale": 6.0
       },
       "components": [
-        {
-          "type": "SpriteRendererComponent",
-          "texture": "PlayerShip.png"
-        },
         {
           "type": "CircleColilliderComponent",
           "radius": 48.0

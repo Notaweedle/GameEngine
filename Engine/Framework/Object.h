@@ -13,8 +13,6 @@ namespace nu {
 		Object() = default;
 		virtual ~Object() = default;
 
-		// base virtual Clone so derived Clone() (from CLASS_PROTOTYPE) can be called
-		// polymorphically through an Object*/Component* (needed by Actor's copy ctor).
 		CLASS_PROTOTYPE(Object)
 
 		virtual const std::string& getName() const { return m_name; }

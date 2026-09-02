@@ -57,7 +57,8 @@ namespace nu {
 
         virtual void Update(float dt);
         virtual void Draw(const class Renderer& renderer) const;
-        virtual void OnKilled() {}   // overridden by game entities (e.g. Enemy); lets Scene notify without knowing the type
+        virtual void OnKilled() {}
+        virtual void OnCollision(class Actor* other) {}
         virtual void Start();
         virtual void OnDestroy();
 

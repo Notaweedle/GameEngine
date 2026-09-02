@@ -18,15 +18,16 @@ bool SpriteGame::Initialize()
 
 void SpriteGame::Update(float dt)
 {
-	// TODO: new game update logic
+	
 	if (m_scene) m_scene->Update(dt);
 }
 
 void SpriteGame::Draw()
 {
+	
 	auto& e = Engine::Get();
 	e.GetRenderer().Clear();
-
+	e.GetRenderer().enableCamera(true);
 	if (m_scene) m_scene->Draw(e.GetRenderer());
 
 	e.GetRenderer().Present();
