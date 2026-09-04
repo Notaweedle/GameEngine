@@ -1,0 +1,41 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Tilemap",
+      "tag": "Ground",
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 5.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "data/dang1.tmj" }
+      ]
+    },
+    {
+      "name": "PlayerPrototype",
+      "prototype": false,
+      "tag": "Player",
+      "type": "Player",
+      "active": true,
+      "speed": 40.0,
+      "bulletSpeed": 1400.0,
+      "lifespan": 10.0,
+      "velocity": [
+        0.0,
+        0.0
+      ],
+      "transform": {
+        "position": [
+          0.0,
+          0.0
+        ],
+        "rotation": 45.0,
+        "scale": 6.0
+      },
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "PlayerShip.png"
+        }
+      ]
+    }
+  ]
+}

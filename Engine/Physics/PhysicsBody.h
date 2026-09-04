@@ -33,6 +33,10 @@ namespace nu
 			Shape shape = Shape::Box;
 			bool isSensor = false;
 
+			// wrap the body around the 2560x1600 screen edges (space game).
+			// set false for level-based games so the player doesn't teleport.
+			bool wrap = true;
+
 			// actor associated with the body
 			class Actor* actor{ nullptr };
 		};

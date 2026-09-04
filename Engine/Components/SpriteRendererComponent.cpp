@@ -25,8 +25,7 @@ namespace nu {
     void SpriteRendererComponent::Draw(const Renderer& renderer)
 	{
         if (m_texture == nullptr) {
-            std::cout << "m_texture can NOT be null" << std::endl;
-            return; 
+            return;   // no texture set (e.g. an invisible trigger actor) -> draw nothing
         }
         if (m_texture) { 
             if (m_sourceRect.w > 0 && m_sourceRect.h > 0) {

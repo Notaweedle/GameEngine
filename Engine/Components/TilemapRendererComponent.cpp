@@ -86,6 +86,30 @@ namespace nu
 				renderer.DrawTexture(*layer.texture, source, cx, cy, 0.0f, scale, false);
 			}
 		}
+
+		// draw object-layer sprites (single tiles placed in the Tiled editor)
+		res_t<Texture> tileset = m_tilemap->GetTilesetTexture();
+		if (tileset)
+		{
+			for (const auto& obj : m_tilemap->GetObjects())
+			{
+				if (!obj.name.empty()) continue;   // named objects are spawned as actors by the game
+
+				Rect src = m_tilemap->GetGidRect(obj.gid);
+				if (src.w <= 0.0f) continue;
+
+				// Tiled tile-object x,y is the BOTTOM-LEFT corner; find its center
+				float mapCx = obj.x + obj.width * 0.5f;
+				float mapCy = obj.y - obj.height * 0.5f;
+
+				float wx = t.position.x + (mapCx - m_tilemap->GetOriginX()) * scale;
+				float wy = t.position.y + (mapCy - m_tilemap->GetOriginY()) * scale;
+
+				// scale so a resized object still matches its editor size
+				float objScale = (tw > 0.0f) ? scale * (obj.width / tw) : scale;
+				renderer.DrawTexture(*tileset, src, wx, wy, 0.0f, objScale, false);
+			}
+		}
 	}
 
 	void TilemapRendererComponent::Read(const json::value_t& value)

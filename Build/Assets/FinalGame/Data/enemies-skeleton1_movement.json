@@ -1,0 +1,7 @@
+{
+  "texture_name": "Art/Monster/enemies-skeleton1_movement.png",
+  "columns": 10,
+  "rows": 1,
+  "start_frame": 0,
+  "total_frames": 10
+}

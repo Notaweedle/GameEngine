@@ -27,16 +27,18 @@ namespace nu {
     {
         if (!m_physicsBody) return;
 
-        // pull the simulated position/rotation back onto the owning actor
-        // (engine rotation is in radians, and box2d's GetRotation is already radians)
+       
         Vector2 pos = m_physicsBody->GetPosition();
 
-        // screen wrap: keep the BODY in bounds too, otherwise the actor wraps but the
-        // body flies off and the two desync (the "stuck on the border" bug)
-        Vector2 wrapped{ math::Wrap(0.0f, 2560.0f, pos.x), math::Wrap(0.0f, 1600.0f, pos.y) };
-        if (wrapped.x != pos.x || wrapped.y != pos.y) m_physicsBody->SetPosition(wrapped);
+        
+        if (m_bodyDef.wrap)
+        {
+            Vector2 wrapped{ math::Wrap(0.0f, 2560.0f, pos.x), math::Wrap(0.0f, 1600.0f, pos.y) };
+            if (wrapped.x != pos.x || wrapped.y != pos.y) m_physicsBody->SetPosition(wrapped);
+            pos = wrapped;
+        }
 
-        GetOwner()->setPosistion(wrapped);
+        GetOwner()->setPosistion(pos);
         GetOwner()->setRotation(m_physicsBody->GetRotation());
     }
 
@@ -91,6 +93,7 @@ namespace nu {
         JSON_READ_NAME(value, "angular_damping", m_bodyDef.angularDamping);
         JSON_READ_NAME(value, "constrain_angle", m_bodyDef.constrainAngle);
         JSON_READ_NAME(value, "is_dynamic", m_bodyDef.isDynamic);
+        JSON_READ_NAME(value, "wrap", m_bodyDef.wrap);
         JSON_READ_NAME(value, "friction", m_bodyDef.friction);
         JSON_READ_NAME(value, "restitution", m_bodyDef.restitution);
         JSON_READ_NAME(value, "density", m_bodyDef.density);

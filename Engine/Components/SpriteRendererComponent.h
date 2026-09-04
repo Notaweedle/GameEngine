@@ -18,6 +18,16 @@ namespace nu
 		bool getFilpH() { return m_flipH; }
 		void setFilpH(bool flip = true) { m_flipH = flip; }
 
+		// draw a specific texture + sub-rect directly (e.g. a single tile pulled
+		// from a tilemap). Clears the texture name so Start() won't overwrite it.
+		void SetTile(res_t<Texture> texture, const Rect& source)
+		{
+			m_texture = texture;
+			m_sourceRect = source;
+			m_size = Vector2{ source.w, source.h };
+			m_textureName.clear();
+		}
+
 		void Read(const json::value_t& value) override;
 
 

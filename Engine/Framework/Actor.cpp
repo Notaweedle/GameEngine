@@ -47,8 +47,6 @@ namespace nu {
         m_transform.position += (m_velocity * dt);
         m_velocity *= std::pow(0.05f, dt);
 
-        m_transform.position.x = math::Wrap(0.0f, 2560.0f, m_transform.position.x);
-        m_transform.position.y = math::Wrap(0.0f, 1600.0f, m_transform.position.y);
 
 
     

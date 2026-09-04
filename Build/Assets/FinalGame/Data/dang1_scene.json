@@ -1,0 +1,94 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Tilemap",
+      "tag": "tilemap",
+      "prototype": false,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 5.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "Data/dang1.tmj" }
+      ]
+    },
+    {
+      "type": "PlayerController",
+      "name": "Hero",
+      "tag": "Player",
+      "prototype": false,
+      "active": true,
+      "speed": 600.0,
+      "transform": { "position": [600.0, 1250.0], "rotation": 0.0, "scale": 3.5 },
+      "components": [
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "circle",
+          "size": [16.0, 18.0],
+          "is_dynamic": true,
+          "gravity_scale": 0.0,
+          "linear_damping": 0.0,
+          "density": 1.0,
+          "constrain_angle": true,
+          "wrap":false
+        },
+        {
+          "type": "CircleColilliderComponent",
+          "radius": 50.0
+        },
+        {
+          "type": "SpriteAnimatorRendererComponet",
+          "default_animation": "idle",
+          "animations": [
+            { "name": "idle", "texture_frames": "Data/hero_idle.json", "frames_per_second": 8,  "loop": true },
+            { "name": "run",  "texture_frames": "Data/hero_run.json",  "frames_per_second": 12, "loop": true },
+            { "name": "attack", "texture_frames": "Data/hero_attack.json", "frames_per_second": 12, "loop": false },
+            { "name": "death",  "texture_frames": "Data/hero_death.json",  "frames_per_second": 12, "loop": false }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Key",
+      "tag": "Key",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [950.0, 1050.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "SpriteRendererComponent" },
+        { "type": "CircleColilliderComponent", "radius": 30.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Door",
+      "tag": "door",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [1300.0, 1250.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "SpriteRendererComponent" },
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "box",
+          "size": [16.0, 40.0],
+          "is_dynamic": false,
+          "wrap": false
+        },
+        { "type": "CircleColilliderComponent", "radius": 60.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Trapdoor",
+      "tag": "trapdoor",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 5.0 },
+      "components": [
+        { "type": "SpriteRendererComponent" },
+        { "type": "CircleColilliderComponent", "radius": 40.0 }
+      ]
+    }
+  ]
+}

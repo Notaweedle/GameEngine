@@ -65,5 +65,6 @@ namespace nu
 
 		it->second->setMode(FMOD_LOOP_NORMAL);
 		m_system->playSound(it->second, nullptr, false, nullptr);
+		
 	}
 }

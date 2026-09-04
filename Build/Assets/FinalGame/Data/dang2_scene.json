@@ -1,0 +1,179 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Tilemap",
+      "tag": "tilemap",
+      "prototype": false,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "Data/dang2.tmj" }
+      ]
+    },
+    {
+      "type": "PlayerController",
+      "name": "Hero",
+      "tag": "Player",
+      "prototype": false,
+      "active": true,
+      "speed": 600.0,
+      "transform": { "position": [2088.0, 1650.0], "rotation": 0.0, "scale": 3.5 },
+      "components": [
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "circle",
+          "size": [16.0, 16.0],
+          "is_dynamic": true,
+          "wrap": false,
+          "gravity_scale": 0.0,
+          "linear_damping": 0.0,
+          "density": 1.0,
+          "constrain_angle": true
+        },
+        { "type": "CircleColilliderComponent", "radius": 24.0 },
+        {
+          "type": "SpriteAnimatorRendererComponet",
+          "default_animation": "idle",
+          "animations": [
+            { "name": "idle", "texture_frames": "Data/hero_idle.json", "frames_per_second": 8,  "loop": true },
+            { "name": "run",  "texture_frames": "Data/hero_run.json",  "frames_per_second": 12, "loop": true },
+            { "name": "attack",  "texture_frames": "Data/hero_attack.json",  "frames_per_second": 12, "loop": false },
+            { "name": "death",  "texture_frames": "Data/hero_death.json",  "frames_per_second": 12, "loop": false }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "ladder",
+      "tag": "ladder",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "SpriteRendererComponent" },
+        { "type": "CircleColilliderComponent", "radius": 40.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "spawn_flag",
+      "tag": "spawn_flag",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "CircleColilliderComponent", "radius": 80.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Skeleton",
+      "tag": "enemy",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponet",
+          "default_animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames": "Data/enemies-skeleton1_idle.json",
+              "frames_per_second": 8,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Data/enemies-skeleton1_movement.json",
+              "frames_per_second": 12,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "texture_frames": "Data/enemies-skeleton1_attack.json",
+              "frames_per_second": 12,
+              "loop": false
+            },
+            {
+              "name": "death",
+              "texture_frames": "Data/enemies-skeleton1_death.json",
+              "frames_per_second": 12,
+              "loop": false
+            }
+          ]
+        },
+        { "type": "CircleColilliderComponent", "radius": 30.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Boss",
+      "tag": "enemy",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 10.0 },
+      "components": [
+        {
+          "type": "SpriteAnimatorRendererComponet",
+          "default_animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "texture_frames": "Data/enemies-skeleton1_idle.json",
+              "frames_per_second": 8,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "texture_frames": "Data/enemies-skeleton1_movement.json",
+              "frames_per_second": 12,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "texture_frames": "Data/enemies-skeleton1_attack.json",
+              "frames_per_second": 12,
+              "loop": false
+            },
+            {
+              "name": "death",
+              "texture_frames": "Data/enemies-skeleton1_death.json",
+              "frames_per_second": 12,
+              "loop": false
+            }
+          ]
+        },
+        {
+          "type": "CircleColilliderComponent",
+          "radius": 50.0
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "GoldKey",
+      "tag": "item",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 5.0 },
+      "components": [
+        { "type": "SpriteRendererComponent", "texture": "Art/Dungeon_GKey.png" },
+        { "type": "CircleColilliderComponent", "radius": 40.0 }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "game_win",
+      "tag": "win",
+      "prototype": true,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 6.0 },
+      "components": [
+        { "type": "CircleColilliderComponent", "radius": 90.0 }
+      ]
+    }
+  ]
+}

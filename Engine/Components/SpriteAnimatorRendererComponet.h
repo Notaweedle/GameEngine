@@ -33,6 +33,7 @@ namespace nu {
 		bool m_pause{ false };
 
 		std::string m_defaultAnimationName;
+		std::string m_currentAnimationName;
 		SpriteAnimation m_currentAnimation;
 		std::map<std::string, SpriteAnimation> m_animations;
 	};

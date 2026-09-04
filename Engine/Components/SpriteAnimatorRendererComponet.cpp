@@ -43,11 +43,18 @@ namespace nu {
 
 	void SpriteAnimatorRendererComponet::Play(const std::string& name)
 	{
-		auto iter = m_animations.find(ToLower(name));
+		std::string key = ToLower(name);
+
+		// already playing this animation? don't restart it (keeps it from
+		// freezing on frame 0 when Play is called every frame).
+		if (key == m_currentAnimationName) return;
+
+		auto iter = m_animations.find(key);
 		if (iter == m_animations.end()) {
 			std::cerr << "could not find animation name : " << name << std::endl;
 			return;
 		}
+		m_currentAnimationName = key;
 		m_currentAnimation = iter->second;
 
 		m_frame = 0;

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <memory>
 #include <random>
+#include "FinalGame/FinalGame.h"
 using namespace nu;
 
 
@@ -26,7 +27,7 @@ int main()
     e.Initialize();
 
     
-    std::unique_ptr<nu::Game> game = std::make_unique<SpriteGame>();
+    std::unique_ptr<nu::Game> game = std::make_unique<FinalGame>();
     game->Initialize();
 
   

@@ -32,6 +32,12 @@ namespace nu
         
         SDL_SetRenderLogicalPresentation(m_renderer, 2560, 1600, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
+        // drawing happens in the logical 2560x1600 space, so the camera must
+        // center on that (not the window size). These were left at 0, which
+        // broke camera centering (everything rendered at the top-left).
+        m_width = 2560;
+        m_height = 1600;
+
         return true;
     }
 

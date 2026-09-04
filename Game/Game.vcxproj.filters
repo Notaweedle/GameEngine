@@ -46,6 +46,15 @@
     <Filter Include="Assets\SpriteGame\TileMap">
       <UniqueIdentifier>{46ffd0aa-12a7-4a4e-bdb6-935826c49925}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FinalGame">
+      <UniqueIdentifier>{12e6705a-6c8f-4145-81d6-8115d7315144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\FinalGame">
+      <UniqueIdentifier>{4f924cb0-b4e8-48e7-821a-49cf1c3edb4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\FinalGame\Data">
+      <UniqueIdentifier>{7e7587b3-90a4-465e-9718-f82dfbd5473b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -69,8 +78,14 @@
     <ClCompile Include="SpaceGame\bullet.cpp">
       <Filter>SpaceGame</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
+    <ClCompile Include="SpriteGame\PlayerController.cpp">
       <Filter>SpriteGame</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalGame\FinalGame.cpp">
+      <Filter>FinalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalGame\Door.cpp">
+      <Filter>FinalGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,8 +107,22 @@
     <ClInclude Include="SpaceGame\bullet.h">
       <Filter>SpaceGame</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h">
+    <ClInclude Include="FinalGame\FinalGame.h">
+      <Filter>FinalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalGame\Door.h">
+      <Filter>FinalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\PlayerController.h">
       <Filter>SpriteGame</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\FinalGame\Data\dang1_scene.json">
+      <Filter>Assets\FinalGame\Data</Filter>
+    </None>
+    <None Include="..\Build\Assets\FinalGame\Data\dang2_scene.json">
+      <Filter>Assets\FinalGame\Data</Filter>
+    </None>
   </ItemGroup>
 </Project>
