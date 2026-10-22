@@ -1,0 +1,26 @@
+#pragma once
+#include <cstdint>
+
+namespace nu
+{
+	class Time
+	{
+	public:
+		Time();
+
+		void Reset();
+		void Tick();
+
+		float GetTime() { return TicksToSeconds(m_currentTicks - m_startTicks); }
+		
+		float GetDeltaTime() { float dt = TicksToSeconds(m_deltaTicks); return dt > 0.1f ? 0.1f : dt; }
+
+		float TicksToSeconds(uint64_t ticks) { return (float)ticks / 1'000'000'000;	}
+
+	private:
+		uint64_t m_startTicks = 0;
+		uint64_t m_currentTicks = 0;
+		uint64_t m_frameTicks = 0;
+		uint64_t m_deltaTicks = 0;
+	};
+}

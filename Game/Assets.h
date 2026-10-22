@@ -1,11 +1,13 @@
 #pragma once
-#include "Model.h"
+#include "Renderer/Model.h"
+#include <memory>
 
 namespace Assets
 {
-	const extern nu::Model model_player;
-	const extern nu::Model model_yeedi;
-	const extern nu::Model model_raincol;
-	const extern nu::Model model_triangle;
-	const extern nu::Model model_bullet;
+    
+    const extern std::shared_ptr<nu::Model> model_player;
+    const extern std::shared_ptr<nu::Model> model_yeedi;
+    const extern std::shared_ptr<nu::Model> model_raincol;
+    const extern std::shared_ptr<nu::Model> model_triangle;
+    const extern std::shared_ptr<nu::Model> model_bullet;
 }

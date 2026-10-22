@@ -2,10 +2,10 @@
 //
 
 #include "pch.h"
-#include "framework.h"
+#include "framework/framework.h"
 #include "Engine.h"
-#include "Input.h"
-#include <Iostream>
+#include "Input/Input.h"
+#include <iostream>
 
 
 
@@ -15,10 +15,11 @@ namespace nu {
 	bool Engine::Initialize() {
 		
 		
-		m_renderer.Initialize("Astroid", 2560, 1600);
+		m_renderer.Initialize("Astroid", 1280, 800);
 		m_renderer.SetColor(0.0f,0.0f,0.0f);
 		m_input.Initialize();
 		m_audio.Initialize();
+		m_physics.Initialize();
 
 		return true;
 	};

@@ -1,0 +1,73 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Tilemap",
+      "tag": "tilemap",
+      "prototype": false,
+      "active": true,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 3.0 },
+      "components": [
+        { "type": "TilemapRendererComponent", "tilemap": "data/untitled.tmj" }
+      ]
+    },
+    {
+      "type": "Player",
+      "name": "Player",
+      "tag": "Player",
+      "prototype": false,
+      "active": true,
+      "speed": 40.0,
+      "bulletSpeed": 1400.0,
+      "lifespan": 10.0,
+      "velocity": [0.0, 0.0],
+      "transform": { "position": [700.0, 480.0], "rotation": 0.0, "scale": 3.0 },
+      "components": [
+        { "type": "SpriteRendererComponent", "texture": "PlayerShip.png" },
+        { "type": "CircleColilliderComponent", "radius": 24.0 },
+        {
+          "type": "RigidBodyPhysicsComponent",
+          "shape": "circle",
+          "size": [1, 1],
+          "is_dynamic": true,
+          "density": 1.0,
+          "linear_damping": 3.0,
+          "constrain_angle": false
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "bat",
+      "tag": "enemy",
+      "prototype": false,
+      "active": true,
+      "transform": { "position": [300.0, 250.0], "rotation": 0.0, "scale": 4.0 },
+      "components": [
+        {
+          "type": "SpriteAnimationRendererComponent",
+          "frames_per_second": 12,
+          "loop": true,
+          "texture_frames": "Animations/bat_idle.json"
+        }
+      ]
+    },
+    {
+      "type": "bullet",
+      "name": "bulletPrototype",
+      "tag": "bullet",
+      "prototype": true,
+      "active": true,
+      "speed": 1050.0,
+      "lifespan": 10.0,
+      "damping": 1.0,
+      "velocity": [0.0, 0.0],
+      "texture": "Bullet_1.png",
+      "health": 1,
+      "transform": { "position": [0.0, 0.0], "rotation": 0.0, "scale": 1.0 },
+      "components": [
+        { "type": "CircleColilliderComponent", "radius": 15.0 }
+      ]
+    }
+  ]
+}

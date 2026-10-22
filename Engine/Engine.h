@@ -1,30 +1,46 @@
 #pragma once
 
-#include "Renderer.h"
-#include "Vector2.h"
-#include "Random.h"
-#include "mathUitl.h"
 #include "pch.h"
+
+
+#include "Core/Random.h"
+#include "Core/Factory.h"
+#include "Core/Singleton.h"
+#include "Core/StringUtil.h"
+#include "Core/GameTime.h"
+#include "Core/File.h"
+
+#include "Math/mathUitl.h"
+#include "Math/Transform.h"
+#include "Math/Vector2.h"
+
+
+#include "Framework/Actor.h"
+#include "Framework/Scene.h"
+#include "Framework/Game.h"
+
+
+#include "Audio/Audio.h"
+
+#include "Resources/ResourceManager.h"
+#include "Resources/Resource.h"
+
+#include "Renderer/Texture.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Model.h"
+#include "Renderer/ParticleSystem.h"
+
+#include "Input/Input.h"
+
+#include "Physics/Physics.h"
+
 #include "SDL3/SDL.h"
-
 #include <vector>
-#include "Input.h"
-#include "GameTime.h"
-#include "Tranform.h"
-#include "Actor.h"
-#include "Model.h"
-#include "Scene.h"
-#include "Enemy.h"
-#include "bullet.h"
-#include "File.h"
-#include "ParticleSystem.h"
-#include "Audio.h"
-
 
 namespace nu {
 	class Engine {
 	public:
-		static Engine& Get() { static Engine engine; return engine; }
+		static Engine& Get() { return s_instance; }
 		bool Initialize();
 		bool ShutDown();
 		bool Update();
@@ -33,16 +49,21 @@ namespace nu {
 		Time& GetTime() { return m_time; };
 		ParticleSystem& GetParticleSystem() { return m_particleSystem; };
 		Audio& GetAudio() { return m_audio; };
+		Physics& GetPhysics() { return m_physics; };
 
-		Engine(const Engine&) = delete;
+		
 		
 	private:
 		Engine() = default;
 		Input m_input;
 		Renderer m_renderer;
 		Time m_time;
-		ParticleSystem m_particleSystem{ 1000 };
+		ParticleSystem m_particleSystem{ 5000 };
 		Audio m_audio;
+		Physics m_physics;
+		static Engine s_instance;
 	};
+
+	inline Engine Engine::s_instance;
 
 }
