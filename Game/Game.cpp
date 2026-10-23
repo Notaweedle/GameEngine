@@ -12,24 +12,80 @@
 #include <iostream>
 #include <memory>
 #include <random>
+#include <functional>
+#include <string>
+#include <vector>
 using namespace nu;
 
-
-
-
-
-int main()
+// Games selectable with --game <name>. The first entry is the default.
+struct GameEntry
 {
+    std::string name;
+    std::function<std::unique_ptr<nu::Game>()> create;
+};
+
+static const std::vector<GameEntry> games =
+{
+    { "spritegame", [] { return std::make_unique<SpriteGame>(); } },
+    { "spacegame",  [] { return std::make_unique<SpaceGame>(); } },
+};
+
+static void PrintUsage(const char* program)
+{
+    std::cerr << "Usage: " << program << " [--game <name>]\n";
+    std::cerr << "Games:";
+    for (const auto& entry : games) std::cerr << " " << entry.name;
+    std::cerr << " (default: " << games.front().name << ")\n";
+}
+
+// Returns nullptr and prints usage if the arguments are invalid.
+static std::unique_ptr<nu::Game> CreateGameFromArgs(int argc, char* argv[])
+{
+    std::string name = games.front().name;
+
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "--game" && i + 1 < argc) {
+            name = argv[++i];
+        }
+        else if (arg.rfind("--game=", 0) == 0) {
+            name = arg.substr(7);
+        }
+        else {
+            std::cerr << "Unknown or incomplete argument: " << arg << "\n";
+            PrintUsage(argv[0]);
+            return nullptr;
+        }
+    }
+
+    for (const auto& entry : games) {
+        if (EqualsIgnoreCase(entry.name, name)) return entry.create();
+    }
+
+    std::cerr << "Unknown game: " << name << "\n";
+    PrintUsage(argv[0]);
+    return nullptr;
+}
+
+int main(int argc, char* argv[])
+{
+    std::unique_ptr<nu::Game> game = CreateGameFromArgs(argc, argv);
+    if (!game) return 1;
+
     SetWorkingDirectory("Assets");   
     
     nu::Engine& e = nu::Engine::Get();
-    e.Initialize();
+    if (!e.Initialize()) {
+        std::cerr << "Failed to initialize engine\n";
+        return 1;
+    }
 
-    
-    std::unique_ptr<nu::Game> game = std::make_unique<SpriteGame>();
-    game->Initialize();
-
-  
+    if (!game->Initialize()) {
+        std::cerr << "Failed to initialize game\n";
+        game.reset();
+        e.ShutDown();
+        return 1;
+    }
 
     bool quit = false;
     while (!quit)
